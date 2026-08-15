@@ -46,6 +46,7 @@
 @import url('./03-components/empty-state.css');
 @import url('./03-components/crisis-list.css');
 @import url('./03-components/breathing-circle.css');
+@import url('./03-components/garden.css');
 @import url('./03-components/nav-bar.css');
 /* Module 4+ adds: sheet, modal, progress-ring, fab, field, chart-card,
    skeleton. One @import per file, in this block. */
@@ -57,7 +58,9 @@
 @import url('./04-features/checkin.css');
 @import url('./04-features/feelings.css');
 @import url('./04-features/practice.css');
-/* Module 4+ adds: companion, garden. */
+@import url('./04-features/task.css');
+@import url('./04-features/garden.css');
+/* Module 5+ adds: companion. */
 
 /* ---- 05 · UTILITIES ----------------------------------------------------- */
 @import url('./05-utilities/layout.css');

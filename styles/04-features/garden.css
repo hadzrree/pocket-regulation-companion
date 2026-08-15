@@ -1,0 +1,37 @@
+/* ==========================================================================
+   04-FEATURES / GARDEN
+   Purpose : Layout for the Garden tab.
+   Depends : 01-tokens/*, 03-components/garden.css
+   Pairs with : features/garden/garden.view.js
+   ========================================================================== */
+
+.garden-view {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.garden-view__stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.garden-view__record { padding-block-start: var(--space-4); }
+
+/* One row per thing the person did. No count, no total, no comparison —
+   the specificity is the point. */
+.grew-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.grew-row__icon { color: var(--color-primary); }
+.grew-row__body { min-width: 0; }
+.grew-row__what { font-weight: 600; }
+.grew-row__when { color: var(--color-text-secondary); }

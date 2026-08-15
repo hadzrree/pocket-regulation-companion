@@ -1,0 +1,112 @@
+/* ==========================================================================
+   03-COMPONENTS / GARDEN
+   Purpose : Colour and motion for the drawn garden.
+   Depends : 01-tokens/colors.css (the --color-garden-* palette)
+   Pairs with : core/components/Garden.js
+
+   Every colour here comes from the garden palette in the tokens file. The
+   drawing therefore recolours correctly in the night theme without a single
+   value being repeated — and it will keep matching if the palette is ever
+   retuned.
+   ========================================================================== */
+
+.garden {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- Sky ----------------------------------------------------------------
+   Three times of day, set by the class Garden.js puts on the root. */
+.garden--morning   .garden__sky-top    { stop-color: var(--color-garden-sky-dawn); }
+.garden--morning   .garden__sky-bottom { stop-color: var(--color-accent-tint); }
+.garden--afternoon .garden__sky-top    { stop-color: var(--color-garden-sky-day); }
+.garden--afternoon .garden__sky-bottom { stop-color: var(--color-primary-tint); }
+.garden--evening   .garden__sky-top    { stop-color: var(--color-garden-sky-dusk); }
+.garden--evening   .garden__sky-bottom { stop-color: var(--color-secondary-tint); }
+.garden--lateNight .garden__sky-top    { stop-color: var(--color-garden-sky-dusk); }
+.garden--lateNight .garden__sky-bottom { stop-color: var(--color-secondary-soft); }
+
+.garden__sun      { fill: var(--color-garden-firefly); opacity: 0.85; }
+.garden__sun-halo { fill: var(--color-garden-firefly); opacity: 0.18; }
+
+/* At 3am it is the moon, not the sun. Someone opening the app in the middle
+   of the night should not be shown midday. */
+.garden--lateNight .garden__sun      { fill: var(--color-secondary-bright); opacity: 0.7; }
+.garden--lateNight .garden__sun-halo { fill: var(--color-secondary-bright); opacity: 0.12; }
+
+/* ---- Ground -------------------------------------------------------------- */
+.garden__hill--far  { fill: var(--color-garden-leaf); opacity: 0.32; }
+.garden__hill--near { fill: var(--color-garden-stem); opacity: 0.26; }
+.garden__soil       { fill: var(--color-garden-soil); }
+
+/* ---- The scatter · one object per thing the person did ------------------- */
+.garden__grass {
+  fill: none;
+  stroke: var(--color-garden-stem);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.garden__pebble       { fill: var(--color-border-strong); opacity: 0.7; }
+.garden__bud-stem     { stroke: var(--color-garden-stem); stroke-width: 1.4; fill: none; stroke-linecap: round; }
+.garden__bud-head     { fill: var(--color-garden-bloom); }
+.garden__bud-head--alt{ fill: var(--color-garden-bloom-alt); }
+
+/* ---- The main plant ------------------------------------------------------ */
+.garden__stem {
+  fill: none;
+  stroke: var(--color-garden-stem);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+.garden__leaf      { fill: var(--color-garden-leaf); }
+.garden__leaf--alt { fill: var(--color-garden-stem); opacity: 0.85; }
+
+.garden__petal       { fill: var(--color-garden-bloom); }
+.garden__petal--alt  { fill: var(--color-garden-bloom-alt); }
+.garden__bloom-centre{ fill: var(--color-garden-firefly); }
+
+/* ---- Fireflies -----------------------------------------------------------
+   The only purely decorative flourish in the product, and it arrives at the
+   last stage so it means something when it does. A slow, irregular fade —
+   never a blink, which reads as an alert. */
+.garden__firefly {
+  fill: var(--color-garden-firefly);
+  opacity: 0.2;
+  animation: firefly 5.5s var(--ease-breath) infinite;
+}
+
+@keyframes firefly {
+  0%, 100% { opacity: 0.12; }
+  45%      { opacity: 0.85; }
+}
+
+/* Reduce movement stops the fireflies entirely and leaves them at a steady
+   soft glow. They are decoration; the accommodation costs nothing. */
+[data-motion='reduced'] .garden__firefly { animation: none; opacity: 0.5; }
+
+/* ---- Growing in ----------------------------------------------------------
+   The whole drawing settles once on arrival. It never re-animates on a
+   re-render, so returning to the tab is calm rather than showy. */
+.garden { animation: garden-settle var(--duration-ambient) var(--ease-out-soft) both; }
+@keyframes garden-settle {
+  from { opacity: 0; transform: scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+[data-motion='reduced'] .garden { animation: none; }
+
+/* ---- Stage dots ----------------------------------------------------------
+   Five dots, no percentage, no "3/5" label. It says where the garden is, not
+   how far it has to go — there is no "has to". */
+.garden-stages { display: flex; gap: var(--space-2); justify-content: center; }
+
+.garden-stages__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--color-border-strong);
+}
+.garden-stages__dot.is-reached { background: var(--color-primary); }

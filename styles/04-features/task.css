@@ -1,0 +1,40 @@
+/* ==========================================================================
+   04-FEATURES / TASK
+   Purpose : Zone 3 of Today — the one small thing.
+   Depends : 01-tokens/*, 03-components/card.css
+   Pairs with : features/task/task-card.js
+
+   THE ACTION ROW IS THE WHOLE DESIGN
+     .card__actions already gives both buttons `flex: 1 1 auto`, so "I did it"
+     and "Not now" come out the same width. That is deliberate and it is load
+     bearing — see the header note in task-card.js. Do not add a rule here
+     that shrinks, greys or de-emphasises the second button.
+   ========================================================================== */
+
+.task { width: 100%; }
+
+.task__text {
+  margin: 0;
+  color: var(--color-text-primary);
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+/* Once done, the task text is shown as a record of what happened rather than
+   as an instruction — same words, quieter weight. */
+.task__text-done { color: var(--color-text-secondary); }
+
+/* The single line that appears when the ask has just got smaller. It names
+   the change so it is legible rather than mysterious. Never an apology. */
+.task__softened {
+  color: var(--color-text-secondary);
+  padding-inline: var(--space-2);
+  padding-block-end: var(--space-2);
+  animation: task-soften var(--duration-slow) var(--ease-out-soft) both;
+}
+
+@keyframes task-soften {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+[data-motion='reduced'] .task__softened { animation: none; }

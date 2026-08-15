@@ -145,10 +145,32 @@ export const en = {
     today: 'Today'
   },
 
+  /* The honest version of a progress screen. No total, no streak, no
+     percentage, no goal. The dated list IS the evidence.
+     Clinical Framework §9.3. */
   garden: {
     title: 'Garden',
+    /* Printed before anyone scrolls. Everyone arrives at a screen like this
+       expecting to be told what they have lost. */
+    intro: 'Nothing here disappears.',
     empty: 'This is yours. It started when you did.',
-    comingSoon: 'Your garden starts growing in Module 4.'
+    grewFrom: 'It grew from these.',
+    from: {
+      'check-in': 'You said how you were.',
+      session: 'You slowed down for a bit.',
+      task: 'You did one small thing.',
+      thought: 'You put a thought down.'
+    }
+  },
+
+  task: {
+    heading: 'One small thing',
+    did: 'I did it',
+    doneTitle: 'That was a real thing.',
+    /* Said when "not now" has just made the ask smaller. Names the change,
+       never apologises for it, never nudges. */
+    softened: 'Something smaller, then.',
+    resting: 'Nothing today, then. That\'s allowed.'
   },
 
   me: {

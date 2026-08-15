@@ -34,7 +34,7 @@
  */
 
 /** The version the app expects. Bump this when adding a migration below. */
-export const DB_VERSION = 2;
+export const DB_VERSION = 3;
 
 export const DB_NAME = 'prc';
 
@@ -46,7 +46,8 @@ export const STORES = Object.freeze({
   MOODS:    'moods',
   GROWTH:   'growth',
   META:     'meta',
-  SESSIONS: 'sessions'
+  SESSIONS: 'sessions',
+  TASKS:    'tasks'
 });
 
 /**
@@ -126,12 +127,38 @@ export const MIGRATIONS = {
       sessions.createIndex('byDateKey', 'dateKey');
       sessions.createIndex('byStartedAt', 'startedAt');
     }
+  },
+
+  /* -------------------------------------------------------------------------
+     v3 — Module 4. The one small thing.
+  ------------------------------------------------------------------------- */
+  3(db) {
+    /* TASKS — keyed by the LOCAL date, like moods.
+
+       ONE RECORD PER DAY, because there is one task per day. The schema
+       enforces it: there is no way to store a second offer for the same date,
+       so "a list of today's tasks" is not a thing this database can hold.
+
+       Record shape:
+         { dateKey, taskId, tier, offeredAt, doneAt, softenings, seen }
+
+       ON `softenings`
+       It counts how many times the person said "not now" today, and it exists
+       for exactly one purpose: to make the next suggestion SMALLER. It is
+       never displayed, never summed across days, and the only behaviour it
+       can cause is the app asking for less. There is deliberately no field
+       anywhere in this store that records a task as refused, skipped or
+       failed. Clinical Framework §8.3.
+    */
+    if (!db.objectStoreNames.contains(STORES.TASKS)) {
+      const tasks = db.createObjectStore(STORES.TASKS, { keyPath: 'dateKey' });
+      tasks.createIndex('byOfferedAt', 'offeredAt');
+    }
   }
 
   /* -------------------------------------------------------------------------
      FUTURE MIGRATIONS GO HERE. Add, never edit.
 
-     v3 — Module 4: 'tasks'     (the one small thing, keyPath 'id')
      v4 — Module 5: 'thoughts'  (what the user tells Mika, keyPath 'id')
      v5 — Module 6: 'symptoms'  (physical symptom log, keyPath 'id')
 

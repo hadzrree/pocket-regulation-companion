@@ -21,7 +21,7 @@
 
 /* Bump this string on EVERY release. It is what triggers the update and the
    cleanup of the previous cache. */
-const CACHE = 'prc-v1.2.0-module3';
+const CACHE = 'prc-v1.3.0-module4';
 
 /* The app shell. Every path relative — see the header note. */
 const SHELL = [
@@ -50,6 +50,7 @@ const SHELL = [
   './styles/03-components/empty-state.css',
   './styles/03-components/crisis-list.css',
   './styles/03-components/breathing-circle.css',
+  './styles/03-components/garden.css',
   './styles/03-components/nav-bar.css',
   './styles/04-features/transitions.css',
   './styles/04-features/settings.css',
@@ -57,6 +58,8 @@ const SHELL = [
   './styles/04-features/checkin.css',
   './styles/04-features/feelings.css',
   './styles/04-features/practice.css',
+  './styles/04-features/task.css',
+  './styles/04-features/garden.css',
   './styles/05-utilities/layout.css',
   './styles/05-utilities/text.css',
 
@@ -88,17 +91,21 @@ const SHELL = [
   './core/components/EmptyState.js',
   './core/components/CrisisList.js',
   './core/components/BreathingCircle.js',
+  './core/components/Garden.js',
 
   './core/storage/db.js',
   './core/storage/migrations.js',
   './core/storage/repositories/mood.repo.js',
   './core/storage/repositories/growth.repo.js',
   './core/storage/repositories/session.repo.js',
+  './core/storage/repositories/task.repo.js',
 
   './core/safety/crisis-resources.js',
+  './core/content/task-catalogue.js',
 
   './features/today/today.view.js',
   './features/checkin/checkin.js',
+  './features/task/task-card.js',
   './features/regulate/regulate.view.js',
   './features/feelings/feelings.view.js',
   './features/garden/garden.view.js',

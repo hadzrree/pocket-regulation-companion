@@ -131,8 +131,23 @@ export const ms = {
 
   garden: {
     title: 'Taman',
+    intro: 'Tiada apa-apa di sini yang hilang.',
     empty: 'Ini milik awak. Ia bermula bila awak mula.',
-    comingSoon: 'Taman awak mula tumbuh dalam Modul 4.'
+    grewFrom: 'Ia tumbuh daripada semua ni.',
+    from: {
+      'check-in': 'Awak beritahu macam mana rasa awak.',
+      session: 'Awak perlahankan diri sekejap.',
+      task: 'Awak buat satu benda kecil.',
+      thought: 'Awak letak satu fikiran.'
+    }
+  },
+
+  task: {
+    heading: 'Satu benda kecil',
+    did: 'Dah buat',
+    doneTitle: 'Itu benda betul yang awak dah buat.',
+    softened: 'Kalau macam tu, benda yang lebih kecil.',
+    resting: 'Tak apa, tak payah hari ni. Itu pun okay.'
   },
 
   me: {
