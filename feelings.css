@@ -1,0 +1,48 @@
+/* ==========================================================================
+   04-FEATURES / FEELINGS
+   Purpose : The record of days already told.
+   Depends : 01-tokens/*, 03-components/mood-selector.css (the drawn faces)
+   Pairs with : features/feelings/feelings.view.js
+
+   NOTE ON WHAT IS NOT STYLED HERE
+     There is no trend line, no average, no comparison, and no rule for
+     colouring a "bad week". The screen shows what the person said and stops.
+     Clinical Framework §12.4.
+   ========================================================================== */
+
+.feelings__list { padding-block-start: var(--space-2); }
+
+.feeling-row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.feeling-row__face { width: 44px; }
+.feeling-row__face .mood-face { max-width: 44px; }
+
+/* Per-row colour, so the drawn face keeps its meaning outside the selector.
+   The word beside it carries the same meaning in text — colour is never the
+   only signal. Design Language §18. */
+.feeling-row[data-mood='1'] { --mood: var(--color-mood-1); --mood-soft: var(--color-mood-1-soft); --mood-ink: var(--color-mood-1-ink); }
+.feeling-row[data-mood='2'] { --mood: var(--color-mood-2); --mood-soft: var(--color-mood-2-soft); --mood-ink: var(--color-mood-2-ink); }
+.feeling-row[data-mood='3'] { --mood: var(--color-mood-3); --mood-soft: var(--color-mood-3-soft); --mood-ink: var(--color-mood-3-ink); }
+.feeling-row[data-mood='4'] { --mood: var(--color-mood-4); --mood-soft: var(--color-mood-4-soft); --mood-ink: var(--color-mood-4-ink); }
+.feeling-row[data-mood='5'] { --mood: var(--color-mood-5); --mood-soft: var(--color-mood-5-soft); --mood-ink: var(--color-mood-5-ink); }
+
+.feeling-row__body { min-width: 0; }
+.feeling-row__date { font-weight: 700; }
+.feeling-row__word { color: var(--mood-ink); font-weight: 700; }
+
+/* A note spans the full row width, below the face and the date. */
+.feeling-row__note {
+  grid-column: 1 / -1;
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+  overflow-wrap: anywhere;   /* a long unbroken string must not widen the row */
+}

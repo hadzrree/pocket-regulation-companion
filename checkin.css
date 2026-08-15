@@ -1,0 +1,50 @@
+/* ==========================================================================
+   04-FEATURES / CHECK-IN
+   Purpose : The daily check-in card, the response line, and the crisis offer.
+   Depends : 01-tokens/*, 03-components/card.css, 03-components/mood-selector.css
+   Pairs with : features/checkin/checkin.js
+   ========================================================================== */
+
+.checkin { width: 100%; }
+
+/* The check-in card carries slightly less horizontal padding than a standard
+   card, so the five faces get every available pixel on a 320px screen. */
+.card--checkin { padding-inline: var(--space-4); }
+.card--checkin .card__head { padding-inline: var(--space-2); }
+
+/* ---- The response --------------------------------------------------------
+   Fades and rises 6px. It is the app answering, so it should feel like
+   something arriving gently rather than a panel opening. */
+.checkin__response {
+  padding-inline: var(--space-2);
+  animation: checkin-arrive var(--duration-slower) var(--ease-out-soft) both;
+}
+
+.checkin__response-text {
+  color: var(--color-text-primary);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+@keyframes checkin-arrive {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+[data-motion='reduced'] .checkin__response { animation: none; }
+
+/* ---- The crisis offer ----------------------------------------------------
+   Ordinary size, ordinary weight, "care" tone. NOT a modal, NOT a banner,
+   NOT red. Making it dramatic would punish an honest answer, and a user who
+   learns that telling the truth summons an alarming screen will stop telling
+   the truth. Clinical Framework §6.2. */
+.checkin__care {
+  animation: checkin-arrive var(--duration-slower) var(--ease-out-soft) both;
+}
+[data-motion='reduced'] .checkin__care { animation: none; }
+
+/* The crisis list itself now lives in 03-components/crisis-list.css.
+   It moved there in Module 3, when Calm Mode and the help screen started
+   using the same list. Only the spacing above it, which is specific to the
+   check-in, remains here. */
+.checkin__care .crisis-list { margin-block-start: var(--space-4); }

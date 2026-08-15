@@ -1,0 +1,62 @@
+/* ==========================================================================
+   03-COMPONENTS / CRISIS-LIST
+   Purpose : The list of crisis phone numbers.
+   Depends : 01-tokens/*
+   Pairs with : core/components/CrisisList.js
+
+   Used by the check-in, Calm Mode and the help screen. Moved out of
+   04-features/checkin.css in Module 3, when the second and third callers
+   appeared.
+
+   THE TARGET SIZE IS 72px, NOT 48px
+     This is the only control in the product with its own touch minimum. A
+     person reaching for a crisis number may have a tremor, may be crying,
+     may be breathing badly, and is almost certainly not looking carefully.
+     48px is the WCAG floor for someone in ordinary conditions. These are not
+     ordinary conditions. Design Language §5.6; Clinical Framework §6.2.
+   ========================================================================== */
+
+.crisis-list { width: 100%; }
+
+.crisis-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--touch-crisis);      /* 72px */
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: background-color var(--duration-base) var(--ease-standard);
+}
+.crisis-line:hover { background: var(--color-card-sunken); }
+
+.crisis-line__body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+
+.crisis-line__name {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+}
+
+/* Tabular figures so the numbers align down the column and read as numbers
+   rather than as words. */
+.crisis-line__number {
+  font-family: var(--font-numeric);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-title-size);
+  font-weight: 700;
+  color: var(--color-danger);
+  letter-spacing: 0.02em;
+}
+
+.crisis-line__note {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-lh);
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.crisis-line__icon { color: var(--color-danger); }

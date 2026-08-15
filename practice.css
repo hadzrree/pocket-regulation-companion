@@ -1,0 +1,136 @@
+/* ==========================================================================
+   04-FEATURES / PRACTICE
+   Purpose : The three full-screen distress routes — Calm Mode, Grounding,
+             and the help screen.
+   Depends : 01-tokens/*, 03-components/breathing-circle.css
+   Pairs with : features/panic/calm.view.js, features/ground/ground.view.js,
+                features/crisis/crisis.view.js
+
+   THE LAYOUT RULE FOR THESE SCREENS
+     One thing in the middle, the way out at the bottom, nothing else. The
+     navigation bar is hidden by the router (navTab: null), so the whole
+     viewport belongs to this screen.
+
+     The stage is centred vertically and the foot is pinned to the thumb zone,
+     so the exit is in the same place on every one of these screens and does
+     not move when the content above it changes height. A control that moves
+     is a control that has to be found again, and finding things is expensive
+     in the states these screens exist for.
+   ========================================================================== */
+
+.practice {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-8) var(--screen-padding-x)
+           calc(var(--space-8) + var(--safe-bottom));
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+/* The middle. Takes all remaining height and centres its contents, so the
+   circle sits in the optical centre of the screen rather than the top. */
+.practice__stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+
+/* The bottom. Never moves, on any of the three screens. */
+.practice__foot {
+  flex: none;
+  padding-block-start: var(--space-8);
+}
+
+/* Calm Mode gets the calm gradient. Not decoration — it separates this screen
+   from every other screen in the app at a glance, which matters when someone
+   opens it in a hurry and needs to know instantly that they are in the right
+   place. */
+.practice--calm { background: var(--gradient-calm); }
+
+/* ---- The quiet route to a phone number -----------------------------------
+   Present on Calm Mode, where the navigation bar is hidden. A text link
+   rather than a button: findable, but not implying that the app has decided
+   this is an emergency. Full 48px height despite looking like text. */
+.calm__help {
+  display: block;
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.calm__help:hover { color: var(--color-danger); }
+
+/* ---- Grounding ---------------------------------------------------------- */
+.practice__glyph { color: var(--color-secondary); opacity: 0.75; }
+
+.practice__prompt {
+  max-width: 22ch;
+  text-wrap: balance;
+  color: var(--color-text-primary);
+}
+
+/* Five dots, not a percentage bar. A bar implies a quantity being filled and
+   a point at which it is not yet full. Dots simply say which prompt this is.
+   Design Language §14.3. */
+.steps { display: flex; gap: var(--space-2); justify-content: center; }
+
+.steps__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--color-border-strong);
+  transition: background-color var(--duration-slow) var(--ease-standard),
+              transform var(--duration-slow) var(--ease-spring);
+}
+.steps__dot.is-done { background: var(--color-secondary); transform: scale(1.25); }
+
+[data-motion='reduced'] .steps__dot,
+[data-motion='reduced'] .steps__dot.is-done { transform: none; }
+
+/* ---- The closing line ----------------------------------------------------
+   Shown after any practice, however short. It never contains a duration, a
+   count, or a comparison — "You did some" is the whole message, because the
+   alternative is a number that some sessions fail to reach. */
+.practice__after {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  text-align: center;
+  animation: practice-settle var(--duration-slower) var(--ease-out-soft) both;
+}
+
+.practice__after-text { max-width: 24ch; text-wrap: balance; }
+
+@keyframes practice-settle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+[data-motion='reduced'] .practice__after { animation: none; }
+
+/* ---- The help screen -----------------------------------------------------
+   Not a .practice — it scrolls, because five numbers with their hours and
+   notes do not fit one viewport at large text sizes. Everything else about
+   it follows the same rules. */
+.crisis-screen {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--space-8) + var(--safe-bottom));
+}
+.crisis-screen__foot { padding-block-start: var(--space-6); }

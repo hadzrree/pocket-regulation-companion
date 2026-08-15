@@ -21,7 +21,7 @@
 
 /* Bump this string on EVERY release. It is what triggers the update and the
    cleanup of the previous cache. */
-const CACHE = 'prc-v1.1.0-module2';
+const CACHE = 'prc-v1.2.0-module3';
 
 /* The app shell. Every path relative — see the header note. */
 const SHELL = [
@@ -48,12 +48,15 @@ const SHELL = [
   './styles/03-components/mood-selector.css',
   './styles/03-components/toast.css',
   './styles/03-components/empty-state.css',
+  './styles/03-components/crisis-list.css',
+  './styles/03-components/breathing-circle.css',
   './styles/03-components/nav-bar.css',
   './styles/04-features/transitions.css',
   './styles/04-features/settings.css',
   './styles/04-features/today.css',
   './styles/04-features/checkin.css',
   './styles/04-features/feelings.css',
+  './styles/04-features/practice.css',
   './styles/05-utilities/layout.css',
   './styles/05-utilities/text.css',
 
@@ -83,11 +86,14 @@ const SHELL = [
   './core/components/NavBar.js',
   './core/components/Toast.js',
   './core/components/EmptyState.js',
+  './core/components/CrisisList.js',
+  './core/components/BreathingCircle.js',
 
   './core/storage/db.js',
   './core/storage/migrations.js',
   './core/storage/repositories/mood.repo.js',
   './core/storage/repositories/growth.repo.js',
+  './core/storage/repositories/session.repo.js',
 
   './core/safety/crisis-resources.js',
 
@@ -97,6 +103,9 @@ const SHELL = [
   './features/feelings/feelings.view.js',
   './features/garden/garden.view.js',
   './features/me/me.view.js',
+  './features/panic/calm.view.js',
+  './features/ground/ground.view.js',
+  './features/crisis/crisis.view.js',
 
   './assets/fonts/nunito-latin.woff2',
   './assets/fonts/inter-latin.woff2',

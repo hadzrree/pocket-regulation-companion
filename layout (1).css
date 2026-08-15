@@ -1,0 +1,28 @@
+/* ==========================================================================
+   05-UTILITIES / LAYOUT
+   Purpose : Single-purpose layout helpers. Each does one thing.
+   Depends : 01-tokens/spacing.css
+   Rule    : A utility never has more than one declaration group. If it needs
+             two, it is a component.
+   ========================================================================== */
+
+.u-stack     { display: flex; flex-direction: column; gap: var(--stack-gap); }
+.u-stack-sm  { display: flex; flex-direction: column; gap: var(--space-2); }
+.u-stack-lg  { display: flex; flex-direction: column; gap: var(--space-8); }
+
+.u-row       { display: flex; align-items: center; gap: var(--space-3); }
+.u-spread    { display: flex; align-items: center; justify-content: space-between;
+               gap: var(--space-4); }
+.u-center    { display: grid; place-items: center; }
+
+.u-screen    { padding-inline: var(--screen-padding-x); }
+.u-screen-y  { padding-block: var(--screen-padding-y); }
+
+.u-grow      { flex: 1; }
+.u-full      { width: 100%; }
+
+/* Pushes the following element to the bottom of a flex column — used to keep
+   the primary action in the thumb zone regardless of content height. */
+.u-push      { margin-top: auto; }
+
+.u-hidden    { display: none !important; }

@@ -1,0 +1,94 @@
+/* ==========================================================================
+   03-COMPONENTS / TOAST
+   Purpose : A brief message that appears, is read, and leaves by itself.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Toast.js
+
+   POSITION
+     Above the navigation bar, not over it, and never over the crisis control.
+     It fades and rises 8px — it does not slide in from an edge. Sliding
+     implies something arriving from elsewhere; this is the app quietly
+     confirming something the user just did.
+   ========================================================================== */
+
+.toast-host {
+  position: fixed;
+  inset-inline: 0;
+  /* Clears the nav bar (68px) plus the device safe area plus a comfortable
+     gap, so a toast never sits on top of a tab the user is about to press. */
+  bottom: calc(var(--nav-height) + var(--safe-bottom) + var(--space-4));
+  z-index: var(--z-toast);
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--space-4);
+  pointer-events: none;   /* the empty host must never block a tap */
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--content-max);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--duration-slow) var(--ease-out-soft),
+              transform var(--duration-slow) var(--ease-out-soft);
+}
+
+.toast.is-visible { opacity: 1; transform: translateY(0); }
+
+.toast__text {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-lh);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.toast__icon { color: var(--color-primary); }
+
+.toast__action {
+  flex: none;
+  min-height: var(--touch-min);
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-tint);
+}
+
+.toast__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  /* 44px rather than the usual 48px minimum: this control is the least
+     important thing on screen, it sits beside larger targets, and the toast
+     also dismisses itself. WCAG 2.2 AA is met at 24px for a control with
+     adequate spacing; 44px is comfortably above that. */
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-circle);
+  color: var(--color-text-tertiary);
+}
+.toast__close:hover { background: var(--color-card-sunken); color: var(--color-text-primary); }
+
+/* ---- Tone --------------------------------------------------------------- */
+.toast--care { background: var(--color-accent-tint); border-color: var(--color-accent-soft); }
+.toast--care .toast__icon { color: var(--color-accent); }
+.toast--info .toast__icon { color: var(--color-info); }
+
+/* ---- Reduced motion ------------------------------------------------------ */
+[data-motion='reduced'] .toast { transform: none; transition: opacity var(--duration-base) linear; }
+[data-motion='reduced'] .toast.is-visible { transform: none; }

@@ -1,0 +1,38 @@
+/* ==========================================================================
+   02-BASE / RESET
+   Purpose : A small, opinionated reset. Not Normalize — we only remove what
+             actively fights the design system.
+   Depends : 01-tokens/*
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;      /* respect OS text size, don't inflate */
+  -webkit-tap-highlight-color: transparent;  /* we draw our own press state */
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd { margin: 0; }
+
+ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+
+img, picture, svg, video { max-width: 100%; display: block; }
+
+input, button, textarea, select { font: inherit; color: inherit; }
+
+/* Inputs and textareas must never be resized by the user in a way that breaks
+   the single-column layout on a phone. */
+textarea { resize: vertical; }
+
+/* Remove the default button chrome. Every button in this app is styled. */
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Prevent iOS zooming on focus by never letting an input fall below 16px. */
+input, textarea { font-size: max(16px, var(--text-body-size)); }

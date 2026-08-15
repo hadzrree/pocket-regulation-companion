@@ -1,0 +1,65 @@
+/* ==========================================================================
+   01-TOKENS / TYPOGRAPHY
+   Purpose : The type scale. Every size derives from --font-scale so the in-app
+             text-size control and the OS setting both work without touching
+             a single component.
+   Source  : Design Language v1.0 §2.
+   Depends : nothing (cascade order only).
+   ========================================================================== */
+
+:root {
+  /* Nunito — the app's voice. Rounded terminals read as kind, not clinical.
+     Inter  — numerals, chart labels, captions. Tabular figures stop progress
+              counters jittering as they animate.
+     Both are SELF-HOSTED (see 02-base/fonts.css). The system stack below is a
+     real fallback, not a formality: the app must look correct before fonts
+     load, and correct forever if a font file is missing. */
+  --font-primary:   'Nunito', ui-rounded, 'SF Pro Rounded', system-ui,
+                    -apple-system, 'Segoe UI', sans-serif;
+  --font-secondary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-numeric:   'Inter', ui-monospace, system-ui, sans-serif;
+
+  /* Set by [data-textsize] in 02-base/a11y.css. Default 1. */
+  --font-scale: 1;
+
+  --text-display-size:   calc(40px * var(--font-scale));
+  --text-display-lh:     1.10;  --text-display-weight:  800;  --text-display-ls:  -0.02em;
+
+  --text-h1-size:        calc(32px * var(--font-scale));
+  --text-h1-lh:          1.19;  --text-h1-weight:       800;  --text-h1-ls:       -0.015em;
+
+  --text-h2-size:        calc(26px * var(--font-scale));
+  --text-h2-lh:          1.23;  --text-h2-weight:       700;  --text-h2-ls:       -0.01em;
+
+  --text-h3-size:        calc(22px * var(--font-scale));
+  --text-h3-lh:          1.27;  --text-h3-weight:       700;  --text-h3-ls:       -0.005em;
+
+  --text-title-size:     calc(19px * var(--font-scale));
+  --text-title-lh:       1.37;  --text-title-weight:    700;  --text-title-ls:    0;
+
+  --text-subtitle-size:  calc(17px * var(--font-scale));
+  --text-subtitle-lh:    1.41;  --text-subtitle-weight: 500;  --text-subtitle-ls: 0;
+
+  /* Body line-height is 1.63, not 1.5. Brain fog needs air between lines. */
+  --text-body-size:      calc(16px * var(--font-scale));
+  --text-body-lh:        1.63;  --text-body-weight:     400;  --text-body-ls:     0;
+
+  --text-body-sm-size:   calc(15px * var(--font-scale));
+  --text-body-sm-lh:     1.60;  --text-body-sm-weight:  400;  --text-body-sm-ls:  0;
+
+  --text-caption-size:   calc(13px * var(--font-scale));
+  --text-caption-lh:     1.38;  --text-caption-weight:  500;  --text-caption-ls:  0.01em;
+
+  --text-button-size:    calc(16px * var(--font-scale));
+  --text-button-lh:      1.25;  --text-button-weight:   700;  --text-button-ls:   0.01em;
+
+  --text-label-size:     calc(12px * var(--font-scale));
+  --text-label-lh:       1.33;  --text-label-weight:    600;  --text-label-ls:    0.06em;
+
+  /* Reading measure. Bahasa Malaysia runs ~15% longer than English. */
+  --measure-en: 68ch;
+  --measure-bm: 60ch;
+}
+
+:lang(ms) { --measure: var(--measure-bm); hyphens: auto; }
+:lang(en) { --measure: var(--measure-en); }

@@ -1,0 +1,52 @@
+/* ==========================================================================
+   01-TOKENS / LAYOUT
+   Purpose : Sizing, touch targets, safe areas, and the z-index scale.
+   Source  : Design Language v1.0 §§5-6; Clinical Framework §14.
+   ========================================================================== */
+
+:root {
+  /* Touch targets. 48px is the WCAG 2.2 floor; distress flows use 56px because
+     a person with a tremor cannot reliably hit 48. */
+  --touch-min:     48px;
+  --touch-comfort: 56px;
+  --touch-crisis:  72px;   /* emergency button — must be hittable in panic */
+
+  --button-height-sm: 40px;
+  --button-height-md: 48px;
+  --button-height-lg: 56px;
+  --button-height-xl: 64px;   /* the ONE primary action on a screen */
+
+  --icon-16: 16px;  --icon-20: 20px;  --icon-24: 24px;   /* 24 is the default */
+  --icon-28: 28px;  --icon-32: 32px;  --icon-40: 40px;
+  --icon-stroke:      1.75;   /* Lucide ships at 2 — we soften it deliberately */
+  --icon-stroke-bold: 2.25;   /* selected nav tab only */
+
+  --nav-height:  68px;
+  --fab-size:    56px;
+  --content-max: 480px;   /* phone-first; centred on tablet and desktop */
+
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+
+  /* Every primary action lives inside this band, for one-handed use. */
+  --thumb-zone-bottom: 220px;
+
+  /* z-index scale. The FAB sits ABOVE the nav and nothing may be placed above
+     it except the emergency layer — a modal must never block crisis access. */
+  --z-base:      0;
+  --z-card:     10;
+  --z-nav:     100;
+  --z-fab:     110;
+  --z-sheet:   200;
+  --z-dialog:  300;
+  --z-emergency: 400;
+  --z-toast:   500;
+
+  /* Instance-level. Each progress ring sets its own two values inline; the
+     keyframe reads them. Declared here so there is always a defined fallback.
+       circumference = 2 * PI * r      offset = circumference * (1 - progress) */
+  --ring-circumference: 0;
+  --ring-offset: 0;
+}

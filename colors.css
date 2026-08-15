@@ -1,0 +1,205 @@
+/* ==========================================================================
+   01-TOKENS / COLORS
+   Purpose : Every colour in the application, as CSS custom properties.
+   Source  : Warm Dawn Design Language v1.0 §1. Values are contrast-verified —
+             do not change one without re-running the verification.
+   Depends : nothing. This is the first file in the cascade.
+   Naming  : --color-{role}        text/icon/fill. ALWAYS accessible (>=4.5:1)
+             --color-{role}-soft   tinted background behind that role
+             --color-{role}-bright DECORATIVE ONLY. Never text. Never the sole
+                                   carrier of meaning.
+   ========================================================================== */
+
+:root {
+  /* ---- Surfaces ---------------------------------------------------------- */
+  --color-bg:               #FBF7F2;  /* Morning Light — warm ivory, never pure white */
+  --color-surface:          #FFFDFA;  /* Raised sheets, nav bars */
+  --color-card:             #FFFFFF;  /* Cards float above the warm page */
+  --color-card-sunken:      #F5EFE8;  /* Inset wells, inputs, progress tracks */
+  --color-overlay:          rgba(43, 39, 36, 0.34);   /* Warm scrim, never black */
+  --color-overlay-blur:     rgba(251, 247, 242, 0.72);
+
+  /* ---- Borders ----------------------------------------------------------- */
+  --color-border:           #E9DFD4;  /* Hairline separators (decorative) */
+  --color-border-strong:    #D8CABB;  /* Card outlines, dividers (decorative) */
+  --color-border-control:   #998E84;  /* Interactive borders — meets 3:1 */
+
+  /* ---- Text -------------------------------------------------------------- */
+  --color-text-primary:     #2B2724;  /* Warm ink, softer than black. 14.8:1 on card */
+  --color-text-secondary:   #6B625A;  /* 6.0:1 on card */
+  --color-text-tertiary:    #8C837A;  /* 3.7:1 — meta only, never sentences */
+  --color-text-on-color:    #FFFFFF;
+  --color-text-inverse:     #FBF7F2;
+
+  /* ---- Disabled ---------------------------------------------------------- */
+  --color-disabled-text:    #8F8378;
+  --color-disabled-surface: #EFE9E2;
+  --color-disabled-border:  #E0D8CF;
+
+  /* ---- Primary · Sage (calm, growth, the app's voice) --------------------- */
+  --color-primary:          #3B7563;
+  --color-primary-hover:    #2F6252;
+  --color-primary-pressed:  #275547;
+  --color-primary-bright:   #6BAF95;   /* decorative only */
+  --color-primary-soft:     #E3EFE9;
+  --color-primary-tint:     #F1F8F4;
+
+  /* ---- Secondary · Dusk Sky (rest, night, breathing) ---------------------- */
+  --color-secondary:        #4F639B;
+  --color-secondary-hover:  #425384;
+  --color-secondary-bright: #93A6D6;   /* decorative only */
+  --color-secondary-soft:   #E6EAF5;
+  --color-secondary-tint:   #F3F5FB;
+
+  /* ---- Accent · Terracotta (warmth, encouragement) ------------------------ */
+  --color-accent:           #9E592C;
+  --color-accent-hover:     #874B25;
+  --color-accent-bright:    #EBA063;   /* decorative only */
+  --color-accent-soft:      #FBEADD;
+  --color-accent-tint:      #FEF6EF;
+
+  /* ---- Semantic ---------------------------------------------------------- */
+  --color-success:          #3A764F;
+  --color-success-bright:   #6FB88A;
+  --color-success-soft:     #E4F0E7;
+
+  --color-warning:          #916517;
+  --color-warning-bright:   #E0A63E;
+  --color-warning-soft:     #FBEFD9;
+
+  --color-danger:           #A45145;   /* Clay. NEVER fire-engine red. */
+  --color-danger-bright:    #D98979;
+  --color-danger-soft:      #F8E7E2;
+
+  --color-info:             #3D6F8E;
+  --color-info-bright:      #7FB0CC;
+  --color-info-soft:        #E3EEF4;
+
+  /* ---- Mood scale (5 steps, warm -> cool, never red) ---------------------- */
+  --color-mood-5:           #C88618;   /* Very Happy — Sunlight */
+  --color-mood-5-soft:      #FBE0A8;
+  --color-mood-5-ink:       #885B10;
+  --color-mood-4:           #4E8F72;   /* Good — New Leaf */
+  --color-mood-4-soft:      #D6EADD;
+  --color-mood-4-ink:       #427056;
+  --color-mood-3:           #A4927B;   /* Neutral — Warm Sand */
+  --color-mood-3-soft:      #EDE4D7;
+  --color-mood-3-ink:       #736450;
+  --color-mood-2:           #6C8BB8;   /* Low — Quiet Sky */
+  --color-mood-2-soft:      #DCE5F2;
+  --color-mood-2-ink:       #486795;
+  --color-mood-1:           #7E7391;   /* Very Low — Soft Dusk */
+  --color-mood-1-soft:      #E5E0EC;
+  --color-mood-1-ink:       #6A607B;
+
+  /* ---- Garden / reward palette (decorative) ------------------------------- */
+  --color-garden-soil:      #C7A98B;
+  --color-garden-stem:      #5E9E7A;
+  --color-garden-leaf:      #7FC4A0;
+  --color-garden-bloom:     #EBA063;
+  --color-garden-bloom-alt: #E4A6C0;
+  --color-garden-firefly:   #F5D77E;
+  --color-garden-sky-dawn:  #FCEBD8;
+  --color-garden-sky-day:   #E4EFF6;
+  --color-garden-sky-dusk:  #E7DDEC;
+
+  /* ---- Gradients (2 stops max, low chroma travel, 150-160deg) ------------- */
+  --gradient-calm:      linear-gradient(160deg, #E3EFE9 0%, #F1F8F4 100%);
+  --gradient-dawn:      linear-gradient(160deg, #FCEBD8 0%, #FDF6EE 100%);
+  --gradient-dusk:      linear-gradient(160deg, #E6EAF5 0%, #F3F1F8 100%);
+  --gradient-primary:   linear-gradient(150deg, #4E8F79 0%, #3B7563 100%);
+  --gradient-breath:    linear-gradient(150deg, #7FC4A0 0%, #93A6D6 100%);
+  --gradient-celebrate: linear-gradient(150deg, #F5D77E 0%, #EBA063 100%);
+}
+
+/* ==========================================================================
+   NIGHT THEME
+   Not a style preference — a clinical accommodation for 3am use.
+   Warm charcoal, never pure black (halation makes text vibrate for tired eyes).
+   Warm off-white text, never #FFF.
+   Applied via <html data-theme="dark">, set by core/a11y/prefs.js.
+   ========================================================================== */
+
+[data-theme="dark"] {
+  --color-bg:               #16151A;
+  --color-surface:          #1D1C22;
+  --color-card:             #23222A;
+  --color-card-sunken:      #1A191F;
+  --color-overlay:          rgba(8, 7, 10, 0.58);
+  --color-overlay-blur:     rgba(22, 21, 26, 0.72);
+
+  --color-border:           #33313B;
+  --color-border-strong:    #454351;
+  --color-border-control:   #6F6C82;
+
+  --color-text-primary:     #F2EDE7;
+  --color-text-secondary:   #B4ABA2;
+  --color-text-tertiary:    #8F8880;
+  --color-text-on-color:    #16151A;
+  --color-text-inverse:     #23222A;
+
+  --color-disabled-text:    #847D89;
+  --color-disabled-surface: #2C2A33;
+  --color-disabled-border:  #3A3844;
+
+  --color-primary:          #7FC4AB;
+  --color-primary-hover:    #95D2BB;
+  --color-primary-pressed:  #6BB299;
+  --color-primary-bright:   #7FC4AB;
+  --color-primary-soft:     #22332E;
+  --color-primary-tint:     #1C2823;
+
+  --color-secondary:        #9BAEE0;
+  --color-secondary-hover:  #AEBEE9;
+  --color-secondary-bright: #9BAEE0;
+  --color-secondary-soft:   #252A3A;
+  --color-secondary-tint:   #1E212C;
+
+  --color-accent:           #E9A277;
+  --color-accent-hover:     #F0B28C;
+  --color-accent-bright:    #E9A277;
+  --color-accent-soft:      #33261D;
+  --color-accent-tint:      #281E17;
+
+  --color-success:          #82C395;
+  --color-success-bright:   #82C395;
+  --color-success-soft:     #203025;
+
+  --color-warning:          #E0B25E;
+  --color-warning-bright:   #E0B25E;
+  --color-warning-soft:     #332A19;
+
+  --color-danger:           #E39485;
+  --color-danger-bright:    #E39485;
+  --color-danger-soft:      #33221F;
+
+  --color-info:             #8FBBD6;
+  --color-info-bright:      #8FBBD6;
+  --color-info-soft:        #1E2B33;
+
+  --color-mood-5: #F2C169;  --color-mood-5-soft: #3A2E17;  --color-mood-5-ink: #F2C169;
+  --color-mood-4: #7CBF9B;  --color-mood-4-soft: #1F3028;  --color-mood-4-ink: #7CBF9B;
+  --color-mood-3: #C9B79E;  --color-mood-3-soft: #302A22;  --color-mood-3-ink: #C9B79E;
+  --color-mood-2: #93AFD8;  --color-mood-2-soft: #1F2733;  --color-mood-2-ink: #93AFD8;
+  --color-mood-1: #A296B6;  --color-mood-1-soft: #2A2533;  --color-mood-1-ink: #A296B6;
+
+  --color-garden-soil:      #6B5946;
+  --color-garden-sky-dawn:  #2E2620;
+  --color-garden-sky-day:   #1F2A31;
+  --color-garden-sky-dusk:  #262130;
+
+  --gradient-calm:      linear-gradient(160deg, #22332E 0%, #1C2823 100%);
+  --gradient-dawn:      linear-gradient(160deg, #33261D 0%, #241C17 100%);
+  --gradient-dusk:      linear-gradient(160deg, #252A3A 0%, #1E212C 100%);
+  --gradient-primary:   linear-gradient(150deg, #7FC4AB 0%, #63A98F 100%);
+  --gradient-breath:    linear-gradient(150deg, #7FC4A0 0%, #93A6D6 100%);
+  --gradient-celebrate: linear-gradient(150deg, #F2C169 0%, #E9A277 100%);
+
+  color-scheme: dark;
+}
+
+/* Follow the OS unless the user has explicitly chosen. prefers-color-scheme is
+   read HERE and nowhere else in the codebase — one source of truth. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+}

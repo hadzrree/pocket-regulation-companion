@@ -1,0 +1,43 @@
+/* ==========================================================================
+   01-TOKENS / SHADOWS
+   Purpose : Soft elevation. Every shadow is tinted warm brown-grey —
+             rgba(90,70,55,a) — never black. Black shadows on a warm background
+             read as dirt. Blur is always >=4x the Y-offset so edges dissolve
+             rather than cut.
+   Source  : Design Language v1.0 §7.
+   Depends : colors.css only for the dark-theme override selector.
+   ========================================================================== */
+
+:root {
+  --shadow-xs:        0 1px 2px rgba(90, 70, 55, 0.04);
+  --shadow-sm:        0 2px 6px rgba(90, 70, 55, 0.05),
+                      0 1px 2px rgba(90, 70, 55, 0.04);
+  --shadow-md:        0 6px 16px rgba(90, 70, 55, 0.07),
+                      0 2px 5px rgba(90, 70, 55, 0.04);
+  --shadow-lg:        0 14px 32px rgba(90, 70, 55, 0.09),
+                      0 4px 10px rgba(90, 70, 55, 0.05);
+  --shadow-floating:  0 12px 28px rgba(59, 117, 99, 0.22),
+                      0 4px 10px rgba(90, 70, 55, 0.08);
+  --shadow-glass:     0 8px 32px rgba(90, 70, 55, 0.10),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.60);
+  --shadow-pressed:   0 1px 3px rgba(90, 70, 55, 0.06);
+  --shadow-focus:     0 0 0 3px rgba(59, 117, 99, 0.28);
+  --shadow-glow-warm: 0 0 24px rgba(235, 160, 99, 0.35);
+
+  --blur-glass: saturate(160%) blur(20px);
+}
+
+/* Shadows barely read on dark. Elevation is carried by surface lightness plus
+   a 1px inset highlight. Never raise opacity to compensate — it looks muddy. */
+[data-theme="dark"] {
+  --shadow-xs:        0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-sm:        0 2px 6px rgba(0, 0, 0, 0.34);
+  --shadow-md:        0 6px 16px rgba(0, 0, 0, 0.40);
+  --shadow-lg:        0 14px 32px rgba(0, 0, 0, 0.48);
+  --shadow-floating:  0 12px 28px rgba(0, 0, 0, 0.52);
+  --shadow-glass:     0 8px 32px rgba(0, 0, 0, 0.44),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-pressed:   0 1px 3px rgba(0, 0, 0, 0.30);
+  --shadow-focus:     0 0 0 3px rgba(127, 196, 171, 0.40);
+  --shadow-glow-warm: 0 0 24px rgba(233, 162, 119, 0.28);
+}

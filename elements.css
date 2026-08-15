@@ -1,0 +1,58 @@
+/* ==========================================================================
+   02-BASE / ELEMENTS
+   Purpose : Bare element defaults. Everything here is unclassed HTML.
+   Depends : 01-tokens/*
+   ========================================================================== */
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-lh);
+  font-weight: var(--text-body-weight);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* Stop the whole page rubber-banding on iOS — it makes a fixed nav bar
+     detach visibly, which reads as the app breaking. */
+  overscroll-behavior-y: none;
+
+  /* The app is a single full-height column with a fixed nav at the bottom. */
+  min-height: 100dvh;
+  padding-bottom: var(--safe-bottom);
+
+  transition: background-color var(--duration-slow) var(--ease-standard),
+              color var(--duration-slow) var(--ease-standard);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-primary);
+  text-wrap: balance;              /* avoids a single orphaned word in a title */
+}
+
+h1 { font-size: var(--text-h1-size);    line-height: var(--text-h1-lh);
+     font-weight: var(--text-h1-weight); letter-spacing: var(--text-h1-ls); }
+h2 { font-size: var(--text-h2-size);    line-height: var(--text-h2-lh);
+     font-weight: var(--text-h2-weight); letter-spacing: var(--text-h2-ls); }
+h3 { font-size: var(--text-h3-size);    line-height: var(--text-h3-lh);
+     font-weight: var(--text-h3-weight); letter-spacing: var(--text-h3-ls); }
+h4 { font-size: var(--text-title-size); line-height: var(--text-title-lh);
+     font-weight: var(--text-title-weight); }
+
+p  { max-width: var(--measure, 68ch); text-wrap: pretty; }
+
+a  { color: var(--color-primary); text-underline-offset: 3px; }
+
+/* The router mounts every view into #main. */
+#main {
+  display: block;
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + var(--space-4));
+}
+
+/* Centre the phone-shaped app on wide screens. Desktop is not a separate
+   design — it is the same column, centred. Design Language §3.5. */
+#appbar, #main, #nav > * {
+  max-width: var(--content-max);
+  margin-inline: auto;
+}

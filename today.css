@@ -1,0 +1,23 @@
+/* ==========================================================================
+   04-FEATURES / TODAY
+   Purpose : Layout for the Today screen's four zones.
+   Depends : 01-tokens/*, 05-utilities/layout.css
+   Pairs with : features/today/today.view.js
+   ========================================================================== */
+
+.today {
+  /* Room for the nav bar plus the safe area, so the last element on the
+     screen is never sitting under a tab. */
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.today__checkin { width: 100%; }
+
+/* ---- Zone 4 · the offer --------------------------------------------------
+   The ONE primary action on the screen, at 64px, inside the thumb zone. Its
+   label follows the check-in — see the reasoning in today.view.js. There is
+   no second button here and there never will be. */
+.today__offer { display: flex; }
+.today__offer .btn { box-shadow: var(--shadow-floating); }

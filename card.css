@@ -1,0 +1,90 @@
+/* ==========================================================================
+   03-COMPONENTS / CARD
+   Purpose : The container that holds almost everything on a screen.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Card.js
+
+   RULES (Design Language §6)
+     - 24px radius. 24px internal padding on every side.
+     - Warm-tinted shadow, never black.
+     - A toned card carries a 3px left edge AND a word or icon. Colour is
+       never the only signal.
+     - An interactive card lifts 1.5% on hover and presses 2.8% down on tap.
+   ========================================================================== */
+
+.card {
+  display: block;
+  width: 100%;
+  padding: var(--space-6);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  text-align: start;
+  border: 1px solid transparent;
+}
+
+/* ---- Elevation ---------------------------------------------------------- */
+.card--raised { box-shadow: var(--shadow-md); }
+.card--flat   { box-shadow: none; border-color: var(--color-border); }
+.card--sunken {
+  background: var(--color-card-sunken);
+  box-shadow: none;
+  border-color: transparent;
+}
+
+/* ---- Tone ----------------------------------------------------------------
+   The left edge is 3px, not a full border, so the card still reads as calm.
+   Every toned card in the app also carries an icon or a word — see Card.js. */
+.card--calm { background: var(--color-primary-tint);   border-inline-start: 3px solid var(--color-primary); }
+.card--warm { background: var(--color-accent-tint);    border-inline-start: 3px solid var(--color-accent); }
+.card--dusk { background: var(--color-secondary-tint); border-inline-start: 3px solid var(--color-secondary); }
+
+/* "care" is the tone used when the app is offering support after a heavy
+   check-in. Clay, never red — see Design Language §1.6. */
+.card--care { background: var(--color-danger-soft);    border-inline-start: 3px solid var(--color-danger); }
+
+/* ---- Head, body, actions ------------------------------------------------ */
+.card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+.card__icon  { color: var(--color-primary); }
+.card--warm .card__icon { color: var(--color-accent); }
+.card--dusk .card__icon { color: var(--color-secondary); }
+.card--care .card__icon { color: var(--color-danger); }
+
+.card__title { margin: 0; }
+
+.card__body { color: var(--color-text-primary); }
+.card__body p { max-width: var(--measure); }
+
+.card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block-start: var(--space-5);
+}
+/* Two actions share the row equally. Neither is visually favoured — the
+   decline option must never look like the lesser choice. */
+.card__actions > * { flex: 1 1 auto; min-width: 0; }
+
+/* ---- Interactive -------------------------------------------------------- */
+.card--interactive {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform var(--duration-base) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard);
+}
+.card--interactive:hover  { transform: scale(var(--lift-scale)); box-shadow: var(--shadow-lg); }
+.card--interactive:active { transform: scale(var(--press-scale)); box-shadow: var(--shadow-pressed); }
+
+[data-motion='reduced'] .card--interactive,
+[data-motion='reduced'] .card--interactive:hover,
+[data-motion='reduced'] .card--interactive:active { transform: none; }
+
+/* High contrast gives every card a real outline, because a shadow alone is
+   not a reliable boundary for a low-vision user. */
+[data-contrast='high'] .card { border-color: var(--color-border-control); }

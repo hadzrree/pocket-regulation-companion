@@ -1,0 +1,94 @@
+/* ==========================================================================
+   03-COMPONENTS / BREATHING-CIRCLE
+   Purpose : The paced breathing circle.
+   Depends : 01-tokens/*
+   Pairs with : core/components/BreathingCircle.js
+
+   NOTE ON HOW THIS IS ANIMATED
+     There are no @keyframes here. The pace changes every cycle as the rhythm
+     lengthens from 5.5s to 12s, so the durations are set from JavaScript
+     through the Web Animations API. This file provides only the resting
+     appearance and the layout.
+
+     Everything animated is transform and opacity — the two properties a
+     browser can composite without touching layout or paint. A stutter in
+     this circle is not cosmetic: it breaks the rhythm the user is following.
+   ========================================================================== */
+
+.breath {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+/* A fixed square stage so the layout never reflows as the circle grows.
+   Sizing the stage to the LARGEST state means nothing around it moves. */
+.breath__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(72vw, 280px);
+  aspect-ratio: 1 / 1;
+}
+
+.breath__disc {
+  width: 100%;
+  height: 100%;
+  /* The circle grows from its own centre, not its top-left corner. */
+  transform-origin: 50% 50%;
+  transform: scale(0.56);   /* the resting, smallest state */
+  opacity: 0.42;
+  will-change: transform, opacity;
+}
+
+/* The outer ring — a soft edge so the shape has no hard boundary to snap to. */
+.breath__halo {
+  fill: none;
+  stroke: var(--color-primary-bright);
+  stroke-width: 1.5;
+  opacity: 0.45;
+}
+
+/* The body of the circle. A two-stop gradient in the calm palette. */
+.breath__fill {
+  fill: var(--color-primary-soft);
+  stroke: var(--color-primary);
+  stroke-width: 2;
+}
+
+/* The word sits at the centre of the stage, NOT inside the circle — so it
+   does not scale with it. Text that grows and shrinks is hard to read and
+   pulls the eye, and the eye should be resting on the shape. */
+.breath__word {
+  position: absolute;
+  font-family: var(--font-primary);
+  font-size: var(--text-h3-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  /* Never intercepts a tap — the whole screen is a large stop target. */
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+/* ---- Reduced movement ----------------------------------------------------
+   The circle holds ONE size. A large shape growing and shrinking in the
+   centre of the visual field is exactly the pattern that triggers vestibular
+   symptoms.
+
+   The pacing is not removed — that would leave the screen useless for the
+   people who asked for the accommodation. The JavaScript switches to easing
+   the fill opacity instead, which has no travel and no scale change for the
+   vestibular system to track. The word and the haptic pulse carry the rhythm
+   as well. Clinical Framework §14.4. */
+[data-motion='reduced'] .breath__disc {
+  transform: scale(0.86);
+  will-change: opacity;
+}
+
+/* ---- High contrast ------------------------------------------------------- */
+[data-contrast='high'] .breath__fill { stroke-width: 3; }
+[data-contrast='high'] .breath__halo { opacity: 0.8; stroke-width: 2; }

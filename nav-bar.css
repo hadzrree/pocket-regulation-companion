@@ -1,0 +1,98 @@
+/* ==========================================================================
+   03-COMPONENTS / NAV-BAR
+   Purpose : The five-tab bottom navigation.
+   Depends : 01-tokens/*
+   Pairs with : app/main.js buildNav() in Module 1; core/components/NavBar.js
+                in Module 2 (which adds Lucide icons and the floating puck).
+
+   RULES (Design Language §15, Clinical Framework §14)
+     - Five tabs, never six.
+     - Icon AND word. Icon-only navigation forces recall, and recall is
+       expensive when concentration is gone.
+     - 48px minimum target, 8px minimum gap.
+     - Labels never truncate.
+     - The bar HIDES COMPLETELY in Calm Mode and Emergency Mode: in those
+       moments there is one thing to do, so there is one thing on screen.
+   ========================================================================== */
+
+#nav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-nav);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding-bottom: var(--safe-bottom);
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+/* Fade out, never slide. Sliding implies distance and urgency. */
+#nav[hidden] { display: none; }
+
+.navbar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: var(--space-2);
+  min-height: var(--nav-height);
+  padding: var(--space-2) var(--space-2) var(--space-3);
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.navbar__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: var(--touch-min);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--space-2) var(--space-1);
+  border-radius: var(--radius-md);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-secondary);
+  font-size: calc(10.5px * var(--font-scale));
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition: color var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-spring);
+}
+
+.navbar__label {
+  /* Labels wrap rather than truncate. A Bahasa Malaysia label at 200% text
+     size must stay readable, not turn into an ellipsis. */
+  overflow-wrap: anywhere;
+}
+
+/* The selected tab floats 7px upward onto a soft sage puck. */
+.navbar__tab[aria-selected='true'] {
+  color: var(--color-primary);
+  transform: translateY(-7px);
+  background: var(--color-primary-soft);
+}
+
+.navbar__tab:hover { color: var(--color-primary); }
+
+/* ==========================================================================
+   MODULE 2 ADDITIONS — icons, motion preference, large-text growth.
+   The Module 1 bar was labels only; core/components/NavBar.js now renders a
+   Lucide glyph above each word.
+   ========================================================================== */
+
+.navbar__glyph {
+  display: grid;
+  place-items: center;
+  height: 24px;
+}
+
+/* Reduced motion keeps the sage puck and the colour, drops the 7px lift.
+   The selected tab stays unmistakable — it simply stops moving. */
+[data-motion='reduced'] .navbar__tab,
+[data-motion='reduced'] .navbar__tab[aria-selected='true'] { transform: none; }
+
+/* At the largest text sizes five labels stop fitting on one line each. The
+   bar grows taller rather than truncating a word. */
+.navbar { min-height: max(var(--nav-height), calc(56px * var(--font-scale))); }

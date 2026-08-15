@@ -1,0 +1,25 @@
+/* ==========================================================================
+   03-COMPONENTS / EMPTY-STATE
+   Purpose : What a screen looks like before the user has done anything.
+   Depends : 01-tokens/*
+   Pairs with : core/components/EmptyState.js
+   ========================================================================== */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+/* The glyph is deliberately faint. An empty state should not draw the eye —
+   it is a description of a state, not a call to action. */
+.empty__glyph { color: var(--color-text-tertiary); opacity: 0.5; }
+
+.empty__text {
+  max-width: 34ch;
+  color: var(--color-text-secondary);
+  text-wrap: balance;
+}
