@@ -39,13 +39,16 @@ import { t } from '../../core/i18n/i18n.js';
 import { localDateKey, partOfDay, formatDate } from '../../core/utils/date.js';
 import { getState } from '../../core/store/store.js';
 import { CheckIn, loadToday } from '../checkin/checkin.js';
+import { TaskCard, loadTask } from '../task/task-card.js';
 import { Button } from '../../core/components/Button.js';
 import { navigate } from '../../app/router.js';
 import { on as busOn, EVENTS } from '../../core/events/bus.js';
 
 let cleanups = [];
 let checkin = null;
+let taskCard = null;
 let offerSlot = null;
+let taskSlot = null;
 /** Guards against a late storage answer landing after the view unmounted. */
 let alive = false;
 
@@ -88,8 +91,9 @@ export function mount(container) {
   const checkinSlot = el('div', { class: 'today__checkin' });
 
   /* --- Zone 3 · The one thing --------------------------------------------
-     MODULE 4: exactly ONE task card goes here. Nothing renders until then —
-     an empty "your task will appear here" box advertises a hole. */
+     Exactly ONE task card. Never two. The slot stays empty until storage
+     answers — an empty "your task will appear here" box advertises a hole. */
+  taskSlot = el('div', { class: 'today__task' });
 
   /* --- Zone 4 · The offer ------------------------------------------------ */
   offerSlot = el('div', { class: 'today__offer' });
@@ -98,15 +102,19 @@ export function mount(container) {
   const screen = el('div', { class: 'u-screen u-screen-y u-stack-lg today' }, [
     header,
     checkinSlot,
+    taskSlot,
     offerSlot
   ]);
 
   clear(container);
   container.appendChild(screen);
 
-  // The label follows the check-in, including when it is made just now.
-  cleanups.push(busOn(EVENTS.MOOD_LOGGED, ({ mood }) => {
-    if (alive) paintOffer(mood);
+  // The label and the task both follow the check-in, including when it is
+  // made just now.
+  cleanups.push(busOn(EVENTS.MOOD_LOGGED, ({ mood, isFirst }) => {
+    if (!alive) return;
+    paintOffer(mood);
+    if (isFirst) showTask(mood);
   }));
 
   loadToday().then((record) => {
@@ -114,13 +122,38 @@ export function mount(container) {
     checkin = CheckIn({ record });
     checkinSlot.appendChild(checkin.node);
     paintOffer(record ? record.mood : null);
+
+    /* THE TASK IS NOT OFFERED UNTIL THERE HAS BEEN A CHECK-IN.
+       Two reasons, and the second is the important one:
+
+       1. Order of address. Asking someone to do something before asking how
+          they are is the wrong way round for a companion.
+
+       2. The tier is chosen from the mood and then FIXED for the day — the
+          task must not change every time the screen is opened. If the task
+          were created on a first visit with no check-in, a person who then
+          said "very heavy" would be stuck with a task chosen for a day they
+          had not described. Waiting costs nothing and gets it right. */
+    if (record) showTask(record.mood);
   });
+}
+
+/** Build zone 3 for a known mood. Safe to call more than once. */
+async function showTask(mood) {
+  const task = await loadTask(mood);
+  if (!alive || !taskSlot) return;
+  if (taskCard) taskCard.destroy();
+  clear(taskSlot);
+  taskCard = TaskCard({ record: task });
+  taskSlot.appendChild(taskCard.node);
 }
 
 export function unmount() {
   alive = false;
   if (checkin) { checkin.destroy(); checkin = null; }
+  if (taskCard) { taskCard.destroy(); taskCard = null; }
   offerSlot = null;
+  taskSlot = null;
   cleanups.forEach((fn) => fn());
   cleanups = [];
 }
