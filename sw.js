@@ -21,7 +21,7 @@
 
 /* Bump this string on EVERY release. It is what triggers the update and the
    cleanup of the previous cache. */
-const CACHE = 'prc-v1.0.1-module1';
+const CACHE = 'prc-v1.1.0-module2';
 
 /* The app shell. Every path relative — see the header note. */
 const SHELL = [
@@ -42,9 +42,18 @@ const SHELL = [
   './styles/02-base/fonts.css',
   './styles/02-base/elements.css',
   './styles/02-base/a11y.css',
+  './styles/03-components/icon.css',
+  './styles/03-components/button.css',
+  './styles/03-components/card.css',
+  './styles/03-components/mood-selector.css',
+  './styles/03-components/toast.css',
+  './styles/03-components/empty-state.css',
   './styles/03-components/nav-bar.css',
   './styles/04-features/transitions.css',
   './styles/04-features/settings.css',
+  './styles/04-features/today.css',
+  './styles/04-features/checkin.css',
+  './styles/04-features/feelings.css',
   './styles/05-utilities/layout.css',
   './styles/05-utilities/text.css',
 
@@ -60,17 +69,43 @@ const SHELL = [
   './core/utils/result.js',
   './core/utils/id.js',
   './core/utils/date.js',
+  './core/utils/haptics.js',
   './core/a11y/prefs.js',
   './core/a11y/announce.js',
   './core/i18n/i18n.js',
   './core/i18n/locales/en.js',
   './core/i18n/locales/ms.js',
 
+  './core/components/icons.js',
+  './core/components/Button.js',
+  './core/components/Card.js',
+  './core/components/MoodSelector.js',
+  './core/components/NavBar.js',
+  './core/components/Toast.js',
+  './core/components/EmptyState.js',
+
+  './core/storage/db.js',
+  './core/storage/migrations.js',
+  './core/storage/repositories/mood.repo.js',
+  './core/storage/repositories/growth.repo.js',
+
+  './core/safety/crisis-resources.js',
+
   './features/today/today.view.js',
+  './features/checkin/checkin.js',
   './features/regulate/regulate.view.js',
   './features/feelings/feelings.view.js',
   './features/garden/garden.view.js',
   './features/me/me.view.js',
+
+  './assets/fonts/nunito-latin.woff2',
+  './assets/fonts/inter-latin.woff2',
+  /* The two "-ext" files are NOT precached. A browser only fetches them if
+     the page contains a Latin-Extended character, which English and Bahasa
+     Malaysia never do. Precaching them would spend 120 KB of the user's data
+     on files that will almost certainly never be read. They are still cached
+     on demand by the runtime handler below, so a user whose name carries a
+     diacritic gets them once and then works offline like everyone else. */
 
   './assets/icons/favicon.svg',
   './assets/icons/app/icon-192.png',

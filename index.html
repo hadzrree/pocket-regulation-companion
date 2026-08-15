@@ -59,6 +59,24 @@
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/icons/app/apple-touch-icon.png">
 
+  <!-- FONT PRELOAD
+       main.css is discovered first, then fonts.css inside it, then the font
+       file — three round trips before a single letter is drawn in the real
+       typeface. Preloading starts the two Latin files immediately, in
+       parallel with the stylesheet, so the swap happens on the first frame
+       instead of the third.
+
+       Only the two Latin files are preloaded. The "-ext" files carry
+       characters that English and Bahasa Malaysia never use; preloading them
+       would spend 120 KB on bytes that are almost never read.
+
+       crossorigin is REQUIRED on a font preload even for a same-origin file.
+       Fonts are always fetched in CORS mode, so a preload without it is
+       treated as a different request, the file is downloaded twice, and the
+       console warns that the preload went unused. -->
+  <link rel="preload" href="./assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+
   <link rel="stylesheet" href="./styles/main.css">
 
   <!--
