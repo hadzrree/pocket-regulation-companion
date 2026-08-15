@@ -26,7 +26,8 @@ import { on as busOn, EVENTS } from '../core/events/bus.js';
 import { start as startRouter, navigate } from './router.js';
 import { register as registerSW, requestPersistence } from './register-sw.js';
 import { t } from '../core/i18n/i18n.js';
-import { el, qs, on } from '../core/utils/dom.js';
+import { qs } from '../core/utils/dom.js';
+import * as navBar from '../core/components/NavBar.js';
 
 /* ---------------------------------------------------------------------------
    1 · GLOBAL ERROR HANDLING
@@ -74,61 +75,16 @@ window.addEventListener('offline', () => setState({ isOnline: false }));
 
 /* ---------------------------------------------------------------------------
    3 · NAVIGATION BAR
-   A minimal version lives here in Module 1 so the shell is navigable.
-   Module 2 replaces it with the full NavBar component (floating selected tab,
-   Lucide icons, safe-area padding). The markup contract stays the same.
+
+   MODULE 2 CHANGE
+   The five tabs used to be built inline here, labels only. They now come from
+   core/components/NavBar.js, which adds the icons and the bolder selected
+   stroke. main.js keeps only the wiring: build it, and rebuild it when the
+   language changes.
 --------------------------------------------------------------------------- */
 
-const TABS = [
-  { id: 'today',    path: '/today',    key: 'nav.today' },
-  { id: 'regulate', path: '/regulate', key: 'nav.regulate' },
-  { id: 'feelings', path: '/feelings', key: 'nav.feelings' },
-  { id: 'garden',   path: '/garden',   key: 'nav.garden' },
-  { id: 'me',       path: '/me',       key: 'nav.me' }
-];
-
-let navObserver = null;
-
 function buildNav() {
-  const nav = qs('#nav');
-  if (!nav) return;
-
-  // Rebuild from scratch. This function is called again whenever the language
-  // changes, so labels must not be assumed to already exist.
-  if (navObserver) { navObserver.disconnect(); navObserver = null; }
-  while (nav.firstChild) nav.removeChild(nav.firstChild);
-
-  nav.setAttribute('aria-label', t('nav.label'));
-  const list = el('div', { class: 'navbar', role: 'tablist' });
-
-  for (const tab of TABS) {
-    const button = el(
-      'button',
-      {
-        class: 'navbar__tab',
-        role: 'tab',
-        type: 'button',
-        'data-tab': tab.id,
-        'aria-selected': 'false'
-      },
-      [el('span', { class: 'navbar__label' }, t(tab.key))]
-    );
-    on(button, 'click', () => navigate(tab.path));
-    list.appendChild(button);
-  }
-
-  nav.appendChild(list);
-
-  // Reflect the active tab whenever the router updates nav.dataset.active.
-  const sync = () => {
-    const active = nav.dataset.active;
-    for (const b of list.querySelectorAll('.navbar__tab')) {
-      b.setAttribute('aria-selected', String(b.dataset.tab === active));
-    }
-  };
-  navObserver = new MutationObserver(sync);
-  navObserver.observe(nav, { attributes: true, attributeFilter: ['data-active'] });
-  sync();
+  navBar.mount(qs('#nav'), navigate);
 }
 
 /**

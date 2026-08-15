@@ -1,0 +1,50 @@
+/* ==========================================================================
+   04-FEATURES / TODAY
+   Purpose : Layout for the Today screen's four zones.
+   Depends : 01-tokens/*, 05-utilities/layout.css
+   Pairs with : features/today/today.view.js
+   ========================================================================== */
+
+.today {
+  /* Room for the nav bar plus the safe area, so the last element on the
+     screen is never sitting under a tab. */
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.today__checkin { width: 100%; }
+
+/* ---- Zone 4 · the offer --------------------------------------------------
+   In Module 3 this becomes the 64px contextual primary button. For now it is
+   a quiet link, styled as a full-width row so the thumb zone still has an
+   obvious, generous target. */
+.today__offer { display: flex; }
+
+.today__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1.5px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color var(--duration-base) var(--ease-standard),
+              color var(--duration-base) var(--ease-standard),
+              border-color var(--duration-base) var(--ease-standard);
+}
+.today__link:hover {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

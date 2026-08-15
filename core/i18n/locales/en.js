@@ -47,7 +47,48 @@ export const en = {
 
   today: {
     subtitle: 'One small thing is enough today.',
-    placeholder: 'Your day starts here.'
+    placeholder: 'Your day starts here.',
+    seeFeelings: 'See what you\'ve told me'
+  },
+
+  /* The five faces. WORDS, NEVER NUMBERS — a score invites comparison,
+     targets, and the feeling of failing. A description does not.
+     Clinical Framework §12.4. */
+  mood: {
+    veryHeavy: 'Very heavy',
+    heavy: 'Heavy',
+    okay: 'Okay',
+    good: 'Good',
+    light: 'Light'
+  },
+
+  checkin: {
+    question: 'How are you, right now?',
+    saved: 'Noted. Thank you.',
+    changed: 'Changed.',
+    /* The response lowers what it asks for as the mood falls. At the bottom
+       of the scale the app asks for nothing at all. UX Strategy §5.1. */
+    response: {
+      1: 'Thank you for telling me. Today can be very small.',
+      2: 'That sounds heavy. Nothing big today.',
+      3: 'Okay is a real answer.',
+      4: 'I\'m glad it\'s a bit lighter.',
+      5: 'That\'s worth noticing.'
+    }
+  },
+
+  /* Offered, never imposed. The app shows numbers; the person decides.
+     It never dials, never alerts anyone, never contacts a clinician.
+     Clinical Framework §6.4. */
+  crisis: {
+    cardTitle: 'Someone can pick up',
+    cardBody:
+      'If today is more than you can hold, there are people who answer the ' +
+      'phone at any hour. You don\'t have to be in danger to call.',
+    open: 'See the numbers',
+    title: 'People who answer',
+    intro: 'Free, any hour. You choose who to call.',
+    call: 'Call'
   },
 
   regulate: {
@@ -58,7 +99,9 @@ export const en = {
 
   feelings: {
     title: 'Feelings',
-    comingSoon: 'The check-in arrives in Module 2.'
+    intro: 'What you\'ve told me.',
+    empty: 'Nothing here yet. That\'s allowed.',
+    today: 'Today'
   },
 
   garden: {

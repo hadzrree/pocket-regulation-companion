@@ -75,3 +75,24 @@
 }
 
 .navbar__tab:hover { color: var(--color-primary); }
+
+/* ==========================================================================
+   MODULE 2 ADDITIONS — icons, motion preference, large-text growth.
+   The Module 1 bar was labels only; core/components/NavBar.js now renders a
+   Lucide glyph above each word.
+   ========================================================================== */
+
+.navbar__glyph {
+  display: grid;
+  place-items: center;
+  height: 24px;
+}
+
+/* Reduced motion keeps the sage puck and the colour, drops the 7px lift.
+   The selected tab stays unmistakable — it simply stops moving. */
+[data-motion='reduced'] .navbar__tab,
+[data-motion='reduced'] .navbar__tab[aria-selected='true'] { transform: none; }
+
+/* At the largest text sizes five labels stop fitting on one line each. The
+   bar grows taller rather than truncating a word. */
+.navbar { min-height: max(var(--nav-height), calc(56px * var(--font-scale))); }

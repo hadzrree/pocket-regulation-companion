@@ -157,3 +157,32 @@
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
 }
+
+/* ==========================================================================
+   MODULE 2 · THE ONE EXCEPTION TO THE FOCUS RING
+   ==========================================================================
+   #main carries tabindex="-1" so the router can move focus into new content
+   after a route change. That makes it match [tabindex]:focus-visible above,
+   which drew a 3px sage ring around the ENTIRE screen on every navigation.
+
+   The ring is removed here, deliberately and with a caveat:
+
+     - WCAG 2.4.7 governs user interface COMPONENTS. #main is a landmark
+       container, not a control — nobody activates it, so there is no state
+       for the ring to communicate.
+     - Screen reader users are not relying on it: the router announces the
+       new screen title through the polite live region (core/a11y/announce.js)
+       at the same moment focus lands.
+     - Sighted keyboard users are not stranded either. Focus is genuinely
+       inside #main, so their next Tab reaches the first control ON the new
+       screen rather than sending them back through the whole page.
+
+   This is standard practice for skip-link and route-change focus targets.
+   Every actual control keeps its full ring.
+   ========================================================================== */
+
+#main:focus,
+#main:focus-visible {
+  outline: none;
+  box-shadow: none;
+}

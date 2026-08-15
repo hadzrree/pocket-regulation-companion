@@ -1,0 +1,145 @@
+/* ==========================================================================
+   03-COMPONENTS / BUTTON
+   Purpose : Every button shape, in five variants and four sizes.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Button.js
+
+   THE RULES THIS FILE ENFORCES (Design Language §5, Clinical Framework §14)
+     - Every button is a pill. No sharp corners anywhere in the product.
+     - Minimum height 48px. The one primary action on a screen is 64px.
+     - Press = scale 0.972 and a shadow drop. Never a colour flash.
+     - The "quiet" variant is a real, dignified option — never greyed out,
+       never smaller than the action beside it.
+     - Focus is a 3px ring with a 2px offset, visible in both themes.
+   ========================================================================== */
+
+.btn {
+  /* --- structure --- */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--button-height-lg);
+  padding-inline: var(--space-6);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-pill);
+
+  /* --- type --- */
+  font-family: var(--font-primary);
+  font-size: var(--text-button-size);
+  font-weight: var(--text-button-weight);
+  line-height: var(--text-button-lh);
+  letter-spacing: var(--text-button-ls);
+  text-align: center;
+
+  /* --- behaviour --- */
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;   /* removes the 300ms mobile click delay */
+  transition:
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+/* Labels wrap. They never truncate — a Bahasa Malaysia label at 200% text
+   size must stay readable, not become an ellipsis. */
+.btn__label { overflow-wrap: anywhere; }
+
+.btn:active:not(:disabled) {
+  transform: scale(var(--press-scale));
+  box-shadow: var(--shadow-pressed);
+}
+
+.btn:disabled {
+  background: var(--color-disabled-surface);
+  border-color: var(--color-disabled-border);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---- Sizes -------------------------------------------------------------- */
+.btn--sm { min-height: var(--button-height-sm); padding-inline: var(--space-4);
+           font-size: var(--text-body-sm-size); }
+.btn--md { min-height: var(--button-height-md); }
+.btn--lg { min-height: var(--button-height-lg); }
+.btn--xl { min-height: var(--button-height-xl); padding-inline: var(--space-8);
+           font-size: var(--text-title-size); }
+
+.btn--full { display: flex; width: 100%; }
+
+/* ---- Primary ------------------------------------------------------------
+   The single most important action on the screen. If a screen has two of
+   these, the screen is wrong, not the button. */
+.btn--primary {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-color);
+  box-shadow: var(--shadow-floating);
+}
+.btn--primary:hover:not(:disabled) { background: var(--color-primary-hover); }
+
+/* ---- Secondary ---------------------------------------------------------- */
+.btn--secondary {
+  background: var(--color-card);
+  border-color: var(--color-border-control);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary);
+}
+
+/* ---- Quiet ---------------------------------------------------------------
+   "Not now." "Stop here." "I can't today."
+
+   READ THIS BEFORE CHANGING IT. This variant is deliberately NOT de-emphasised
+   into invisibility. Standard product practice is to make the decline option
+   weak so users pick the other one. Here, declining is a legitimate and often
+   correct clinical choice, and the behavioural-activation model collapses if
+   users feel pushed. It is a full-height, full-contrast, dignified control
+   that simply carries no fill. Clinical Framework §8.3. */
+.btn--quiet {
+  background: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text-secondary);
+}
+.btn--quiet:hover:not(:disabled) {
+  background: var(--color-card-sunken);
+  color: var(--color-text-primary);
+}
+
+/* ---- Ghost -------------------------------------------------------------- */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+  padding-inline: var(--space-4);
+}
+.btn--ghost:hover:not(:disabled) { background: var(--color-primary-tint); }
+
+/* ---- Crisis --------------------------------------------------------------
+   72px, because it must be hittable by someone whose hands are shaking.
+   Clay, never fire-engine red: the control offers help, it does not sound an
+   alarm. Design Language §1.6, Clinical Framework §6.2. */
+.btn--crisis {
+  min-height: var(--touch-crisis);
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  font-size: var(--text-title-size);
+}
+.btn--crisis:hover:not(:disabled) { background: var(--color-danger); color: var(--color-text-on-color); }
+
+/* ---- Reduced motion ------------------------------------------------------
+   The press transform is removed, the colour change is kept. Feedback still
+   happens — it just stops moving. */
+[data-motion='reduced'] .btn,
+[data-motion='reduced'] .btn:active:not(:disabled) {
+  transform: none;
+  transition: background-color var(--duration-instant) linear,
+              color var(--duration-instant) linear;
+}

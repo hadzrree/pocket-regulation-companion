@@ -38,15 +38,23 @@
 @import url('./02-base/a11y.css');
 
 /* ---- 03 · COMPONENTS ---------------------------------------------------- */
+@import url('./03-components/icon.css');
+@import url('./03-components/button.css');
+@import url('./03-components/card.css');
+@import url('./03-components/mood-selector.css');
+@import url('./03-components/toast.css');
+@import url('./03-components/empty-state.css');
 @import url('./03-components/nav-bar.css');
-/* Module 2 adds: button, card, sheet, modal, toast, mood-selector,
-   progress-ring, breathing-circle, fab, field, chart-card, empty-state,
-   skeleton. One @import per file, in this block. */
+/* Module 3+ adds: sheet, modal, progress-ring, breathing-circle, fab, field,
+   chart-card, skeleton. One @import per file, in this block. */
 
 /* ---- 04 · FEATURES ------------------------------------------------------ */
 @import url('./04-features/transitions.css');
 @import url('./04-features/settings.css');
-/* Module 3+ adds: today, calm-mode, companion, garden. */
+@import url('./04-features/today.css');
+@import url('./04-features/checkin.css');
+@import url('./04-features/feelings.css');
+/* Module 3+ adds: calm-mode, companion, garden. */
 
 /* ---- 05 · UTILITIES ----------------------------------------------------- */
 @import url('./05-utilities/layout.css');

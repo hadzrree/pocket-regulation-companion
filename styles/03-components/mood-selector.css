@@ -1,0 +1,139 @@
+/* ==========================================================================
+   03-COMPONENTS / MOOD-SELECTOR
+   Purpose : The five faces — the emotional centre of the product.
+   Depends : 01-tokens/*
+   Pairs with : core/components/MoodSelector.js
+
+   THE COLOUR SCALE
+     Warm (Sunlight) at the top, cool (Soft Dusk) at the bottom. It never
+     passes through red at any point. Red means danger, error, stop — and a
+     low mood is none of those things. Design Language §1.5.
+
+     Adjacent steps are separated by luminance as well as hue, so the scale
+     still reads as an ordered sequence in greyscale and under every common
+     colour vision deficiency.
+
+   THE SELECTED STATE CARRIES FOUR SIGNALS
+     fill + ring + scale + bold label. Never colour alone. Design Language §18.
+   ========================================================================== */
+
+.mood-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+/* ---- One face button -----------------------------------------------------
+   flex:1 1 0 with min-width:0 lets five faces share any width down to a
+   320px screen without the row overflowing. Without min-width:0 a flex item
+   refuses to shrink below its content and the fifth face falls off. */
+.mood {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-comfort);
+  padding: var(--space-2) var(--space-1) var(--space-3);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform var(--duration-base) var(--ease-spring),
+              background-color var(--duration-base) var(--ease-standard),
+              border-color var(--duration-base) var(--ease-standard);
+}
+
+.mood__label {
+  font-family: var(--font-primary);
+  font-size: calc(11px * var(--font-scale));
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;   /* labels wrap, never truncate */
+
+  /* Two lines' worth of height is reserved whether or not the word needs it.
+     "Very heavy" wraps and the other four do not; without this the first
+     button is taller than its neighbours and the row of faces sits on a
+     crooked baseline. Reserving the space keeps the five faces aligned in
+     every language and at every text size. */
+  min-height: 2.5em;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ---- The drawn face ------------------------------------------------------ */
+.mood-face {
+  display: block;
+  width: 100%;
+  max-width: 56px;
+  aspect-ratio: 1 / 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.mood-face__head  { fill: var(--mood-soft); stroke: var(--mood); stroke-width: 2; }
+.mood-face__eye   { fill: none; stroke: var(--mood-ink); stroke-width: 2.4; }
+.mood-face__eye-dot { fill: var(--mood-ink); stroke: none; }
+.mood-face__mouth { fill: none; stroke: var(--mood-ink); stroke-width: 2.4; }
+.mood-face__blush { fill: var(--mood); opacity: 0.28; }
+
+/* ---- Per-step colour ---------------------------------------------------- */
+.mood[data-mood='1'] { --mood: var(--color-mood-1); --mood-soft: var(--color-mood-1-soft); --mood-ink: var(--color-mood-1-ink); }
+.mood[data-mood='2'] { --mood: var(--color-mood-2); --mood-soft: var(--color-mood-2-soft); --mood-ink: var(--color-mood-2-ink); }
+.mood[data-mood='3'] { --mood: var(--color-mood-3); --mood-soft: var(--color-mood-3-soft); --mood-ink: var(--color-mood-3-ink); }
+.mood[data-mood='4'] { --mood: var(--color-mood-4); --mood-soft: var(--color-mood-4-soft); --mood-ink: var(--color-mood-4-ink); }
+.mood[data-mood='5'] { --mood: var(--color-mood-5); --mood-soft: var(--color-mood-5-soft); --mood-ink: var(--color-mood-5-ink); }
+
+/* ---- Hover -------------------------------------------------------------- */
+@media (hover: hover) {
+  .mood:hover:not(:disabled) .mood-face { transform: scale(1.06); }
+  .mood:hover:not(:disabled) .mood__label { color: var(--color-text-primary); }
+}
+
+.mood:active:not(:disabled) .mood-face { transform: scale(0.94); }
+
+/* ---- Selected ------------------------------------------------------------
+   Four simultaneous signals: a tinted well, a coloured ring, a 6% lift on the
+   face, and a bolder darker label. */
+.mood[aria-checked='true'] {
+  background: var(--mood-soft);
+  border-color: var(--mood);
+}
+.mood[aria-checked='true'] .mood-face  { transform: scale(1.08); }
+.mood[aria-checked='true'] .mood__label { color: var(--mood-ink); font-weight: 800; }
+
+/* ---- Locked (past the two-hour edit window) ------------------------------
+   The chosen face stays at full strength. Only the OTHER four fade, and they
+   fade gently rather than greying out — the day is recorded, not disabled.
+   Nothing here says "locked" or "expired". */
+.mood-row--locked .mood { cursor: default; }
+.mood-row--locked .mood[aria-checked='false'] { opacity: 0.4; }
+.mood-row--locked .mood[aria-checked='true']  { opacity: 1; }
+
+/* ---- Reduced motion ------------------------------------------------------ */
+[data-motion='reduced'] .mood,
+[data-motion='reduced'] .mood-face,
+[data-motion='reduced'] .mood:hover .mood-face,
+[data-motion='reduced'] .mood:active .mood-face,
+[data-motion='reduced'] .mood[aria-checked='true'] .mood-face { transform: none; }
+
+/* ---- High contrast ------------------------------------------------------- */
+[data-contrast='high'] .mood { border-color: var(--color-border-control); }
+[data-contrast='high'] .mood-face__head { stroke-width: 2.6; }
+[data-contrast='high'] .mood__label { color: var(--color-text-primary); }
+
+/* ---- Very narrow screens -------------------------------------------------
+   Below 340px the five words stop fitting side by side even wrapped. The
+   faces stay; the labels remain in the accessible name, so nothing is lost
+   for a screen reader — only the printed word is dropped. */
+@media (max-width: 339px) {
+  .mood__label { font-size: calc(10px * var(--font-scale)); }
+}

@@ -1,0 +1,93 @@
+/* ==========================================================================
+   04-FEATURES / CHECK-IN
+   Purpose : The daily check-in card, the response line, and the crisis offer.
+   Depends : 01-tokens/*, 03-components/card.css, 03-components/mood-selector.css
+   Pairs with : features/checkin/checkin.js
+   ========================================================================== */
+
+.checkin { width: 100%; }
+
+/* The check-in card carries slightly less horizontal padding than a standard
+   card, so the five faces get every available pixel on a 320px screen. */
+.card--checkin { padding-inline: var(--space-4); }
+.card--checkin .card__head { padding-inline: var(--space-2); }
+
+/* ---- The response --------------------------------------------------------
+   Fades and rises 6px. It is the app answering, so it should feel like
+   something arriving gently rather than a panel opening. */
+.checkin__response {
+  padding-inline: var(--space-2);
+  animation: checkin-arrive var(--duration-slower) var(--ease-out-soft) both;
+}
+
+.checkin__response-text {
+  color: var(--color-text-primary);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+@keyframes checkin-arrive {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+[data-motion='reduced'] .checkin__response { animation: none; }
+
+/* ---- The crisis offer ----------------------------------------------------
+   Ordinary size, ordinary weight, "care" tone. NOT a modal, NOT a banner,
+   NOT red. Making it dramatic would punish an honest answer, and a user who
+   learns that telling the truth summons an alarming screen will stop telling
+   the truth. Clinical Framework §6.2. */
+.checkin__care {
+  animation: checkin-arrive var(--duration-slower) var(--ease-out-soft) both;
+}
+[data-motion='reduced'] .checkin__care { animation: none; }
+
+.crisis-list { margin-block-start: var(--space-4); }
+
+/* Each number is a real <a href="tel:">. It works without JavaScript, it can
+   be long-pressed to copy, and a screen reader announces it as a phone link. */
+.crisis-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  /* 72px — the crisis touch target. It must be hittable by someone whose
+     hands are shaking. Design Language §5.6. */
+  min-height: var(--touch-crisis);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: background-color var(--duration-base) var(--ease-standard);
+}
+.crisis-line:hover { background: var(--color-card-sunken); }
+
+.crisis-line__body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+
+.crisis-line__name {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+}
+
+/* Tabular figures so the numbers align down the column and read as numbers
+   rather than as words. */
+.crisis-line__number {
+  font-family: var(--font-numeric);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-title-size);
+  font-weight: 700;
+  color: var(--color-danger);
+  letter-spacing: 0.02em;
+}
+
+.crisis-line__note {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-lh);
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.crisis-line__icon { color: var(--color-danger); }

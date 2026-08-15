@@ -52,7 +52,41 @@ export const ms = {
 
   today: {
     subtitle: 'Satu benda kecil pun cukup hari ni.',
-    placeholder: 'Hari awak bermula di sini.'
+    placeholder: 'Hari awak bermula di sini.',
+    seeFeelings: 'Tengok apa awak dah beritahu'
+  },
+
+  /* Perkataan, bukan nombor. Skor mengundang perbandingan dan rasa gagal. */
+  mood: {
+    veryHeavy: 'Berat sangat',
+    heavy: 'Berat',
+    okay: 'Okay',
+    good: 'Baik',
+    light: 'Ringan'
+  },
+
+  checkin: {
+    question: 'Macam mana rasa awak sekarang?',
+    saved: 'Dah dicatat. Terima kasih.',
+    changed: 'Dah tukar.',
+    response: {
+      1: 'Terima kasih sebab beritahu saya. Hari ni boleh jadi kecil je.',
+      2: 'Bunyi macam berat. Tak payah buat benda besar hari ni.',
+      3: 'Okay pun satu jawapan yang betul.',
+      4: 'Saya lega sikit dah ringan.',
+      5: 'Itu patut diperasan.'
+    }
+  },
+
+  crisis: {
+    cardTitle: 'Ada orang boleh jawab',
+    cardBody:
+      'Kalau hari ni terlalu berat untuk awak tanggung, ada orang yang jawab ' +
+      'telefon bila-bila masa. Awak tak perlu dalam bahaya untuk telefon.',
+    open: 'Lihat nombor',
+    title: 'Orang yang menjawab',
+    intro: 'Percuma, bila-bila masa. Awak pilih siapa nak telefon.',
+    call: 'Telefon'
   },
 
   regulate: {
@@ -63,7 +97,9 @@ export const ms = {
 
   feelings: {
     title: 'Rasa',
-    comingSoon: 'Semakan rasa akan datang dalam Modul 2.'
+    intro: 'Apa yang awak dah beritahu saya.',
+    empty: 'Belum ada apa-apa lagi. Tak apa.',
+    today: 'Hari ini'
   },
 
   garden: {
@@ -83,7 +119,9 @@ export const ms = {
     contrast: 'Kontras lebih tinggi',
     motion: 'Kurangkan pergerakan',
     language: 'Bahasa',
-    about: 'Tentang'
+    about: 'Tentang',
+    on: 'Hidup',
+    off: 'Mati'
   },
 
   scope: {

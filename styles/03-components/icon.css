@@ -1,0 +1,30 @@
+/* ==========================================================================
+   03-COMPONENTS / ICON
+   Purpose : Sizing and stroke for every inline SVG icon.
+   Depends : 01-tokens/layout.css (--icon-stroke), 01-tokens/motion.css
+   Pairs with : core/components/icons.js
+
+   WHY STROKE-WIDTH LIVES HERE AND NOT IN THE JS
+     An SVG presentation attribute cannot contain a var(). Setting
+     stroke-width="var(--icon-stroke)" parses as an invalid length and falls
+     back to 1 — hairline icons that look like a rendering fault. Declared as
+     a CSS property it resolves correctly, AND it means high-contrast mode can
+     thicken every icon in the app with one rule.
+   ========================================================================== */
+
+.icon {
+  display: block;
+  flex: none;
+  stroke-width: var(--icon-stroke);
+  /* Icons never scale with the text-size control. A 200% icon beside 200%
+     text is not more readable — it just eats the line. Design Language §8.2. */
+  transition: stroke-width var(--duration-base) var(--ease-standard);
+}
+
+/* The selected navigation tab. Weight, not only colour, marks position —
+   colour must never be the sole carrier of meaning. Design Language §18. */
+.icon--bold { stroke-width: var(--icon-stroke-bold); }
+
+/* High-contrast mode thickens every stroke by one step so icons hold their
+   shape against a stronger background. */
+[data-contrast='high'] .icon { stroke-width: var(--icon-stroke-bold); }
