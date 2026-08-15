@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<!--
+  404.html
+  GitHub Pages serves this for any path it does not recognise. Because the app
+  uses hash routing, this should almost never fire — but if someone follows an
+  old link, we send them into the app rather than showing GitHub's 404.
+  Architecture §0.2.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pocket Regulation Companion</title>
+<script>
+  /* Preserve any hash so a deep link still lands where it was meant to. */
+  location.replace('./' + (location.hash || ''));
+</script>
+</head>
+<body></body>
+</html>

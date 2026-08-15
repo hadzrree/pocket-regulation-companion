@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+  offline.html
+  A tiny fallback, shown only if a page navigation happens while offline AND
+  the shell somehow is not cached. In normal operation the user never sees it.
+
+  It deliberately does NOT say "you are offline" in an alarming way. Offline is
+  the normal state for this app. Architecture §12.3.
+-->
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pocket Regulation Companion</title>
+<link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+  <main id="main" class="u-screen u-screen-y u-stack u-center" style="min-height:80dvh">
+    <h1 class="t-h2 t-center">I'm still here.</h1>
+    <p class="t-body t-muted t-center">Give me a moment and open me again.</p>
+    <a class="t-button" href="./" style="color:var(--color-primary)">Try again</a>
+  </main>
+</body>
+</html>

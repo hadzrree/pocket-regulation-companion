@@ -1,0 +1,26 @@
+/* ==========================================================================
+   01-TOKENS / SPACING
+   Purpose : A strict 4px grid. Generous space is the visual equivalent of a
+             slow sentence — a clinical choice, not an aesthetic one.
+   Source  : Design Language v1.0 §3.
+   ========================================================================== */
+
+:root {
+  --space-0:   0px;
+  --space-1:   4px;   /* icon-to-label gap, chip internals */
+  --space-2:   8px;   /* MINIMUM gap between adjacent touch targets */
+  --space-3:  12px;   /* compact chips and list rows */
+  --space-4:  16px;   /* default gap in a vertical stack, gutter between cards */
+  --space-5:  20px;   /* padding inside information cards */
+  --space-6:  24px;   /* screen side padding AND padding inside every card */
+  --space-8:  32px;   /* between sections on a screen */
+  --space-10: 40px;   /* above a hero primary button */
+  --space-12: 48px;   /* around empty states */
+  --space-16: 64px;   /* top of a first-run or celebration screen */
+  --space-20: 80px;   /* breathing screen — deliberate emptiness */
+
+  --screen-padding-x: var(--space-6);
+  --screen-padding-y: var(--space-8);
+  --stack-gap:        var(--space-4);
+  --section-gap:      var(--space-8);
+}

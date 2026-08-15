@@ -1,0 +1,46 @@
+/* ==========================================================================
+   04-FEATURES / SETTINGS
+   Purpose : Layout for the Me tab's preference groups.
+   Depends : 01-tokens/*
+   Pairs with : features/me/me.view.js
+   ========================================================================== */
+
+.setting { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.setting__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);   /* the 8px minimum between adjacent touch targets */
+}
+
+.setting__option {
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border-control);
+  background: var(--color-card);
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-button-size);
+  font-weight: 700;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.setting__option:active { transform: scale(var(--press-scale)); }
+
+.setting__option[aria-checked='true'] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-on-color);
+}
+
+/* The text-size group shows the letter A at each actual size, so the control
+   demonstrates what it does rather than describing it. */
+.setting__option[data-name='textSize'][data-value='s']   { font-size: 13px; }
+.setting__option[data-name='textSize'][data-value='m']   { font-size: 16px; }
+.setting__option[data-name='textSize'][data-value='l']   { font-size: 19px; }
+.setting__option[data-name='textSize'][data-value='xl']  { font-size: 22px; }
+.setting__option[data-name='textSize'][data-value='xxl'] { font-size: 26px; }

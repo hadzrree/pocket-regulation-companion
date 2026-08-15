@@ -1,0 +1,56 @@
+/* ==========================================================================
+   MAIN.CSS — the only stylesheet index.html links to.
+
+   It imports six numbered layers in cascade order. THE NUMBERS ARE THE
+   CASCADE. Specificity increases down the list, so a later layer can always
+   override an earlier one without !important.
+
+     01-tokens     custom properties only. No rule that draws anything.
+     02-base       element defaults, reset, fonts, focus, a11y modes.
+     03-components one file per reusable component (Module 2).
+     04-features   layout belonging to exactly one journey (Module 3+).
+     05-utilities  single-purpose helpers.
+     06-print      the print stylesheet, used for PDF export (Module 7).
+
+   NEVER REORDER THESE. Adding a file means adding a line in the right block.
+
+   PERFORMANCE NOTE
+   @import chains are render-blocking and serialise. Acceptable here because
+   the service worker precaches every stylesheet, so only the very first visit
+   pays the cost. If first paint ever misses the 95 target, concatenate the
+   layers at deploy time — the layer files stay the source of truth and no
+   other code changes. Architecture §3.1.
+   ========================================================================== */
+
+/* ---- 01 · TOKENS -------------------------------------------------------- */
+@import url('./01-tokens/colors.css');
+@import url('./01-tokens/typography.css');
+@import url('./01-tokens/spacing.css');
+@import url('./01-tokens/radius.css');
+@import url('./01-tokens/shadows.css');
+@import url('./01-tokens/motion.css');
+@import url('./01-tokens/layout.css');
+
+/* ---- 02 · BASE ---------------------------------------------------------- */
+@import url('./02-base/reset.css');
+@import url('./02-base/fonts.css');
+@import url('./02-base/elements.css');
+@import url('./02-base/a11y.css');
+
+/* ---- 03 · COMPONENTS ---------------------------------------------------- */
+@import url('./03-components/nav-bar.css');
+/* Module 2 adds: button, card, sheet, modal, toast, mood-selector,
+   progress-ring, breathing-circle, fab, field, chart-card, empty-state,
+   skeleton. One @import per file, in this block. */
+
+/* ---- 04 · FEATURES ------------------------------------------------------ */
+@import url('./04-features/transitions.css');
+@import url('./04-features/settings.css');
+/* Module 3+ adds: today, calm-mode, companion, garden. */
+
+/* ---- 05 · UTILITIES ----------------------------------------------------- */
+@import url('./05-utilities/layout.css');
+@import url('./05-utilities/text.css');
+
+/* ---- 06 · PRINT --------------------------------------------------------- */
+/* Module 7 adds: export.css */

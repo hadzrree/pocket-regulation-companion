@@ -1,0 +1,19 @@
+/* ==========================================================================
+   01-TOKENS / RADIUS
+   Purpose : Nothing in this application has a sharp corner. Sharp corners read
+             as institutional — forms, hospitals, portals. Rounded reads as safe.
+   Source  : Design Language v1.0 §4.
+   ========================================================================== */
+
+:root {
+  --radius-xs:     6px;    /* tags, tiny chips */
+  --radius-sm:     10px;   /* inputs, small controls */
+  --radius-md:     14px;   /* buttons in rows, list items */
+  --radius-lg:     20px;   /* inner panels, mood buttons */
+  --radius-card:   24px;   /* THE card radius — most common shape on screen */
+  --radius-xl:     28px;   /* hero cards, bottom sheets, dialogs */
+  --radius-sheet:  28px 28px 0 0;
+  --radius-fab:    26px;   /* 56px FAB — a squircle, not a circle */
+  --radius-pill:   999px;  /* every button, chip, progress bar */
+  --radius-circle: 50%;
+}

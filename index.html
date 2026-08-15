@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!--
+  index.html — the only HTML file in the application.
+
+  EVERY PATH IN THIS FILE IS RELATIVE. There is no leading "/" anywhere.
+  On GitHub Pages the app is served from https://user.github.io/repo-name/,
+  so a leading slash resolves to the DOMAIN root, not the app root. That single
+  mistake causes the blank-screen-after-deploy failure, the missing manifest,
+  and a service worker that registers but caches nothing.
+  Architecture §0.2.
+-->
+<html lang="en"
+      data-theme="light"
+      data-contrast="normal"
+      data-textsize="m"
+      data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Pocket Regulation Companion</title>
+  <meta name="description" content="A gentle companion for hard moments.">
+
+  <!-- Matches the light background so the status bar disappears into the page
+       rather than announcing the app. Updated at runtime by core/a11y/prefs.js -->
+  <meta name="theme-color" content="#FBF7F2">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Pocket">
+
+  <!--
+    CONTENT SECURITY POLICY
+    Delivered as a meta tag because GitHub Pages cannot set HTTP headers.
+
+    connect-src 'self' is the technical expression of the privacy promise:
+    even if a future dependency or a compromised file tried to transmit what
+    someone wrote, the BROWSER would block it. A promise enforced by the
+    platform rather than by good intentions. Architecture §14.3.
+
+    style-src needs 'unsafe-inline' because components set CSS custom
+    properties inline for animation values. Low risk — style injection cannot
+    execute script under this policy.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'sha256-Mr9yNWtoJI3dbJ1qHbxrjFxjpTtBKHuUTPhVsgojsNo=';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data: blob:;
+    font-src 'self';
+    connect-src 'self';
+    media-src 'self' blob:;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'none';
+  ">
+
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./assets/icons/app/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./styles/main.css">
+
+  <!--
+    THE ONLY INLINE SCRIPT IN THIS APPLICATION.
+
+    It applies the saved preferences to <html> BEFORE the first paint. Reading
+    them from IndexedDB is impossible because IndexedDB is asynchronous, and a
+    night-mode user would see a flash of white first. At 3am, for the intended
+    user, that is a bright white screen in a dark room.
+
+    Under ten lines, documented in place, and hash-pinned in the CSP once the
+    file is final. Architecture §3.4.
+  -->
+  <script>
+    (function () {
+      try {
+        var s = JSON.parse(localStorage.getItem('prc.settings') || '{}');
+        var d = document.documentElement;
+        var theme = s.theme === 'auto' || !s.theme
+          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : s.theme;
+        d.dataset.theme = theme;
+        if (s.textSize) d.dataset.textsize = s.textSize;
+        if (s.contrast) d.dataset.contrast = s.contrast;
+        if (s.motion)   d.dataset.motion   = s.motion;
+        if (s.lang)     d.lang             = s.lang;
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', theme === 'dark' ? '#16151A' : '#FBF7F2');
+      } catch (e) {
+        /* The defaults are already on <html>. Nothing to do. */
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <!-- First focusable element, for keyboard users. -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Greeting and screen chrome. Hidden in Calm Mode. -->
+  <header id="appbar" role="banner"></header>
+
+  <!--
+    The router mounts every view here.
+    tabindex="-1" lets the router move focus on navigation, so keyboard users
+    are not left stranded at the top of the document.
+  -->
+  <main id="main" tabindex="-1"></main>
+
+  <!-- Five-tab bottom navigation. Hidden in Calm Mode and Emergency Mode. -->
+  <nav id="nav" role="navigation" aria-label="Main"></nav>
+
+  <!--
+    The single aria-live region. Managed by core/a11y/announce.js.
+    ALWAYS polite, never assertive — an assertive interruption on the crisis
+    card would be alarming for someone already distressed.
+  -->
+  <div id="live" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+  <!-- Sheets, modals and toasts mount here — deliberately BELOW the FAB in
+       z-order, so no modal can ever block emergency access. -->
+  <div id="portal"></div>
+
+  <script type="module" src="./app/main.js"></script>
+</body>
+</html>

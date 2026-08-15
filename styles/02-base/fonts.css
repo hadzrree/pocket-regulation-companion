@@ -1,0 +1,46 @@
+/* ==========================================================================
+   02-BASE / FONTS
+   Purpose : Self-hosted @font-face declarations.
+   Depends : 01-tokens/typography.css
+
+   WHY SELF-HOSTED, NOT GOOGLE FONTS CDN
+   -------------------------------------
+   The tech brief lists "Google Fonts". We use the Google Fonts TYPEFACES
+   (Nunito and Inter, exactly as the Design Language specifies) but serve them
+   from our own /assets/fonts/ folder. Three reasons, any one decisive:
+
+     1. OFFLINE-FIRST. A CDN request fails with no network. The app must work
+        at 3am on a phone with no signal — that is the whole product.
+     2. PRIVACY. A request to fonts.gstatic.com discloses the user's IP and
+        the fact they opened a mental health app, to a third party. The
+        Architecture's CSP (connect-src 'self') blocks it by design.
+     3. PERFORMANCE. Removes a DNS lookup, a TLS handshake and a
+        render-blocking round trip on first paint.
+
+   HOW TO GET THE FILES  (see docs/ASSETS.md for the full walkthrough)
+     1. Go to fonts.google.com, download Nunito and Inter.
+     2. Convert the .ttf to .woff2 at any web font converter, subsetting to
+        Latin + Latin Extended (Latin Extended is required for Bahasa Malaysia).
+     3. Drop the two files into assets/fonts/.
+
+   UNTIL THEN the app renders in the system fallback stack and looks correct —
+   just not final. Nothing breaks.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../assets/fonts/nunito-variable.woff2') format('woff2-variations');
+  font-weight: 400 800;          /* variable font — one file, all weights */
+  font-style: normal;
+  font-display: swap;            /* show fallback immediately, swap when ready */
+  unicode-range: U+0000-00FF, U+0100-024F, U+2000-206F, U+20A0-20BF;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../../assets/fonts/inter-variable.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0100-024F, U+2000-206F, U+20A0-20BF;
+}

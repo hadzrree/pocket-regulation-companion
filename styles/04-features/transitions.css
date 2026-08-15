@@ -1,0 +1,27 @@
+/* ==========================================================================
+   04-FEATURES / TRANSITIONS
+   Purpose : Page transitions between routes.
+   Depends : 01-tokens/motion.css
+   Pairs with : app/router.js, which toggles .is-leaving / .is-entering
+
+   FADE, NEVER SLIDE. Sliding implies distance and urgency; this app has
+   neither. Design Language §11.
+   ========================================================================== */
+
+#main {
+  opacity: 1;
+  transition: opacity 200ms var(--ease-standard);
+}
+
+#main.is-leaving  { opacity: 0; }
+
+#main.is-entering {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+#main:not(.is-entering):not(.is-leaving) {
+  transform: none;
+  transition: opacity 320ms var(--ease-out-soft),
+              transform 320ms var(--ease-out-soft);
+}

@@ -1,0 +1,33 @@
+/* ==========================================================================
+   01-TOKENS / MOTION
+   Purpose : Durations and easing curves. Every animation should feel like a
+             slow breath. The default easing is the shape of an exhale — quick
+             to start, long and soft to settle.
+   Source  : Design Language v1.0 §11.
+   Note    : No component may invent a duration or a curve. If a value is not
+             here, it does not exist. This is what keeps 40 screens feeling
+             like one product.
+   ========================================================================== */
+
+:root {
+  --duration-instant:   90ms;   /* colour / opacity swap */
+  --duration-fast:     160ms;   /* tap feedback, ripple */
+  --duration-base:     240ms;   /* THE default for anything unlisted */
+  --duration-slow:     360ms;   /* card lift, sheet open */
+  --duration-slower:   520ms;   /* page transition, achievement */
+  --duration-ambient: 1200ms;   /* garden growth, sky shift */
+
+  /* The therapeutic breathing cycle: 4 in · 2 hold · 6 out = 12s total. */
+  --duration-inhale:  4000ms;
+  --duration-hold:    2000ms;
+  --duration-exhale:  6000ms;
+
+  --ease-standard: cubic-bezier(0.32, 0.72, 0.28, 1.00);  /* calm decelerate */
+  --ease-out-soft: cubic-bezier(0.16, 1.00, 0.30, 1.00);
+  --ease-in-soft:  cubic-bezier(0.55, 0.00, 0.85, 0.45);
+  --ease-spring:   cubic-bezier(0.34, 1.42, 0.44, 1.00);  /* max 4% overshoot */
+  --ease-breath:   cubic-bezier(0.42, 0.00, 0.58, 1.00);  /* pure sine feel */
+
+  --press-scale: 0.972;
+  --lift-scale:  1.015;
+}
