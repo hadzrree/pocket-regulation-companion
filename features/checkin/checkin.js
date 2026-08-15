@@ -58,7 +58,7 @@ import { Button } from '../../core/components/Button.js';
 import { icon as buildIcon } from '../../core/components/icons.js';
 import * as toast from '../../core/components/Toast.js';
 import * as moodRepo from '../../core/storage/repositories/mood.repo.js';
-import { contactsFor } from '../../core/safety/crisis-resources.js';
+import { CrisisList } from '../../core/components/CrisisList.js';
 import { getState, setState } from '../../core/store/store.js';
 import { announce } from '../../core/a11y/announce.js';
 import { isOk } from '../../core/utils/result.js';
@@ -142,24 +142,10 @@ export function CheckIn({ record = null } = {}) {
     clear(careSlot);
     careSlot.hidden = false;
 
-    const numbers = el('div', { class: 'crisis-list u-stack-sm', hidden: true });
-    const lang = getState().lang || 'en';
-
-    for (const contact of contactsFor(lang)) {
-      // A real <a href="tel:"> — not a button that calls window.open. The
-      // anchor works even if JavaScript has failed, is long-pressable to copy
-      // the number, and is announced correctly as a phone link.
-      numbers.appendChild(
-        el('a', { class: 'crisis-line', href: contact.dial }, [
-          el('span', { class: 'crisis-line__body' }, [
-            el('span', { class: 'crisis-line__name' }, contact.name),
-            el('span', { class: 'crisis-line__number' }, contact.number),
-            el('span', { class: 'crisis-line__note' }, `${contact.hours} · ${contact.note}`)
-          ]),
-          buildIcon('phone', { size: 20, class: 'crisis-line__icon' })
-        ])
-      );
-    }
+    // The same list the help screen and Calm Mode use — one component, one
+    // frozen source of numbers. See core/components/CrisisList.js.
+    const numbers = CrisisList();
+    numbers.hidden = true;
 
     const reveal = Button({
       label: t('crisis.open'),

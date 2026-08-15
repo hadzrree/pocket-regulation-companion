@@ -57,13 +57,40 @@ export const routes = {
     titleKey: 'nav.me',
     navTab: 'me',
     distress: false
-  }
+  },
 
-  /* Module 3 adds:
-   *   '/calm'   → features/panic/calm.view.js   navTab: null, distress: true
-   *   '/crisis' → features/crisis/crisis.view.js navTab: null, distress: true
-   * Both hide the navigation bar. Clinical Framework §6.
-   */
+  /* ---- Module 3 · the distress routes -------------------------------------
+     All three set navTab: null, which hides the navigation bar, and
+     distress: true, which sets state.inDistressFlow.
+
+     WHAT `distress: true` ACTUALLY DOES
+       - the global error handler stops surfacing anything
+       - Toast.show() returns silently
+       - the install prompt is suppressed
+       - a waiting service worker will not activate
+
+     In other words: while a person is on one of these screens, the app makes
+     no announcements of its own for any reason. Clinical Framework §6.3;
+     Architecture §12.1. */
+
+  '/calm': {
+    load: () => import('../features/panic/calm.view.js'),
+    titleKey: 'calm.title',
+    navTab: null,
+    distress: true
+  },
+  '/ground': {
+    load: () => import('../features/ground/ground.view.js'),
+    titleKey: 'ground.title',
+    navTab: null,
+    distress: true
+  },
+  '/crisis': {
+    load: () => import('../features/crisis/crisis.view.js'),
+    titleKey: 'crisis.title',
+    navTab: null,
+    distress: true
+  }
 };
 
 /** Where an unknown hash goes. Never render an unrecognised route. */

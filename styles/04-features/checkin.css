@@ -43,51 +43,8 @@
 }
 [data-motion='reduced'] .checkin__care { animation: none; }
 
-.crisis-list { margin-block-start: var(--space-4); }
-
-/* Each number is a real <a href="tel:">. It works without JavaScript, it can
-   be long-pressed to copy, and a screen reader announces it as a phone link. */
-.crisis-line {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  /* 72px — the crisis touch target. It must be hittable by someone whose
-     hands are shaking. Design Language §5.6. */
-  min-height: var(--touch-crisis);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-md);
-  background: var(--color-card);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  transition: background-color var(--duration-base) var(--ease-standard);
-}
-.crisis-line:hover { background: var(--color-card-sunken); }
-
-.crisis-line__body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
-
-.crisis-line__name {
-  font-family: var(--font-primary);
-  font-size: var(--text-body-size);
-  font-weight: 700;
-}
-
-/* Tabular figures so the numbers align down the column and read as numbers
-   rather than as words. */
-.crisis-line__number {
-  font-family: var(--font-numeric);
-  font-variant-numeric: tabular-nums;
-  font-size: var(--text-title-size);
-  font-weight: 700;
-  color: var(--color-danger);
-  letter-spacing: 0.02em;
-}
-
-.crisis-line__note {
-  font-size: var(--text-caption-size);
-  line-height: var(--text-caption-lh);
-  color: var(--color-text-secondary);
-  overflow-wrap: anywhere;
-}
-
-.crisis-line__icon { color: var(--color-danger); }
+/* The crisis list itself now lives in 03-components/crisis-list.css.
+   It moved there in Module 3, when Calm Mode and the help screen started
+   using the same list. Only the spacing above it, which is specific to the
+   check-in, remains here. */
+.checkin__care .crisis-list { margin-block-start: var(--space-4); }

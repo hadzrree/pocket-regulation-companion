@@ -53,7 +53,8 @@ export const ms = {
   today: {
     subtitle: 'Satu benda kecil pun cukup hari ni.',
     placeholder: 'Hari awak bermula di sini.',
-    seeFeelings: 'Tengok apa awak dah beritahu'
+    offerBreathe: 'Bernafas dengan saya',
+    offerSit: 'Duduk dengan saya sekejap'
   },
 
   /* Perkataan, bukan nombor. Skor mengundang perbandingan dan rasa gagal. */
@@ -91,8 +92,34 @@ export const ms = {
 
   regulate: {
     title: 'Nafas',
-    intro: 'Hembus sikit lebih panjang. Itu je.',
-    comingSoon: 'Pemandu nafas akan datang dalam Modul 3.'
+    intro: 'Tak ada apa-apa di sini yang perlukan awak pandai.',
+    breatheTitle: 'Bernafas dengan saya',
+    breatheBody: 'Satu bulatan untuk diikut. Ia mula di tempat awak, lepas tu perlahan sama-sama.',
+    groundTitle: 'Kembali ke bilik ni',
+    groundBody: 'Lima benda yang awak nampak, lepas tu empat yang awak boleh sentuh. Perlahan dan biasa je.',
+    start: 'Mula'
+  },
+
+  calm: {
+    title: 'Nafas',
+    in: 'Masuk',
+    hold: 'Tahan',
+    out: 'Keluar',
+    stop: 'Berhenti di sini',
+    after: 'Awak dah buat sikit. Itu dikira.',
+    help: 'Saya nak cakap dengan seseorang'
+  },
+
+  ground: {
+    title: 'Kembali',
+    step5: 'Lima benda yang awak boleh nampak.',
+    step4: 'Empat benda yang awak boleh sentuh.',
+    step3: 'Tiga benda yang awak boleh dengar.',
+    step2: 'Dua benda yang awak boleh bau.',
+    step1: 'Satu rasa dalam mulut awak.',
+    next: 'Dah jumpa',
+    nextOne: 'Dah jumpa',
+    after: 'Awak dah kembali. Itu je yang penting.'
   },
 
   feelings: {

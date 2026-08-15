@@ -34,7 +34,7 @@
  */
 
 /** The version the app expects. Bump this when adding a migration below. */
-export const DB_VERSION = 1;
+export const DB_VERSION = 2;
 
 export const DB_NAME = 'prc';
 
@@ -43,9 +43,10 @@ export const DB_NAME = 'prc';
  * silently-created empty object store.
  */
 export const STORES = Object.freeze({
-  MOODS:  'moods',
-  GROWTH: 'growth',
-  META:   'meta'
+  MOODS:    'moods',
+  GROWTH:   'growth',
+  META:     'meta',
+  SESSIONS: 'sessions'
 });
 
 /**
@@ -100,12 +101,36 @@ export const MIGRATIONS = {
     if (!db.objectStoreNames.contains(STORES.META)) {
       db.createObjectStore(STORES.META, { keyPath: 'key' });
     }
+  },
+
+  /* -------------------------------------------------------------------------
+     v2 — Module 3. Breathing and grounding sessions.
+  ------------------------------------------------------------------------- */
+  2(db) {
+    /* SESSIONS — one record per regulation practice the user did.
+
+       Record shape:
+         { id, kind, startedAt, endedAt, seconds, cycles, dateKey }
+
+       WHAT IS DELIBERATELY NOT STORED
+       No target, no goal, no "completed" flag, and no comparison to any
+       previous session. A session that lasted twenty seconds is a session.
+       Storing a completion flag would create the category of an INCOMPLETE
+       session, and the moment that category exists something in the interface
+       will eventually display it — and the app would be telling a person who
+       stopped early that they failed at breathing.
+       Clinical Framework §5.5, §9.3.
+    */
+    if (!db.objectStoreNames.contains(STORES.SESSIONS)) {
+      const sessions = db.createObjectStore(STORES.SESSIONS, { keyPath: 'id' });
+      sessions.createIndex('byDateKey', 'dateKey');
+      sessions.createIndex('byStartedAt', 'startedAt');
+    }
   }
 
   /* -------------------------------------------------------------------------
      FUTURE MIGRATIONS GO HERE. Add, never edit.
 
-     v2 — Module 3: 'sessions'  (breathing and grounding, keyPath 'id')
      v3 — Module 4: 'tasks'     (the one small thing, keyPath 'id')
      v4 — Module 5: 'thoughts'  (what the user tells Mika, keyPath 'id')
      v5 — Module 6: 'symptoms'  (physical symptom log, keyPath 'id')

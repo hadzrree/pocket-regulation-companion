@@ -48,7 +48,11 @@ export const en = {
   today: {
     subtitle: 'One small thing is enough today.',
     placeholder: 'Your day starts here.',
-    seeFeelings: 'See what you\'ve told me'
+    /* Same screen behind both. The wording is the intervention: after a heavy
+       day an activity is one more demand, so the app asks for presence
+       instead. Clinical Framework §8.2. */
+    offerBreathe: 'Breathe with me',
+    offerSit: 'Sit with me a minute'
   },
 
   /* The five faces. WORDS, NEVER NUMBERS — a score invites comparison,
@@ -93,8 +97,45 @@ export const en = {
 
   regulate: {
     title: 'Breathe',
-    intro: 'Slow the out-breath a little. That\'s all this is.',
-    comingSoon: 'The breathing pacer arrives in Module 3.'
+    /* Many people believe they are bad at breathing exercises, usually
+       because an app once set a pace they could not follow. */
+    intro: 'Nothing here needs you to be good at it.',
+    breatheTitle: 'Breathe with me',
+    breatheBody: 'A circle to follow. It starts where you are and slows down with you.',
+    groundTitle: 'Come back to the room',
+    groundBody: 'Five things you can see, then four you can touch. Slow and ordinary.',
+    start: 'Start'
+  },
+
+  /* NEVER "take a deep breath". It is the most common instruction given to a
+     panicking person and one of the least helpful — effortful, often already
+     being over-done, and a demand at the moment there is no capacity to meet
+     one. These three words describe what the circle is doing. Nothing is
+     asked. Clinical Framework §2.4. */
+  calm: {
+    title: 'Breathing',
+    in: 'In',
+    hold: 'Hold',
+    out: 'Out',
+    stop: 'Stop here',
+    after: 'You did some. That counts.',
+    help: 'I need to talk to someone'
+  },
+
+  ground: {
+    title: 'Coming back',
+    step5: 'Five things you can see.',
+    step4: 'Four things you can touch.',
+    step3: 'Three things you can hear.',
+    step2: 'Two things you can smell.',
+    step1: 'One thing you can taste.',
+    /* Two labels, because the last step asks for ONE thing and "I've got
+       them" is wrong there. A small grammatical wobble on the final prompt of
+       a grounding exercise is exactly the kind of thing that pulls a person
+       back out of the room. */
+    next: 'I\'ve got them',
+    nextOne: 'I\'ve got it',
+    after: 'You came back. That\'s the whole thing.'
   },
 
   feelings: {

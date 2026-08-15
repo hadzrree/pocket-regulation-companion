@@ -5,40 +5,68 @@
  *
  * THE FOUR ZONES (UX Strategy §4.2)
  *   1 · Presence      the date and a greeting. Nothing is asked.
- *   2 · Being met     the check-in. ONE question, once a day.      ← Module 2
+ *   2 · Being met     the check-in. ONE question, once a day.       Module 2
  *   3 · The one thing exactly one task. Never two.                   Module 4
- *   4 · The offer     one contextual action, in the thumb zone.      Module 3
+ *   4 · The offer     one contextual action, in the thumb zone.    ← Module 3
  *
- * MODULE 2 SCOPE
- *   Zones 1 and 2 are live. Zone 3 is ABSENT rather than stubbed — an empty
- *   "Your task will appear here" box is worse than nothing, because it
- *   advertises a hole. Zone 4 carries a quiet link to Feelings until Module 3
- *   gives it the calm offer it is meant to have.
+ * ============================================================================
+ * ZONE 4 — WHY THE LABEL CHANGES WITH THE CHECK-IN
+ * ============================================================================
+ *   After "Light" or "Good" the button says "Breathe with me".
+ *   After "Very heavy" or "Heavy" it says "Sit with me a minute".
  *
- * WHY MOUNT IS SYNCHRONOUS AND THE DATA ARRIVES AFTER
- *   The router's view contract is synchronous. The greeting needs no storage,
- *   so it paints immediately; the check-in card is inserted the moment
- *   IndexedDB answers, usually within a frame or two. The screen therefore
- *   never shows a spinner. A loading spinner on this app's home screen would
- *   be a small anxiety for no benefit. Design Language §11.5.
+ *   Both open exactly the same screen. Nothing behind the button differs.
+ *
+ *   The wording is the intervention. "Breathe with me" describes an activity,
+ *   which is fine when someone has the capacity for an activity. To a person
+ *   who has just said their day is very heavy, an activity is one more
+ *   demand — and the reliable finding in behavioural activation is that
+ *   demand has to fall as capacity falls, or the person disengages entirely.
+ *   "Sit with me a minute" asks for nothing except presence, which is the
+ *   smallest possible ask, and it happens to be what the breathing screen
+ *   actually delivers anyway. Clinical Framework §8.2; UX Strategy §4.2.
+ *
+ *   There is exactly ONE primary button on this screen. If a second ever
+ *   appears, the screen is wrong, not the button.
  *
  * DEPENDENCIES  core/utils/dom, core/i18n, core/utils/date, core/store,
- *               features/checkin, app/router
+ *               core/components/Button, features/checkin, app/router
  * SPEC          UX Strategy §4.2; PRD S08-S14
  */
 
-import { el, clear, on } from '../../core/utils/dom.js';
+import { el, clear } from '../../core/utils/dom.js';
 import { t } from '../../core/i18n/i18n.js';
 import { localDateKey, partOfDay, formatDate } from '../../core/utils/date.js';
 import { getState } from '../../core/store/store.js';
 import { CheckIn, loadToday } from '../checkin/checkin.js';
-import { icon as buildIcon } from '../../core/components/icons.js';
+import { Button } from '../../core/components/Button.js';
 import { navigate } from '../../app/router.js';
+import { on as busOn, EVENTS } from '../../core/events/bus.js';
 
 let cleanups = [];
 let checkin = null;
+let offerSlot = null;
 /** Guards against a late storage answer landing after the view unmounted. */
 let alive = false;
+
+/** The mood at or below which the offer stops describing an activity. */
+const LOW = 2;
+
+/** Build (or rebuild) the single primary action. */
+function paintOffer(mood) {
+  if (!offerSlot) return;
+  clear(offerSlot);
+  offerSlot.appendChild(
+    Button({
+      label: mood !== null && mood <= LOW ? t('today.offerSit') : t('today.offerBreathe'),
+      variant: 'primary',
+      size: 'xl',          // 64px — the one primary action on a screen
+      full: true,
+      icon: 'wind',
+      onClick: () => navigate('/calm')
+    })
+  );
+}
 
 export function mount(container) {
   alive = true;
@@ -60,39 +88,39 @@ export function mount(container) {
   const checkinSlot = el('div', { class: 'today__checkin' });
 
   /* --- Zone 3 · The one thing --------------------------------------------
-     MODULE 4: exactly ONE task card goes here. A second card is a design
-     failure, not a feature request. Nothing renders until then. */
+     MODULE 4: exactly ONE task card goes here. Nothing renders until then —
+     an empty "your task will appear here" box advertises a hole. */
 
-  /* --- Zone 4 · The offer ------------------------------------------------
-     MODULE 3 replaces this with the contextual 64px primary button whose
-     label changes with the check-in. Until the breathing pacer exists that
-     button would lead to an empty screen, so this zone carries an honest link
-     to something that IS built. */
-  const seeFeelings = el('button', { type: 'button', class: 'today__link' }, [
-    el('span', {}, t('today.seeFeelings')),
-    buildIcon('chevronRight', { size: 18 })
-  ]);
-  cleanups.push(on(seeFeelings, 'click', () => navigate('/feelings')));
+  /* --- Zone 4 · The offer ------------------------------------------------ */
+  offerSlot = el('div', { class: 'today__offer' });
+  paintOffer(null);
 
   const screen = el('div', { class: 'u-screen u-screen-y u-stack-lg today' }, [
     header,
     checkinSlot,
-    el('div', { class: 'today__offer' }, seeFeelings)
+    offerSlot
   ]);
 
   clear(container);
   container.appendChild(screen);
 
+  // The label follows the check-in, including when it is made just now.
+  cleanups.push(busOn(EVENTS.MOOD_LOGGED, ({ mood }) => {
+    if (alive) paintOffer(mood);
+  }));
+
   loadToday().then((record) => {
     if (!alive) return;   // the user navigated away while storage was opening
     checkin = CheckIn({ record });
     checkinSlot.appendChild(checkin.node);
+    paintOffer(record ? record.mood : null);
   });
 }
 
 export function unmount() {
   alive = false;
   if (checkin) { checkin.destroy(); checkin = null; }
+  offerSlot = null;
   cleanups.forEach((fn) => fn());
   cleanups = [];
 }
