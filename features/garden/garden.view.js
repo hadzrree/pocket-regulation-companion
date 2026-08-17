@@ -41,11 +41,17 @@ import { Garden } from '../../core/components/Garden.js';
 import { EmptyState } from '../../core/components/EmptyState.js';
 import { icon as buildIcon } from '../../core/components/icons.js';
 import * as growth from '../../core/storage/repositories/growth.repo.js';
+import * as thoughtRepo from '../../core/storage/repositories/thought.repo.js';
+import { Mika, STATES } from '../../core/components/Mika.js';
+import { navigate } from '../../app/router.js';
+import { on } from '../../core/utils/dom.js';
 import { formatDate, localDateKey } from '../../core/utils/date.js';
 import { getState } from '../../core/store/store.js';
 import { isOk } from '../../core/utils/result.js';
 
 let alive = false;
+let mika = null;
+let cleanups = [];
 
 /** Which icon belongs to which kind of growth. */
 const KIND_ICON = {
@@ -86,7 +92,30 @@ export function mount(container) {
     const currentStage = growth.stageFor(total);
 
     clear(stage);
-    stage.appendChild(Garden({ stage: currentStage, total }));
+
+    /* Mika lives IN the garden and grows on the same ledger — one ledger, one
+       story, no second progress system to compare. It is ambient: it does its
+       idle breathing and nothing else, and tapping it opens the companion.
+       Mika Spec §0, §8.3. */
+    const scene = el('div', { class: 'garden-scene' }, Garden({ stage: currentStage, total }));
+    const perch = el('button', {
+      type: 'button',
+      class: 'garden-scene__mika',
+      'aria-label': t('mika.title')
+    });
+    thoughtRepo.count().then((held) => {
+      if (!alive) return;
+      if (mika) mika.destroy();
+      mika = Mika({
+        stage: currentStage,
+        holding: isOk(held) ? held.value : 0,
+        state: STATES.RESTING
+      });
+      perch.appendChild(mika.node);
+    });
+    cleanups.push(on(perch, 'click', () => navigate('/mika')));
+    scene.appendChild(perch);
+    stage.appendChild(scene);
 
     /* Five dots. Not "stage 3 of 5", not a percentage, and no indication of
        how much is needed for the next one — there is no "needed". */
@@ -121,4 +150,7 @@ export function mount(container) {
 
 export function unmount() {
   alive = false;
+  if (mika) { mika.destroy(); mika = null; }
+  cleanups.forEach((fn) => fn());
+  cleanups = [];
 }

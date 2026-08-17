@@ -39,7 +39,7 @@ import { t } from '../../core/i18n/i18n.js';
 import { localDateKey, partOfDay, formatDate } from '../../core/utils/date.js';
 import { getState } from '../../core/store/store.js';
 import { CheckIn, loadToday } from '../checkin/checkin.js';
-import { TaskCard, loadTask } from '../task/task-card.js';
+import { TaskCard, loadTask, reconsiderTask } from '../task/task-card.js';
 import { Button } from '../../core/components/Button.js';
 import { navigate } from '../../app/router.js';
 import { on as busOn, EVENTS } from '../../core/events/bus.js';
@@ -52,21 +52,46 @@ let taskSlot = null;
 /** Guards against a late storage answer landing after the view unmounted. */
 let alive = false;
 
-/** The mood at or below which the offer stops describing an activity. */
-const LOW = 2;
-
-/** Build (or rebuild) the single primary action. */
+/**
+ * Build (or rebuild) the single primary action.
+ *
+ * ============================================================================
+ * THREE LABELS, THREE DESTINATIONS, ONE BUTTON
+ * ============================================================================
+ *   | Check-in            | Says                        | Opens  |
+ *   |---------------------|-----------------------------|--------|
+ *   | Very heavy          | Sit with me a minute        | /calm  |
+ *   | Heavy               | Mika's here, if you want    | /mika  |
+ *   | Okay, Good, Light,  | Breathe with me             | /calm  |
+ *   | or no check-in yet  |                             |        |
+ *
+ *   WHY VERY HEAVY GETS THE BODY AND HEAVY GETS MIKA.
+ *   The Mika specification says the companion becomes the primary action
+ *   "after a Heavy check-in". At Very heavy it is one step further down: the
+ *   smallest possible ask is presence, not writing, and writing is a real
+ *   cognitive act that someone at the bottom of the scale may not have. The
+ *   breathing screen asks for nothing at all, so that is what the worst day
+ *   gets. Mika Spec §0, §4.2; Clinical Framework §8.2.
+ *
+ *   There is still exactly ONE primary button on this screen.
+ */
 function paintOffer(mood) {
   if (!offerSlot) return;
   clear(offerSlot);
+
+  const toMika = mood === 2;
+  const label = mood === 1 ? t('today.offerSit')
+    : toMika ? t('today.offerMika')
+    : t('today.offerBreathe');
+
   offerSlot.appendChild(
     Button({
-      label: mood !== null && mood <= LOW ? t('today.offerSit') : t('today.offerBreathe'),
+      label,
       variant: 'primary',
       size: 'xl',          // 64px — the one primary action on a screen
       full: true,
-      icon: 'wind',
-      onClick: () => navigate('/calm')
+      icon: toMika ? 'messageCircle' : 'wind',
+      onClick: () => navigate(toMika ? '/mika' : '/calm')
     })
   );
 }
@@ -111,10 +136,18 @@ export function mount(container) {
 
   // The label and the task both follow the check-in, including when it is
   // made just now.
-  cleanups.push(busOn(EVENTS.MOOD_LOGGED, ({ mood, isFirst }) => {
+  cleanups.push(busOn(EVENTS.MOOD_LOGGED, async ({ mood, isFirst }) => {
     if (!alive) return;
     paintOffer(mood);
-    if (isFirst) showTask(mood);
+
+    if (isFirst) return showTask(mood);
+
+    /* The check-in was CORRECTED inside its two-hour window. The task follows
+       it down, never up — see task.repo.reconsider(). Correcting "Okay" to
+       "Very heavy" and being left with a task chosen for the wrong day is
+       exactly what the edit window exists to prevent. */
+    const softer = await reconsiderTask(mood);
+    if (softer && alive) paintTask(softer);
   }));
 
   loadToday().then((record) => {
@@ -142,9 +175,15 @@ export function mount(container) {
 async function showTask(mood) {
   const task = await loadTask(mood);
   if (!alive || !taskSlot) return;
+  paintTask(task);
+}
+
+/** Render a task record into zone 3, replacing whatever was there. */
+function paintTask(record) {
+  if (!taskSlot) return;
   if (taskCard) taskCard.destroy();
   clear(taskSlot);
-  taskCard = TaskCard({ record: task });
+  taskCard = TaskCard({ record });
   taskSlot.appendChild(taskCard.node);
 }
 

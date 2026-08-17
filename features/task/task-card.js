@@ -178,3 +178,16 @@ export async function loadTask(mood) {
   const result = await taskRepo.offer(mood);
   return isOk(result) ? result.value : null;
 }
+
+/**
+ * The check-in was corrected inside its edit window. Let the task follow it
+ * down. Returns the record only if it actually changed, so the caller can
+ * avoid a pointless re-render.
+ * @param {number} mood
+ * @returns {Promise<Object|null>}
+ */
+export async function reconsiderTask(mood) {
+  const result = await taskRepo.reconsider(mood);
+  if (!isOk(result) || !result.value.changed) return null;
+  return result.value.record;
+}

@@ -39,6 +39,8 @@ import * as moodRepo from '../../core/storage/repositories/mood.repo.js';
 import { formatDate, localDateKey } from '../../core/utils/date.js';
 import { getState } from '../../core/store/store.js';
 import { isOk } from '../../core/utils/result.js';
+import { Button } from '../../core/components/Button.js';
+import { navigate } from '../../app/router.js';
 
 let alive = false;
 
@@ -53,6 +55,13 @@ export function mount(container) {
     el('div', { class: 'u-screen u-screen-y u-stack' }, [
       el('h1', { class: 't-h1' }, t('feelings.title')),
       el('p', { class: 't-subtitle' }, t('feelings.intro')),
+      /* The Thought Park lives here, under the name the interface uses.
+         Same storage, same rules, same permanence. Mika Spec §0. */
+      Button({
+        label: t('mika.openHolding'), variant: 'secondary', size: 'lg', full: true,
+        icon: 'messageCircle', iconPos: 'start',
+        onClick: () => navigate('/holding')
+      }),
       list
     ])
   );

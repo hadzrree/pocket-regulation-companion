@@ -90,6 +90,33 @@ export const routes = {
     titleKey: 'crisis.title',
     navTab: null,
     distress: true
+  },
+
+  /* ---- Module 5 · Mika ----------------------------------------------------
+     navTab: null — the nav bar fades out, because the screen quiets before
+     Mika arrives and a five-tab bar underneath would undo that entirely.
+     Mika gets no tab of its own. Five tabs, permanently. Mika Spec §0.
+
+     distress: FALSE — and that is deliberate. Mika is not a distress flow;
+     it is a place to set something down, and it must be able to tell the
+     person in its own voice if a save failed. What it must never do is show
+     a SYSTEM error mid-gathering, and that is handled by writing the thought
+     to storage BEFORE the animation starts rather than by a global flag. */
+  '/mika': {
+    load: () => import('../features/mika/mika.view.js'),
+    titleKey: 'mika.title',
+    navTab: null,
+    distress: false
+  },
+
+  /* The Thought Park, renamed in the interface only. Same storage, same
+     rules, same permanence. It keeps the Feelings tab highlighted because
+     that is where it lives. */
+  '/holding': {
+    load: () => import('../features/holding/holding.view.js'),
+    titleKey: 'mika.holdingTitle',
+    navTab: 'feelings',
+    distress: false
   }
 };
 
