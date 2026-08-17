@@ -1,0 +1,185 @@
+/* ==========================================================================
+   03-COMPONENTS / MIKA
+   Purpose : Mika's colour, translucency, and ambient life.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Mika.js
+
+   THE GOVERNING PRINCIPLE
+     Mika moves at the speed of an exhale. Its fastest movement is slower than
+     the app's default transition. Nothing it does is ever quick.
+     Mika Specification §6.1.
+
+   WHAT MIKA NEVER DOES
+     Bounce · spin · jump excitedly · wave · chase the cursor · react to every
+     keystroke · flash · shake · look startled · droop · wilt · dim because of
+     absence. If a rule is ever added to this file that does one of those, it
+     is wrong. Mika Specification §6.4.
+   ========================================================================== */
+
+.mika {
+  display: block;
+  overflow: visible;
+  /* Mika is always touching the ground line. Every transform originates
+     there, so it grows and breathes from where it sits rather than floating.
+     Floating reads as anxious. Spec §7.1. */
+  transform-origin: 50% 88%;
+}
+
+/* ---- The shell -----------------------------------------------------------
+   Translucent, because `mika` is the Malay word for the clear acetate sheet
+   on a bound report. You can see what it is holding. Spec §1.1. */
+.mika__shell {
+  fill: var(--color-primary-bright);
+  fill-opacity: 0.55;
+  stroke: var(--color-primary);
+  stroke-width: 1.2;
+  stroke-opacity: 0.5;
+}
+
+/* ---- The core light ------------------------------------------------------
+   Pulses on a FOUR second cycle while the body breathes on a twelve second
+   one. The two drift in and out of phase, and that drift is what makes this
+   read as alive rather than as a loop. Spec §6.2. */
+.mika__core-in  { stop-color: var(--color-garden-firefly); stop-opacity: 0.85; }
+.mika__core-out { stop-color: var(--color-garden-firefly); stop-opacity: 0; }
+
+.mika__core {
+  opacity: 0.62;
+  animation: mika-core 4000ms var(--ease-breath) infinite;
+}
+
+@keyframes mika-core {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.80; }
+}
+
+/* ---- Held thoughts, visible inside ---------------------------------------
+   Not a score. A record of things said, any of which can be taken back at any
+   moment. Spec §8.6. */
+.mika__held {
+  fill: var(--color-garden-leaf);
+  opacity: 0.42;
+}
+
+/* ---- Growth elements ------------------------------------------------------
+   Nothing here can ever be removed. The stage comes from an append-only
+   ledger, so no code path can draw a smaller Mika than last time. Spec §8.4. */
+.mika__leaf   { fill: var(--color-garden-leaf); }
+.mika__moss   { fill: var(--color-garden-stem); opacity: 0.55; }
+.mika__arm    { fill: var(--color-garden-leaf); opacity: 0.9; }
+.mika__petal  { fill: var(--color-garden-bloom); }
+.mika__bloom-core { fill: var(--color-garden-firefly); }
+.mika__canopy { fill: var(--color-garden-leaf); opacity: 0.72; }
+
+.mika__firefly {
+  fill: var(--color-garden-firefly);
+  opacity: 0.25;
+  animation: mika-firefly 5200ms var(--ease-breath) infinite;
+}
+@keyframes mika-firefly {
+  0%, 100% { opacity: 0.15; }
+  45%      { opacity: 0.9; }
+}
+
+/* ---- The face ------------------------------------------------------------
+   Two dots and, sometimes, one curve. Spec §7.1. */
+.mika__eye {
+  fill: var(--color-text-primary);
+  transform-origin: center;
+  transition: transform 90ms var(--ease-standard);
+}
+
+/* The blink. 180ms total, driven from JavaScript on a randomised 4–7s
+   interval — a fixed interval is the fastest way to look mechanical. */
+.mika.is-blinking .mika__eye { transform: scaleY(0.08); }
+
+/* THE MOUTH IS ABSENT AT REST. A permanent smile reads as performance. */
+.mika__mouth {
+  fill: none;
+  stroke: var(--color-text-primary);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity var(--duration-slower) var(--ease-out-soft);
+}
+.mika.is-content .mika__mouth,
+.mika.is-glad .mika__mouth { opacity: 0.85; }
+
+/* ---- Ambient breathing ---------------------------------------------------
+   TWELVE SECONDS. The same 4-2-6 cycle the breathing pacer settles to. It is
+   never mentioned to the user and there is no instruction to follow it —
+   watching a slow, steady, predictable presence is weak but real
+   co-regulation when no calm other is available. Spec §2.1. */
+.mika__breath {
+  transform-origin: 50% 88%;
+  animation: mika-breathe 12000ms var(--ease-breath) infinite;
+}
+@keyframes mika-breathe {
+  0%, 100% { transform: scale(0.97); }
+  33%      { transform: scale(1.03); }   /* in  — 4s  */
+  50%      { transform: scale(1.03); }   /* hold — 2s */
+}
+
+/* ---- Sway ---------------------------------------------------------------
+   Inherited from the garden plants, so Mika belongs to the scene rather than
+   sitting on top of it. Spec §6.2. */
+.mika__sway {
+  transform-origin: 50% 88%;
+  animation: mika-sway 6000ms var(--ease-breath) infinite;
+}
+@keyframes mika-sway {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50%      { transform: rotate(1.6deg); }
+}
+
+/* ---- States --------------------------------------------------------------
+   Six, and six is the ceiling. There is no sad state, no worried state and no
+   disappointed state — a companion that looks upset when you are upset hands
+   you a second person to take care of. Spec §7.3. */
+
+/* Attentive — gaze toward the user. */
+.mika.is-attentive .mika__face { transform: translateY(0.6px); }
+
+/* Receiving — the core warms one step while it gathers. */
+.mika.is-receiving .mika__core { opacity: 0.85; animation-duration: 3000ms; }
+
+/* Comforting — leans 6° toward the user, and NO mouth.
+   §7.1 lists a mouth here; the state table in §7.3 says absent. The state
+   table wins: a smile after a heavy disclosure would be exactly wrong. */
+.mika.is-comforting .mika__sway {
+  animation: none;
+  transform: rotate(6deg);
+  transition: transform 1600ms var(--ease-breath);
+}
+
+/* Quietly glad — two small hops, then straight back to resting.
+   NEVER used after a heavy hold. Reserved for growth moments. Spec §7.3. */
+.mika.is-glad .mika__breath { animation: mika-hop 900ms var(--ease-spring) 2; }
+@keyframes mika-hop {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40%      { transform: translateY(-4px) scale(1.04, 0.96); }
+}
+
+/* ---- Reduced movement -----------------------------------------------------
+   Travel, sway, hops and the lean all go. The AMBIENT BREATHING STAYS: it is
+   therapeutic content, not decoration, and the design language's motion
+   exception covers exactly this case. Blinking stays too, at half frequency —
+   a companion that never blinks reads as dead. Spec §6.7. */
+[data-motion='reduced'] .mika__sway,
+[data-motion='reduced'] .mika.is-glad .mika__breath,
+[data-motion='reduced'] .mika.is-comforting .mika__sway {
+  animation: none;
+  transform: none;
+}
+[data-motion='reduced'] .mika__firefly { animation: none; opacity: 0.55; }
+
+/* ---- High contrast -------------------------------------------------------
+   The silhouette must stay readable, so translucency drops and the outline
+   becomes real. Spec §11.3. */
+[data-contrast='high'] .mika__shell {
+  fill-opacity: 0.25;
+  stroke: var(--color-border-control);
+  stroke-width: 1.5;
+  stroke-opacity: 1;
+}
+[data-contrast='high'] .mika__core { opacity: 0.9; }

@@ -193,8 +193,16 @@ with sync_playwright() as pw:
     check("growth repo exports no delete/update",
           "export function remove" not in src and "export const remove" not in src
           and "delete" not in src.split("*/")[-1].lower(), "")
-    check("storage layer has no single-record delete",
-          ".delete(" not in dbsrc, "")
+    check("growth repo exposes no way to remove an entry",
+          "export function remove" not in src and "export function reset" not in src, "")
+    # Module 5 introduced ONE fenced deletion path, for the user's own written
+    # thoughts. The invariant to assert is therefore no longer "the string
+    # .delete( does not appear" — it is that the growth ledger is not in the
+    # fence, which is the thing that actually matters.
+    db_src = pathlib.Path("/root/prc-app/core/storage/db.js").read_text()
+    fence = db_src.split("const DELETABLE = Object.freeze(")[1].split(")")[0]
+    check("the delete fence exists and excludes growth",
+          "thoughts" in fence and "growth" not in fence, fence.strip())
 
     # ---------- 16. no console errors overall ----------
     check("no console errors across the whole run", not errors, errors[:5])

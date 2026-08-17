@@ -35,3 +35,31 @@
 .grew-row__body { min-width: 0; }
 .grew-row__what { font-weight: 600; }
 .grew-row__when { color: var(--color-text-secondary); }
+
+/* ==========================================================================
+   MODULE 5 — Mika lives in the garden.
+   One ledger, one story. Mika grows on exactly the same growth entries the
+   plant does, so there is no second progress system to compare. Spec §0, §8.3.
+   ========================================================================== */
+
+.garden-scene { position: relative; }
+
+/* Mika sits on the soil, lower-left, out of the way of the main plant. It is
+   ambient — it breathes and blinks and does nothing else. Tapping it opens
+   the companion. */
+.garden-scene__mika {
+  position: absolute;
+  left: 6%;
+  bottom: 4%;
+  display: grid;
+  place-items: end center;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}

@@ -1,0 +1,239 @@
+/* ==========================================================================
+   04-FEATURES / MIKA
+   Purpose : The Mika flow and "What Mika is holding".
+   Depends : 01-tokens/*, 03-components/mika.css
+   Pairs with : features/mika/mika.view.js, features/holding/holding.view.js
+   ========================================================================== */
+
+.mika-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--screen-padding-x)
+           calc(var(--space-6) + var(--safe-bottom));
+  max-width: var(--content-max);
+  margin-inline: auto;
+  /* The screen quiets FIRST, then Mika arrives. 600ms, and it is the
+     difference between being interrupted and being joined. Spec §5 Screen 1. */
+  background: var(--gradient-calm);
+  animation: mika-quiet 600ms var(--ease-standard) both;
+}
+
+@keyframes mika-quiet { from { opacity: 0.4; } to { opacity: 1; } }
+[data-motion='reduced'] .mika-screen { animation: none; }
+
+/* Mika sits in the optical centre of the space above the words. */
+.mika-screen__stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-8);
+}
+
+/* ---- Size on Mika's own screens -----------------------------------------
+   The stage sizes in Mika.js (40px → 76px) are the sizes for Mika standing in
+   the GARDEN, among plants, at a glance. On its own screen, where it is the
+   only thing present and the person is looking directly at it, that reads as
+   lost rather than small.
+
+   These are the same five steps, scaled up by the same factor, so the growth
+   from stage 1 to stage 5 is exactly as proportionate as it is in the garden —
+   it is just legible. Nothing about the drawing changes. */
+.mika-screen__stage .mika--stage-1,
+.gathering__mika .mika--stage-1 { width: 108px; height: 108px; }
+.mika-screen__stage .mika--stage-2,
+.gathering__mika .mika--stage-2 { width: 130px; height: 130px; }
+.mika-screen__stage .mika--stage-3,
+.gathering__mika .mika--stage-3 { width: 151px; height: 151px; }
+.mika-screen__stage .mika--stage-4,
+.gathering__mika .mika--stage-4 { width: 173px; height: 173px; }
+.mika-screen__stage .mika--stage-5,
+.gathering__mika .mika--stage-5 { width: 205px; height: 205px; }
+
+/* At 200% text size Mika shrinks first. Text always wins the space — a person
+   who has turned the type up needs the words, not the picture. Spec §11.3. */
+@media (max-height: 700px) {
+  .mika-screen__stage .mika { width: 96px !important; height: 96px !important; }
+}
+
+/* While the user writes, Mika moves to the lower-left and shrinks — out of
+   the thumb arc, so it is never tapped by accident, and never covering the
+   field. Spec §6.3, §11.4. */
+.mika-screen__aside {
+  display: flex;
+  justify-content: flex-start;
+  padding-inline-start: var(--space-2);
+  opacity: 0.85;
+}
+.mika-screen__aside .mika { width: 52px; height: 52px; }
+
+.mika-screen__lines { padding-block: var(--space-4); text-align: center; }
+
+/* One line at a time, 600ms apart. Nothing appears all at once. */
+.mika-line {
+  max-width: 28ch;
+  margin-inline: auto;
+  text-wrap: balance;
+  color: var(--color-text-primary);
+  animation: mika-line-in var(--duration-slower) var(--ease-out-soft) both;
+}
+@keyframes mika-line-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-motion='reduced'] .mika-line { animation: none; }
+
+.mika-line--received { font-weight: 700; }
+
+.mika-screen__field { flex: 1; display: flex; }
+.mika-screen__foot { flex: none; padding-block-start: var(--space-6); }
+
+/* ---- The field -----------------------------------------------------------
+   Unlimited length. NO character count, NO word counter, NO formatting
+   toolbar, NO mood tags, NO title. Nothing that suggests the text is being
+   read by anything. Spec §5 Screen 2. */
+.mika-field {
+  width: 100%;
+  min-height: 40vh;
+  padding: var(--space-5);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-lh);
+  resize: none;
+}
+.mika-field::placeholder { color: var(--color-text-tertiary); opacity: 0.45; }
+.mika-field:focus { border-color: var(--color-primary); }
+
+/* ---- The gathering -------------------------------------------------------
+   Nothing is eaten, swallowed, crushed, burned or deleted. The leaves drift
+   apart, then travel to Mika and pass THROUGH its translucent shell, where
+   they stay visible. Acceptance and holding — never erasure. Spec §5 Screen 3.
+
+   A tap anywhere fast-forwards to the end. Someone in acute distress must
+   never be made to watch an animation. */
+.gathering {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  cursor: pointer;
+}
+
+.gathering__mika { position: relative; z-index: 1; }
+.gathering__leaves { position: absolute; inset: 0; pointer-events: none; }
+
+.leaf {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 10px;
+  margin: -5px 0 0 -8px;
+  border-radius: 60% 20% 60% 20%;
+  background: var(--color-garden-leaf);
+  opacity: 0;
+  /* Drift out, hang, then travel back into Mika. 900ms per leaf, never
+     faster — Mika does not lunge, snap or chase. */
+  animation: leaf-hold 6800ms var(--ease-out-soft) both;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes leaf-hold {
+  0%   { opacity: 0;    transform: translate(0, 0) scale(1); }
+  8%   { opacity: 0.85; transform: translate(calc(var(--x) * 0.4), calc(var(--y) * 0.4)) scale(1); }
+  26%  { opacity: 0.85; transform: translate(var(--x), var(--y)) scale(1); }
+  55%  { opacity: 0.85; transform: translate(calc(var(--x) * 0.6), calc(var(--y) * 0.5)) scale(0.9); }
+  88%  { opacity: 0.45; transform: translate(0, 0) scale(0.42); }
+  100% { opacity: 0.35; transform: translate(0, 0) scale(0.4); }
+}
+
+/* Reduced motion: no travel at all. The leaves simply fade in over Mika at
+   40% scale. 1.6s, and the meaning survives entirely. Spec §6.7. */
+.leaf--still {
+  animation: leaf-still 1600ms var(--ease-out-soft) both;
+  animation-delay: calc(var(--i) * 0.12s);
+  transform: scale(0.4);
+}
+@keyframes leaf-still {
+  from { opacity: 0; }
+  to   { opacity: 0.35; }
+}
+
+/* ---- The risk offer ------------------------------------------------------
+   A CARD, not a modal. It does not cover the screen, does not block, and
+   cannot trap. No red, no warning icon, no alarm colour — threat cues raise
+   arousal in exactly the person least able to afford it. Spec §10.4.5. */
+.mika-risk { margin-block-end: var(--space-4); }
+.mika-risk .crisis-list { margin-block: var(--space-4); }
+
+/* ==========================================================================
+   WHAT MIKA IS HOLDING
+   ========================================================================== */
+
+.holding {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.holding__mika { display: flex; justify-content: center; padding-block: var(--space-4); }
+
+/* One row per held thought. NO counter, NO badge, NO date until opened, and
+   nothing that could be read as "needs attention". Spec §5 Screen 8. */
+.held {
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.held__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+}
+
+.held__leaf {
+  flex: none;
+  width: 14px;
+  height: 9px;
+  border-radius: 60% 20% 60% 20%;
+  background: var(--color-garden-leaf);
+  opacity: 0.7;
+}
+
+.held__preview { min-width: 0; overflow-wrap: anywhere; }
+
+.held__body { padding: 0 var(--space-4) var(--space-4); }
+
+/* The text exactly as written. It is allowed to be long, ugly and untidy. */
+.held__text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding-block: var(--space-3);
+  border-block-start: 1px solid var(--color-border);
+}
+
+.held__when { color: var(--color-text-secondary); }
+.held__line { padding-block-end: var(--space-3); }
+.held__actions { padding-block-start: var(--space-2); }
+.held__confirm { padding-block-start: var(--space-4); }
+
+/* A thought the person has taken back. It stays in the list — taking
+   something back is not the same as wanting it gone — but it reads as no
+   longer being carried by Mika. */
+.held--returned { opacity: 0.6; }
+.held--returned .held__leaf { background: var(--color-border-strong); }

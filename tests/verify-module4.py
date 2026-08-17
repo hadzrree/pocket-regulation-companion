@@ -72,35 +72,63 @@ with sync_playwright() as pw:
     check("the same task is still there after a reload",
           page.locator(".task__text").inner_text() == first_text, first_text)
 
+    # ---------- 4b. correcting the check-in pulls the task down ----------
+    # This is the case a real user hit: checked in as Okay, got a tier-1 task,
+    # then corrected the answer to Very heavy inside the two-hour edit window.
+    page.locator(".mood[data-mood='1']").click()
+    page.wait_for_timeout(900)
+    tasks_low = read("tasks")
+    check("correcting the check-in down pulls the task down",
+          tasks_low[0]["tier"] == 0, tasks_low[0]["tier"])
+    check("the correction is not counted as a decline",
+          tasks_low[0]["softenings"] == 0, tasks_low[0]["softenings"])
+    check("the smaller task is actually on screen",
+          page.locator(".task__text").inner_text() != first_text,
+          page.locator(".task__text").inner_text())
+
+    # ...and correcting UPWARD must never make the ask bigger.
+    page.locator(".mood[data-mood='5']").click()
+    page.wait_for_timeout(900)
+    tasks_up = read("tasks")
+    check("correcting the check-in up never raises the ask",
+          tasks_up[0]["tier"] == 0, tasks_up[0]["tier"])
+    page.screenshot(path=SHOTS / "02b-today-task-pulled-down.png")
+
     # ---------- 5. "not now" makes the ask smaller ----------
     page.locator(".task .card__actions .btn--quiet").click()
     page.wait_for_timeout(700)
     tasks2 = read("tasks")
-    check("declining lowers the tier", tasks2[0]["tier"] == 1, tasks2[0]["tier"])
-    check("declining offers a different task", tasks2[0]["taskId"] != tasks[0]["taskId"])
-    softened = page.locator(".task__softened").inner_text()
-    check("declining is named, not scolded", softened == "Something smaller, then.", softened)
+    check("declining at the smallest tier stops the asking straight away",
+          tasks2[0]["resting"] is True, tasks2[0])
+    resting_now = page.locator(".task").inner_text()
+    check("and says it is allowed", "allowed" in resting_now.lower(), resting_now)
     body = page.locator("#main").inner_text().lower()
     check("no scolding language after declining",
           not any(w in body for w in BANNED), [w for w in BANNED if w in body])
-    page.screenshot(path=SHOTS / "03-today-softened.png")
-
-    page.locator(".task .card__actions .btn--quiet").click()
-    page.wait_for_timeout(600)
-    tasks3 = read("tasks")
-    check("declining again reaches the smallest tier", tasks3[0]["tier"] == 0, tasks3[0]["tier"])
-
-    page.locator(".task .card__actions .btn--quiet").click()
-    page.wait_for_timeout(600)
-    tasks4 = read("tasks")
-    check("declining at the smallest tier stops the asking", tasks4[0]["resting"] is True, tasks4[0])
-    resting = page.locator(".task").inner_text()
-    check("and says it is allowed", "allowed" in resting.lower(), resting)
     check("no buttons remain in the task card",
           page.locator(".task .btn").count() == 0)
     check("nothing recorded a refusal",
-          not any(k in tasks4[0] for k in ("skipped", "refused", "failed", "expired")), list(tasks4[0]))
+          not any(k in tasks2[0] for k in ("skipped", "refused", "failed", "expired")), list(tasks2[0]))
     page.screenshot(path=SHOTS / "04-today-resting.png")
+
+    # ---------- 5b. the full decline ladder, from the top ----------
+    page.evaluate("""() => new Promise(res => {
+        const r = indexedDB.open('prc');
+        r.onsuccess = () => { const db = r.result;
+          const tx = db.transaction('tasks', 'readwrite');
+          tx.objectStore('tasks').clear();
+          tx.oncomplete = () => res(true); };
+    })""")
+    page.reload(wait_until="networkidle")
+    page.wait_for_selector(".task .card__actions .btn--quiet", timeout=5000)
+    seen_tiers = []
+    for _ in range(3):
+        seen_tiers.append(read("tasks")[0]["tier"])
+        page.locator(".task .card__actions .btn--quiet").click()
+        page.wait_for_timeout(650)
+    check("the ladder descends 2 -> 1 -> 0 then rests",
+          seen_tiers == [2, 1, 0] and read("tasks")[0]["resting"] is True, seen_tiers)
+    page.screenshot(path=SHOTS / "03-today-softened.png")
 
     # ---------- 6. a fresh day, completed ----------
     page.evaluate("""() => new Promise(res => {
@@ -184,9 +212,16 @@ with sync_playwright() as pw:
 
     # the storage layer offers no way to remove a growth entry
     growth_src = pathlib.Path("/root/prc-app/core/storage/repositories/growth.repo.js").read_text()
+    check("the growth repo exposes no way to remove an entry",
+          "export function remove" not in growth_src and "export function reset" not in growth_src)
+    # Module 5 introduced ONE fenced deletion path, for the user's own written
+    # thoughts. The invariant to assert is therefore no longer "the string
+    # .delete( does not appear" — it is that the growth ledger is not in the
+    # fence, which is the thing that actually matters.
     db_src = pathlib.Path("/root/prc-app/core/storage/db.js").read_text()
-    check("no API exists to remove growth",
-          "export function remove" not in growth_src and ".delete(" not in db_src)
+    fence = db_src.split("const DELETABLE = Object.freeze(")[1].split(")")[0]
+    check("the delete fence exists and excludes growth",
+          "thoughts" in fence and "growth" not in fence, fence.strip())
 
     # ---------- 10. bahasa malaysia and the night theme ----------
     page.goto(f"{BASE}/index.html#/me", wait_until="networkidle")

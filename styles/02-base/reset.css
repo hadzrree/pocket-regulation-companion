@@ -36,3 +36,29 @@ button {
 
 /* Prevent iOS zooming on focus by never letting an input fall below 16px. */
 input, textarea { font-size: max(16px, var(--text-body-size)); }
+
+/* ==========================================================================
+   THE [hidden] FIX — added in Module 5, after a real bug
+   ==========================================================================
+   Browsers style `[hidden]` as `display: none` in their user-agent
+   stylesheet, which is the WEAKEST possible source. Any class that sets
+   `display` beats it. This app has several — `.btn--full { display: flex }`,
+   `.u-stack-sm { display: flex }` — so `node.hidden = true` silently did
+   nothing on those elements.
+
+   What that actually caused: the crisis numbers inside the check-in's care
+   card were visible from the moment the card appeared, so the "See the
+   numbers" button had nothing to reveal. And Mika's "Let Mika hold this"
+   button was on screen with an empty field, which is the exact state the
+   design says cannot exist.
+
+   Neither failed loudly. Both were invisible in code review and invisible in
+   a passing test suite, because a thing being MORE visible than intended
+   breaks no assertion anyone thinks to write.
+
+   `!important` is justified here: `hidden` is a statement about whether an
+   element exists for the user, not a style preference, and nothing should be
+   able to override it by accident.
+   ========================================================================== */
+
+[hidden] { display: none !important; }
