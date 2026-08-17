@@ -1,7 +1,13 @@
 # Module 4 — Behavioural Activation, Small Wins, and the Garden
 
-**Status:** complete · **Version:** 1.3.0 · **Date:** 15 August 2026
-**Verification:** 42 of 42 new checks passing · Modules 2 and 3 re-run clean (31/31, 40/40)
+**Status:** complete · **Version:** 1.3.1 · **Date:** 17 August 2026
+**Verification:** 43 of 43 new checks passing · Modules 2 and 3 re-run clean (31/31, 40/40)
+
+> **1.3.1 — found in real use.** Correcting the check-in inside its two-hour
+> edit window left the task at the tier chosen from the *original* answer. A
+> user who corrected "Okay" to "Very heavy" was still being asked to clear a
+> surface. The task now follows a corrected check-in **down** — and never up.
+> See §4, "When the check-in is corrected".
 
 ---
 
@@ -175,6 +181,30 @@ possible. It offers one specific small thing instead.
 The task is **persisted the moment it is offered**, so closing and reopening
 the app shows the same one. A suggestion that changes every time you look at
 it cannot be committed to, and quietly teaches that nothing here is real.
+
+### When the check-in is corrected
+
+The task's tier is chosen from the check-in and then fixed, so the suggestion
+is stable and can be committed to. But the check-in itself stays editable for
+two hours, precisely because people mis-tap and because people realise a
+minute later that "Okay" was not true.
+
+So a correction pulls the task with it:
+
+| Correction | What happens to the task |
+|---|---|
+| Okay → Very heavy | Re-offered at tier 0 |
+| Very heavy → Good | **Nothing.** The ask never grows. |
+| Any correction, task already done | Nothing |
+| Any correction, app already resting | Nothing |
+
+**It only ever goes down.** Raising the ask because someone said they felt
+better would teach them that admitting to a good hour costs something — the
+same failure as pushing after a decline. Within a day, demand can fall and
+cannot rise.
+
+The correction does **not** increment `softenings`. The person did not decline
+anything; they corrected how they were.
 
 ### Nothing records a failure
 

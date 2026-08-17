@@ -54,7 +54,8 @@ export const ms = {
     subtitle: 'Satu benda kecil pun cukup hari ni.',
     placeholder: 'Hari awak bermula di sini.',
     offerBreathe: 'Bernafas dengan saya',
-    offerSit: 'Duduk dengan saya sekejap'
+    offerSit: 'Duduk dengan saya sekejap',
+    offerMika: 'Mika ada, kalau awak nak'
   },
 
   /* Perkataan, bukan nombor. Skor mengundang perbandingan dan rasa gagal. */
@@ -120,6 +121,41 @@ export const ms = {
     next: 'Dah jumpa',
     nextOne: 'Dah jumpa',
     after: 'Awak dah kembali. Itu je yang penting.'
+  },
+
+  mika: {
+    title: 'Mika',
+    srPresence: 'Mika, teman kecil, ada bersama awak.',
+    srGathering: 'Mika sedang kumpul apa yang awak tulis.',
+    srHeld: 'Mika sedang pegang.',
+    fieldLabel: 'Apa yang awak nak letak',
+
+    yesPlease: 'Ya, boleh',
+    justSit: 'Duduk sini je',
+    holdThis: 'Biar Mika pegang',
+    keepItMyself: 'Saya simpan sendiri',
+    ratherNotWrite: 'Saya tak nak tulis',
+    actuallyWrite: 'Sebenarnya, saya nak tulis',
+    anotherStep: 'Nak satu langkah kecil lagi?',
+    imFinished: 'Saya dah habis',
+    stepBreathe: 'Bernafas',
+    stepGround: 'Kembali ke bilik ni',
+    keptYours: 'Itu milik awak. Saya tak simpan.',
+
+    stayWithMe: 'Duduk dengan saya seminit?',
+    notRightNow: 'Bukan sekarang',
+
+    holdingTitle: 'Apa Mika pegang',
+    openHolding: 'Apa Mika pegang',
+    keepHolding: 'Biar Mika terus pegang',
+    takeItBack: 'Saya ambil balik',
+    tookBack: 'Ia milik awak semula.',
+    holdAgain: 'Biar Mika pegang semula',
+    letGo: 'Lepaskan sepenuhnya',
+    letGoConfirm: 'Yang ini takkan kembali.',
+    letGoYes: 'Ya, lepaskan',
+    letGone: 'Baiklah. Ia dah tiada.',
+    undo: 'Sebenarnya, tak jadi'
   },
 
   feelings: {

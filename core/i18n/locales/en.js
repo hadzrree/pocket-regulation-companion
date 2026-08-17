@@ -52,7 +52,10 @@ export const en = {
        day an activity is one more demand, so the app asks for presence
        instead. Clinical Framework §8.2. */
     offerBreathe: 'Breathe with me',
-    offerSit: 'Sit with me a minute'
+    offerSit: 'Sit with me a minute',
+    /* Offered after a HEAVY check-in specifically — see today.view.js for why
+       Very heavy gets the body first and Heavy gets Mika. */
+    offerMika: 'Mika\'s here, if you want'
   },
 
   /* The five faces. WORDS, NEVER NUMBERS — a score invites comparison,
@@ -136,6 +139,44 @@ export const en = {
     next: 'I\'ve got them',
     nextOne: 'I\'ve got it',
     after: 'You came back. That\'s the whole thing.'
+  },
+
+  /* Structural interface strings only. Everything Mika SAYS lives in
+     core/content/mika-lines.js, paired with its Malay so the two can never
+     drift apart. */
+  mika: {
+    title: 'Mika',
+    srPresence: 'Mika, a small companion, is here with you.',
+    srGathering: 'Mika is gathering what you wrote.',
+    srHeld: 'Mika is holding it.',
+    fieldLabel: 'What you want to set down',
+
+    yesPlease: 'Yes, please',
+    justSit: 'Just sit here',
+    holdThis: 'Let Mika hold this',
+    keepItMyself: 'Keep it myself',
+    ratherNotWrite: 'I\'d rather not write',
+    actuallyWrite: 'Actually, I\'ll write something',
+    anotherStep: 'Would you like another small step?',
+    imFinished: 'I\'m finished',
+    stepBreathe: 'Breathe',
+    stepGround: 'Come back to the room',
+    keptYours: 'That\'s yours. I didn\'t keep it.',
+
+    stayWithMe: 'Stay with me a minute?',
+    notRightNow: 'Not right now',
+
+    holdingTitle: 'What Mika is holding',
+    openHolding: 'What Mika is holding',
+    keepHolding: 'Mika can keep holding it',
+    takeItBack: 'I\'ll take it back',
+    tookBack: 'It\'s yours again.',
+    holdAgain: 'Mika can hold it again',
+    letGo: 'Let it go completely',
+    letGoConfirm: 'This one won\'t come back.',
+    letGoYes: 'Yes, let it go',
+    letGone: 'Alright. It\'s gone.',
+    undo: 'Actually, no'
   },
 
   feelings: {

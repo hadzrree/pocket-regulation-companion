@@ -34,7 +34,7 @@
  */
 
 /** The version the app expects. Bump this when adding a migration below. */
-export const DB_VERSION = 3;
+export const DB_VERSION = 4;
 
 export const DB_NAME = 'prc';
 
@@ -47,7 +47,8 @@ export const STORES = Object.freeze({
   GROWTH:   'growth',
   META:     'meta',
   SESSIONS: 'sessions',
-  TASKS:    'tasks'
+  TASKS:    'tasks',
+  THOUGHTS: 'thoughts'
 });
 
 /**
@@ -154,12 +155,45 @@ export const MIGRATIONS = {
       const tasks = db.createObjectStore(STORES.TASKS, { keyPath: 'dateKey' });
       tasks.createIndex('byOfferedAt', 'offeredAt');
     }
+  },
+
+  /* -------------------------------------------------------------------------
+     v4 — Module 5. What Mika holds.
+  ------------------------------------------------------------------------- */
+  4(db) {
+    /* THOUGHTS — one record per thing the user handed over.
+
+       Record shape:
+         { id, text, heldAt, dateKey, entry, returnedAt }
+
+       WHAT IS STORED, AND WHAT IS NOT
+       `text` is exactly what the person typed, unedited and unanalysed. There
+       is NO sentiment field, NO category, NO keyword list, NO risk flag and NO
+       summary. Nothing in this record could tell a reader anything the person
+       did not choose to write, and nothing in it could be aggregated into a
+       profile.
+
+       `entry` records which door they came in by — anger, overthinking, numb —
+       because the response register differs. It says nothing about content.
+
+       THE RISK MATCH IS NOT HERE AND MUST NEVER BE ADDED. A stored flag would
+       be a risk record, and this app keeps none. See core/safety/risk-phrases.js.
+
+       THIS IS THE ONE STORE THE USER MAY DELETE FROM. Their words are theirs,
+       and being unable to take something back would make handing it over a
+       loss rather than a loan. See the DELETABLE guard in db.js.
+       Mika Spec §2.3, §10.1.
+    */
+    if (!db.objectStoreNames.contains(STORES.THOUGHTS)) {
+      const thoughts = db.createObjectStore(STORES.THOUGHTS, { keyPath: 'id' });
+      thoughts.createIndex('byHeldAt', 'heldAt');
+      thoughts.createIndex('byDateKey', 'dateKey');
+    }
   }
 
   /* -------------------------------------------------------------------------
      FUTURE MIGRATIONS GO HERE. Add, never edit.
 
-     v4 — Module 5: 'thoughts'  (what the user tells Mika, keyPath 'id')
      v5 — Module 6: 'symptoms'  (physical symptom log, keyPath 'id')
 
      Remember to bump DB_VERSION above in the same commit.

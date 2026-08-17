@@ -174,6 +174,63 @@ export async function soften() {
   return Ok({ record: updated, resting: Boolean(updated.resting) });
 }
 
+/**
+ * The check-in changed inside its edit window. Follow it DOWN, never up.
+ *
+ * ============================================================================
+ * WHY THIS EXISTS
+ * ============================================================================
+ *   The task's tier is chosen from the day's check-in and then fixed, so the
+ *   suggestion is stable and can be committed to. But the check-in itself is
+ *   editable for two hours, precisely because people mis-tap and because
+ *   people realise a minute later that "Okay" was not true.
+ *
+ *   Without this, correcting the mood from Okay to Very heavy left a task
+ *   chosen for a day the person had just told the app they were not having.
+ *   The correction is the more honest answer; the ask has to follow it.
+ *
+ * ============================================================================
+ * IT ONLY EVER GOES DOWN
+ * ============================================================================
+ *   If someone changes their answer from Very heavy to Good, the task does
+ *   NOT get bigger. Raising the ask because a person said they felt better
+ *   would teach them that admitting to a good hour costs them something, and
+ *   it is the same failure as pushing after a decline. Within a day, demand
+ *   can fall and cannot rise.
+ *
+ *   It also does nothing once the task is done or the app has stopped asking.
+ *
+ * @param {number} mood the corrected check-in
+ * @returns {Promise<Object>} Ok({record, changed})
+ */
+export async function reconsider(mood) {
+  const existing = await today();
+  if (!isOk(existing) || !existing.value) return existing;
+
+  const record = existing.value;
+  if (record.doneAt || record.resting) return Ok({ record, changed: false });
+
+  const nextTier = tierForMood(mood);
+  if (nextTier >= record.tier) return Ok({ record, changed: false });   // never up
+
+  const task = pick(nextTier, record.seen);
+  if (!task) return Ok({ record, changed: false });
+
+  const updated = {
+    ...record,
+    taskId: task.id,
+    tier: nextTier,
+    offeredAt: new Date().toISOString(),
+    seen: [...record.seen, task.id]
+    // `softenings` is deliberately NOT incremented. The person did not
+    // decline anything — they corrected how they were.
+  };
+
+  const written = await db.put(STORES.TASKS, updated);
+  if (!isOk(written)) return written;
+  return Ok({ record: updated, changed: true });
+}
+
 /** Recent days that had a task. Used by Module 6's history. */
 export async function recent(limit = 30) {
   const result = await db.getAll(STORES.TASKS);

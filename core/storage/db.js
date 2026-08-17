@@ -228,16 +228,59 @@ export const put = (store, record) =>
   run(store, 'readwrite', (tx) => tx.objectStore(store).put(record));
 
 /**
+ * The ONLY stores a single record may be removed from.
+ *
+ * ============================================================================
+ * WHY THIS GUARD EXISTS RATHER THAN JUST A `remove()` FUNCTION
+ * ============================================================================
+ *   Until Module 5 there was no way to delete one record from anywhere, and
+ *   that absence was load-bearing: it is the mechanism by which the growth
+ *   ledger's append-only rule is enforced. Not a convention someone has to
+ *   remember — an API that does not exist.
+ *
+ *   Module 5 broke the tie. A person's own written thoughts must be
+ *   deletable, because being unable to take something back would make handing
+ *   it over a loss rather than a loan, and nobody hands over anything under
+ *   those terms.
+ *
+ *   So deletion exists, and it is fenced. `remove()` refuses every store
+ *   except the ones listed here, and it refuses by returning an Err rather
+ *   than throwing, so a mistake is visible in a test rather than at runtime.
+ *   Adding STORES.GROWTH to this array would silently undo the single most
+ *   load-bearing product decision in the app.
+ *
+ *   Clinical Framework §9.2; Mika Specification §10.1.
+ */
+const DELETABLE = Object.freeze(['thoughts']);
+
+/**
+ * Remove ONE record, from a store that permits it.
+ *
+ * @param {string} store  must be in DELETABLE
+ * @param {*} key
+ * @returns {Promise<Object>} Ok(true) | Err('not-deletable') | Err(storage code)
+ */
+export function remove(store, key) {
+  if (!DELETABLE.includes(store)) {
+    // Loud in a test, silent to the user, and impossible to ignore in review.
+    console.error(`[db] refusing to delete from "${store}" — not in DELETABLE`);
+    return Promise.resolve(Err('not-deletable', store));
+  }
+  return run(store, 'readwrite', (tx) => tx.objectStore(store).delete(key));
+}
+
+/**
  * DELETE THE WHOLE DATABASE.
  *
  * This is the ONLY deletion function in the storage layer, and it exists for
  * exactly one caller: the "delete everything" control in Settings (Module 7),
  * which the user reaches deliberately and confirms explicitly.
  *
- * There is no delete-one-record function anywhere in this codebase. That
- * omission is the mechanism by which the growth ledger's append-only rule is
- * enforced: it is not a convention a future developer has to remember, it is
- * an API that does not exist. Clinical Framework §9.2.
+ * The only OTHER deletion path is remove() above, which is fenced to the
+ * stores in DELETABLE and refuses everything else. The growth ledger is not
+ * in that list and must never be added to it — its append-only rule is
+ * enforced by the absence of an API, not by a convention someone has to
+ * remember. Clinical Framework §9.2.
  */
 export function destroyEverything() {
   return new Promise((resolve) => {
