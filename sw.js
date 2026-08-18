@@ -21,7 +21,7 @@
 
 /* Bump this string on EVERY release. It is what triggers the update and the
    cleanup of the previous cache. */
-const CACHE = 'prc-v1.4.0-module5';
+const CACHE = 'prc-v1.5.0-module6';
 
 /* The app shell. Every path relative — see the header note. */
 const SHELL = [
@@ -52,6 +52,7 @@ const SHELL = [
   './styles/03-components/breathing-circle.css',
   './styles/03-components/garden.css',
   './styles/03-components/mika.css',
+  './styles/03-components/mood-ribbon.css',
   './styles/03-components/nav-bar.css',
   './styles/04-features/transitions.css',
   './styles/04-features/settings.css',
@@ -62,6 +63,9 @@ const SHELL = [
   './styles/04-features/task.css',
   './styles/04-features/garden.css',
   './styles/04-features/mika.css',
+  './styles/04-features/body.css',
+  './styles/04-features/report.css',
+  './styles/06-print/report.css',
   './styles/05-utilities/layout.css',
   './styles/05-utilities/text.css',
 
@@ -95,6 +99,7 @@ const SHELL = [
   './core/components/BreathingCircle.js',
   './core/components/Garden.js',
   './core/components/Mika.js',
+  './core/components/MoodRibbon.js',
 
   './core/storage/db.js',
   './core/storage/migrations.js',
@@ -103,10 +108,12 @@ const SHELL = [
   './core/storage/repositories/session.repo.js',
   './core/storage/repositories/task.repo.js',
   './core/storage/repositories/thought.repo.js',
+  './core/storage/repositories/symptom.repo.js',
 
   './core/safety/crisis-resources.js',
   './core/content/task-catalogue.js',
   './core/content/mika-lines.js',
+  './core/content/symptom-catalogue.js',
   './core/safety/risk-phrases.js',
 
   './features/today/today.view.js',
@@ -122,6 +129,8 @@ const SHELL = [
   './features/mika/mika.view.js',
   './features/mika/response-selector.js',
   './features/holding/holding.view.js',
+  './features/body/body.view.js',
+  './features/report/report.view.js',
 
   './assets/fonts/nunito-latin.woff2',
   './assets/fonts/inter-latin.woff2',
