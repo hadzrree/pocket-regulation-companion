@@ -183,8 +183,64 @@ export const en = {
     title: 'Feelings',
     intro: 'What you\'ve told me.',
     empty: 'Nothing here yet. That\'s allowed.',
-    today: 'Today'
+    today: 'Today',
+    history: 'Day by day'
   },
+
+  /* ==========================================================================
+     THE BODY LOG — the clinically riskiest copy in the app.
+     The app NEVER says what a sensation is, NEVER reassures, and NEVER
+     suggests a cause. The standing line appears on every state of the screen.
+     Clinical Framework §10.
+     ========================================================================== */
+  body: {
+    title: 'Something in my body',
+    intro: 'Pick whatever fits. You don\'t have to explain it.',
+    /* Not styled as a warning, and never dramatised. It is a fact that is
+       always true, not an alert that has just fired. */
+    standing:
+      'If something is new, bad, or frightening you, please get it looked at ' +
+      'by a doctor. This app can\'t tell you what it is.',
+    note: 'Note this',
+    notePlaceholder: 'Anything else worth remembering. Optional.',
+    noted: 'Noted.',
+    /* About the app, never about the person. */
+    enough: 'That\'s enough for today. I\'ve got what you told me.',
+    open: 'Something in my body',
+    region: {
+      chest: 'Chest and breathing',
+      head: 'Head',
+      gut: 'Stomach',
+      body: 'All over'
+    }
+  },
+
+  /* The one screen where counts are allowed — different audience, deliberate
+     act, not ambient. See features/report/report.view.js. */
+  report: {
+    title: 'For an appointment',
+    open: 'Something for an appointment',
+    generated: 'Made on',
+    scope:
+      'This is what one person typed into a phone, with the dates they typed ' +
+      'it. It is self-reported. It is not a medical record, not a diagnosis, ' +
+      'not a screening result, and not validated. Please ask them about it ' +
+      'rather than reading it alone.',
+    moodTitle: 'Day by day',
+    blankDays: 'Blank days are just blank.',
+    daysRecorded: '{n} of the last {total} days have an entry.',
+    bodyTitle: 'What the body noticed',
+    bodyNone: 'Nothing recorded in this period.',
+    didTitle: 'Things done',
+    didBreathing: '{n} breathing sessions',
+    didGrounding: '{n} grounding sessions',
+    didTasks: '{n} small things finished',
+    notIncluded:
+      'What was written privately is not included here, on purpose. ' +
+      'Please ask instead.',
+    print: 'Print or save as PDF'
+  },
+
 
   /* The honest version of a progress screen. No total, no streak, no
      percentage, no goal. The dated list IS the evidence.

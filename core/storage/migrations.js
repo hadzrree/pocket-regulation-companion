@@ -34,7 +34,7 @@
  */
 
 /** The version the app expects. Bump this when adding a migration below. */
-export const DB_VERSION = 4;
+export const DB_VERSION = 5;
 
 export const DB_NAME = 'prc';
 
@@ -48,7 +48,8 @@ export const STORES = Object.freeze({
   META:     'meta',
   SESSIONS: 'sessions',
   TASKS:    'tasks',
-  THOUGHTS: 'thoughts'
+  THOUGHTS: 'thoughts',
+  SYMPTOMS: 'symptoms'
 });
 
 /**
@@ -189,13 +190,48 @@ export const MIGRATIONS = {
       thoughts.createIndex('byHeldAt', 'heldAt');
       thoughts.createIndex('byDateKey', 'dateKey');
     }
+  },
+
+  /* -------------------------------------------------------------------------
+     v5 — Module 6. What the body noticed.
+  ------------------------------------------------------------------------- */
+  5(db) {
+    /* SYMPTOMS — one record per thing the person noticed in their body.
+
+       Record shape:
+         { id, sensationIds, note, at, dateKey }
+
+       ONE RECORD IS ONE MOMENT, not one sensation. A panic episode is a tight
+       chest AND a fast heart AND not being able to get a full breath, all at
+       once — it is one thing that happened, not three. Storing it as three
+       would also burn three of the day's three entries on a single episode,
+       which would turn the cap from a protection into an obstruction.
+
+       READ THIS BEFORE ADDING A FIELD.
+
+       There is NO severity. NO 1-10 scale. NO duration. NO "is this better or
+       worse than last time". NO cause. NO category.
+
+       Every one of those turns noticing into MEASURING, and measuring a body
+       sensation is the exact mechanism by which health anxiety maintains
+       itself: the person checks, records a number, compares it to the last
+       number, and the comparison generates the next check. A tracker with a
+       severity slider is a body-checking machine with a clinical costume on.
+
+       What is stored is the plainest possible fact — a person noticed a thing
+       in their body, on a date. That is enough to be useful in a ten-minute
+       appointment, and not enough to feed a loop.
+       Clinical Framework §10; PRD S34-S36.
+    */
+    if (!db.objectStoreNames.contains(STORES.SYMPTOMS)) {
+      const symptoms = db.createObjectStore(STORES.SYMPTOMS, { keyPath: 'id' });
+      symptoms.createIndex('byDateKey', 'dateKey');
+      symptoms.createIndex('byAt', 'at');
+    }
   }
 
   /* -------------------------------------------------------------------------
      FUTURE MIGRATIONS GO HERE. Add, never edit.
-
-     v5 — Module 6: 'symptoms'  (physical symptom log, keyPath 'id')
-
      Remember to bump DB_VERSION above in the same commit.
   ------------------------------------------------------------------------- */
 };

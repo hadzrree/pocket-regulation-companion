@@ -162,8 +162,53 @@ export const ms = {
     title: 'Rasa',
     intro: 'Apa yang awak dah beritahu saya.',
     empty: 'Belum ada apa-apa lagi. Tak apa.',
-    today: 'Hari ini'
+    today: 'Hari ini',
+    history: 'Hari demi hari'
   },
+
+  body: {
+    title: 'Sesuatu pada badan saya',
+    intro: 'Pilih mana yang kena. Awak tak perlu terangkan.',
+    standing:
+      'Kalau ada benda yang baru, teruk, atau menakutkan awak, sila jumpa ' +
+      'doktor. Aplikasi ni tak boleh beritahu apa puncanya.',
+    note: 'Catat ini',
+    notePlaceholder: 'Apa-apa lagi yang patut diingat. Ikut suka.',
+    noted: 'Dah dicatat.',
+    enough: 'Cukup untuk hari ni. Saya dah dapat apa yang awak beritahu.',
+    open: 'Sesuatu pada badan saya',
+    region: {
+      chest: 'Dada dan pernafasan',
+      head: 'Kepala',
+      gut: 'Perut',
+      body: 'Seluruh badan'
+    }
+  },
+
+  report: {
+    title: 'Untuk temujanji',
+    open: 'Sesuatu untuk temujanji',
+    generated: 'Dibuat pada',
+    scope:
+      'Ini apa yang seseorang taip dalam telefon, dengan tarikh ia ditaip. ' +
+      'Ia dilapor sendiri. Ia bukan rekod perubatan, bukan diagnosis, bukan ' +
+      'keputusan saringan, dan tidak disahkan. Sila tanya orangnya, jangan ' +
+      'baca sendiri sahaja.',
+    moodTitle: 'Hari demi hari',
+    blankDays: 'Hari kosong memang kosong je.',
+    daysRecorded: '{n} daripada {total} hari terakhir ada catatan.',
+    bodyTitle: 'Apa yang badan rasa',
+    bodyNone: 'Tiada catatan dalam tempoh ini.',
+    didTitle: 'Perkara yang dibuat',
+    didBreathing: '{n} sesi bernafas',
+    didGrounding: '{n} sesi kembali ke bilik',
+    didTasks: '{n} benda kecil disiapkan',
+    notIncluded:
+      'Apa yang ditulis secara peribadi tidak dimasukkan di sini, dengan ' +
+      'sengaja. Sila tanya.',
+    print: 'Cetak atau simpan sebagai PDF'
+  },
+
 
   garden: {
     title: 'Taman',
