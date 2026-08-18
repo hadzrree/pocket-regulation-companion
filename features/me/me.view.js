@@ -25,6 +25,8 @@ import { el, clear, on } from '../../core/utils/dom.js';
 import { t, LANGUAGES } from '../../core/i18n/i18n.js';
 import * as prefs from '../../core/a11y/prefs.js';
 import { getState } from '../../core/store/store.js';
+import { Button } from '../../core/components/Button.js';
+import { navigate } from '../../app/router.js';
 
 let cleanups = [];
 
@@ -131,6 +133,18 @@ export function mount(container) {
         value: s.lang,
         options: LANGUAGES.map((l) => ({ value: l.code, label: l.label })),
         onChange: (v) => { prefs.set('lang', v); rerender(); }
+      })
+    ]),
+
+    /* The report. It lives HERE and nowhere else — not on Today, not in
+       Feelings, not linked from any flow someone uses while struggling. That
+       placement is what makes the counts on it defensible. See
+       features/report/report.view.js. */
+    el('section', { class: 'u-stack' }, [
+      el('h2', { class: 't-h3' }, t('report.title')),
+      Button({
+        label: t('report.open'), variant: 'secondary', size: 'lg', full: true,
+        onClick: () => navigate('/report')
       })
     ]),
 

@@ -117,6 +117,32 @@ export const routes = {
     titleKey: 'mika.holdingTitle',
     navTab: 'feelings',
     distress: false
+  },
+
+  /* ---- Module 6 ----------------------------------------------------------
+     The body log keeps the Feelings tab lit, because that is where it lives
+     and where the person came from.
+
+     THERE IS DELIBERATELY NO ROUTE TO A SYMPTOM HISTORY. You can record; you
+     cannot scroll back. A scrollable symptom feed is a body-checking
+     instrument — the person reads yesterday's entry to decide whether today
+     is worse, and the comparison generates the next check. The record lives
+     in the report, which is a deliberate act with a reason attached.
+     Clinical Framework §10.3. */
+  '/body': {
+    load: () => import('../features/body/body.view.js'),
+    titleKey: 'body.title',
+    navTab: 'feelings',
+    distress: false
+  },
+
+  /* Reached only from Me. Nothing links to it from a flow someone uses while
+     they are struggling — see the note about counts in report.view.js. */
+  '/report': {
+    load: () => import('../features/report/report.view.js'),
+    titleKey: 'report.title',
+    navTab: 'me',
+    distress: false
   }
 };
 

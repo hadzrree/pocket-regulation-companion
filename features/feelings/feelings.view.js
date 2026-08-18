@@ -41,6 +41,7 @@ import { getState } from '../../core/store/store.js';
 import { isOk } from '../../core/utils/result.js';
 import { Button } from '../../core/components/Button.js';
 import { navigate } from '../../app/router.js';
+import { MoodRibbon, lastDays } from '../../core/components/MoodRibbon.js';
 
 let alive = false;
 
@@ -49,6 +50,7 @@ export function mount(container) {
   const lang = getState().lang || 'en';
 
   const list = el('div', { class: 'feelings__list u-stack-sm' });
+  const ribbonSlot = el('div', { class: 'feelings__ribbon u-stack-sm' });
 
   clear(container);
   container.appendChild(
@@ -57,10 +59,18 @@ export function mount(container) {
       el('p', { class: 't-subtitle' }, t('feelings.intro')),
       /* The Thought Park lives here, under the name the interface uses.
          Same storage, same rules, same permanence. Mika Spec §0. */
+      ribbonSlot,
       Button({
         label: t('mika.openHolding'), variant: 'secondary', size: 'lg', full: true,
         icon: 'messageCircle', iconPos: 'start',
         onClick: () => navigate('/holding')
+      }),
+      /* The body log. Reachable, but not the first thing on the screen — the
+         feature is for an appointment, not for browsing. */
+      Button({
+        label: t('body.open'), variant: 'secondary', size: 'lg', full: true,
+        icon: 'heart', iconPos: 'start',
+        onClick: () => navigate('/body')
       }),
       list
     ])
@@ -74,6 +84,23 @@ export function mount(container) {
       list.appendChild(EmptyState({ text: t('feelings.empty'), icon: 'heart' }));
       return;
     }
+
+    /* The ribbon. One mark per day, no line between them, no average, no
+       trend. See core/components/MoodRibbon.js for why. */
+    const days = lastDays(30);
+    const moodByDay = new Map(rows.map((r) => [r.dateKey, r.mood]));
+    ribbonSlot.appendChild(el('h2', { class: 't-h3' }, t('feelings.history')));
+    ribbonSlot.appendChild(MoodRibbon({
+      days,
+      moodByDay,
+      wordFor: (mood) => {
+        const found = MOODS.find((m) => m.value === mood);
+        return found ? t(found.key) : '';
+      },
+      dateLabel: (key) => formatDate(key, lang)
+    }));
+    /* Said once, in words, and then the blank days are left alone. */
+    ribbonSlot.appendChild(el('p', { class: 't-caption t-muted' }, t('report.blankDays')));
 
     const todayKey = localDateKey();
     for (const row of rows) {
