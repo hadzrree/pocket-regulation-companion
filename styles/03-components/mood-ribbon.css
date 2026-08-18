@@ -1,0 +1,47 @@
+/* ==========================================================================
+   03-COMPONENTS / MOOD-RIBBON
+   Purpose : The mood history drawing.
+   Depends : 01-tokens/colors.css
+   Pairs with : core/components/MoodRibbon.js
+
+   THERE IS NO RULE IN THIS FILE FOR A TREND LINE, AN AVERAGE, A GRIDLINE OR
+   AN AXIS LABEL — because there is nothing to style. The component cannot
+   draw them. If a future change needs a selector here that does not exist,
+   that is the design telling you something.
+   ========================================================================== */
+
+.ribbon-figure { margin: 0; width: 100%; }
+
+.ribbon {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* One mark per day, in the colour of the word that was said. The colour scale
+   is separated by luminance as well as hue, so the ribbon still reads as an
+   ordered sequence in greyscale and under every common colour vision
+   deficiency. Design Language §1.5. */
+.ribbon__day--1 { fill: var(--color-mood-1); }
+.ribbon__day--2 { fill: var(--color-mood-2); }
+.ribbon__day--3 { fill: var(--color-mood-3); }
+.ribbon__day--4 { fill: var(--color-mood-4); }
+.ribbon__day--5 { fill: var(--color-mood-5); }
+
+/* A blank day. Faint, small, on the baseline, and never annotated. */
+.ribbon__blank { fill: var(--color-border-strong); opacity: 0.55; }
+
+/* A hairline for the marks to stand on. Not an axis: no ticks, no numbers. */
+.ribbon__base { stroke: var(--color-border); stroke-width: 1; }
+
+.ribbon-figure__caption {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-secondary);
+  padding-block-start: var(--space-2);
+}
+
+/* High contrast gives every mark an outline so the shape survives when the
+   colour difference is doing less work. */
+[data-contrast='high'] .ribbon__day { stroke: var(--color-text-primary); stroke-width: 0.6; }

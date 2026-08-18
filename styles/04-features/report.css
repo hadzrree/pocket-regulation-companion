@@ -1,0 +1,44 @@
+/* ==========================================================================
+   04-FEATURES / REPORT
+   Purpose : The appointment summary, on screen.
+   Depends : 01-tokens/*
+   Pairs with : features/report/report.view.js
+   ========================================================================== */
+
+.report-screen {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.report { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.report__head { padding-block-end: var(--space-2); border-block-end: 1px solid var(--color-border); }
+
+/* The provenance line. It says what this is and what it is not, and it is on
+   every copy — a page of clinical-looking data with no provenance is worse
+   than no page at all. */
+.report__scope {
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+}
+
+.report__section { padding-block-start: var(--space-2); }
+
+.report__row {
+  padding: var(--space-3) 0;
+  border-block-end: 1px solid var(--color-border);
+}
+.report__row-date { color: var(--color-text-secondary); }
+.report__note { color: var(--color-text-secondary); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.report__list { padding-inline-start: var(--space-5); }
+.report__list li {
+  list-style: disc;
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-lh);
+  padding-block: 2px;
+}
+
+.report__controls { padding-block-start: var(--space-4); }

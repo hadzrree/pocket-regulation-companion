@@ -1,0 +1,66 @@
+/* ==========================================================================
+   04-FEATURES / BODY
+   Purpose : The body-sensation log.
+   Depends : 01-tokens/*, 03-components/card.css
+   Pairs with : features/body/body.view.js
+
+   THE STANDING LINE IS NOT STYLED AS A WARNING.
+   No red, no icon, no border, no box. It is ordinary body text in the
+   secondary colour, in the same place every time. It is a fact that is always
+   true, not an alert that has just fired — and something that looks like an
+   alert every single visit stops being read by the third visit.
+   ========================================================================== */
+
+.body-log {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.body-log__region { padding-block-start: var(--space-4); }
+
+.body-log__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* One sensation. A pill, 48px, in plain words — never clinical vocabulary.
+   A person reading their own clinical terminology back at 2am is reading a
+   diagnosis they gave themselves. */
+.sensation {
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border-strong);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color var(--duration-base) var(--ease-standard),
+              border-color var(--duration-base) var(--ease-standard);
+}
+.sensation:hover { border-color: var(--color-primary); }
+
+.sensation[aria-pressed='true'] {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* The standing line. Ordinary text, every time, never an alert. */
+.body-log__standing {
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+  padding-block-start: var(--space-2);
+}
+
+/* Both closing states share a layout and nothing else. They mean very
+   different things — one is "saved", the other is "the app has stopped asking
+   for today" — so they carry different class names as well. */
+.body-log__after { text-align: center; padding-block: var(--space-6); }

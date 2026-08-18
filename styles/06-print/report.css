@@ -1,0 +1,82 @@
+/* ==========================================================================
+   06-PRINT / REPORT
+   Purpose : What comes out of the printer, or the PDF a phone makes.
+   Depends : nothing — this layer deliberately overrides everything.
+
+   WHY THIS LAYER EXISTS AT ALL
+     The report is meant to be handed to a clinician. On paper that means
+     black text on white paper with real margins, and none of the app's warm
+     off-white, soft shadows or rounded cards — those are for a phone at 3am,
+     not for a page that goes in a folder.
+
+   THE RULE
+     Everything that is not the report is hidden. Buttons, navigation, the
+     toast host, anything interactive. A printed page with a "Print" button
+     drawn on it looks like a mistake, and a clinician reading it will trust
+     the rest of the page slightly less.
+   ========================================================================== */
+
+@media print {
+
+  /* Paper, not screen. Ink is expensive and a tinted background prints as a
+     grey wash that makes small text harder to read. */
+  :root,
+  [data-theme='dark'] {
+    --color-bg: #FFFFFF;
+    --color-card: #FFFFFF;
+    --color-text-primary: #000000;
+    --color-text-secondary: #333333;
+    --color-text-tertiary: #555555;
+    --color-border: #BBBBBB;
+    --color-border-strong: #999999;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  /* Everything that is not the report. */
+  #nav,
+  .toast-host,
+  .skip-link,
+  .report__controls,
+  .btn {
+    display: none !important;
+  }
+
+  #main {
+    padding: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .report-screen { padding: 0 !important; max-width: none !important; }
+
+  .report {
+    gap: 14pt;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  /* Real page margins. 16mm is comfortable for a hole punch and a staple. */
+  @page { margin: 16mm; }
+
+  /* A section must not be split across a page break in the middle of a date
+     and the thing that happened on it. */
+  .report__section { break-inside: avoid; }
+  .report__row { break-inside: avoid; }
+  .report__head { break-after: avoid; }
+
+  /* The drawing prints. The colour scale is separated by luminance as well as
+     hue, so it stays readable on a black-and-white printer — which is what a
+     clinic has. Design Language §1.5. */
+  .ribbon { max-width: 150mm; }
+  .ribbon__day { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+  /* Nothing animates on paper. */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -48,6 +48,7 @@
 @import url('./03-components/breathing-circle.css');
 @import url('./03-components/garden.css');
 @import url('./03-components/mika.css');
+@import url('./03-components/mood-ribbon.css');
 @import url('./03-components/nav-bar.css');
 /* Module 4+ adds: sheet, modal, progress-ring, fab, field, chart-card,
    skeleton. One @import per file, in this block. */
@@ -62,11 +63,13 @@
 @import url('./04-features/task.css');
 @import url('./04-features/garden.css');
 @import url('./04-features/mika.css');
-/* Module 6+ adds: charts, symptoms, export. */
+@import url('./04-features/body.css');
+@import url('./04-features/report.css');
+/* Module 7 adds: export, backup. */
 
 /* ---- 05 · UTILITIES ----------------------------------------------------- */
 @import url('./05-utilities/layout.css');
 @import url('./05-utilities/text.css');
 
 /* ---- 06 · PRINT --------------------------------------------------------- */
-/* Module 7 adds: export.css */
+@import url('./06-print/report.css');
