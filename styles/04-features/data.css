@@ -1,0 +1,105 @@
+/* ==========================================================================
+   04-FEATURES / DATA
+   Purpose : The "Your data" screen — take a copy, put one back, delete all.
+   Depends : 01-tokens/*, 03-components/card.css, 03-components/button.css
+   Pairs with : features/data/data.view.js
+
+   THE DELETE CARD IS NOT STYLED AS A DANGER ZONE.
+   No red border, no warning tint, no skull, no shaking. Every other app puts
+   destructive settings behind a red rectangle, which is a design borrowed
+   from server administration, where the risk is to the company. Here the data
+   belongs to the person and the risk of deleting it is entirely theirs to
+   take.
+
+   Someone deleting a mental-health record may be leaving an unsafe home,
+   passing the phone to a family member, or simply finished. Painting their
+   exit red tells them the app disapproves. It gets the same plain card as
+   everything else, and the confirmation carries the weight in words.
+   ========================================================================== */
+
+.data-screen {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  /* Cleared past the nav bar and the phone's home indicator, so the last
+     button is never half-covered on an iPhone. */
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+/* --------------------------------------------------------------------------
+   THE OPT-IN FOR PRIVATE WRITING
+   The whole row is the label, so the tap target is the sentence rather than
+   a 16px square. Motor difficulty is ordinary — tremor from lithium or an
+   SSRI, a shaking hand mid-panic — and a checkbox you have to aim at is a
+   checkbox that gets missed.
+-------------------------------------------------------------------------- */
+.data-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-height: var(--touch-min);
+  padding: var(--space-3);
+  margin-block-start: var(--space-2);
+  border: 1.5px solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  background: var(--color-card-sunken);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.data-check:hover { border-color: var(--color-primary); }
+
+/* The box itself is left as the platform control. A hand-drawn checkbox has
+   to reimplement indeterminate state, forced-colours mode, and the way each
+   assistive technology announces it — and usually reimplements two of the
+   three. It is only made bigger. */
+.data-check__box {
+  inline-size: 22px;
+  block-size: 22px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--color-primary);
+  /* Optically aligned with the first line of text rather than its box. */
+  margin-block-start: 1px;
+}
+
+/* No focus rule here on purpose. 02-base/a11y.css already rings every
+   input on :focus-visible, and a second declaration would be a second
+   place to keep in step. */
+
+/* --------------------------------------------------------------------------
+   THE FILE PICKER
+   Also left as the platform control, for the same reason and one more: a
+   custom file button has to be a <button> that clicks a hidden <input>, and
+   on several Android browsers that pattern silently does nothing.
+-------------------------------------------------------------------------- */
+.data-file {
+  display: block;
+  inline-size: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3);
+  margin-block-start: var(--space-2);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-card-sunken);
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+}
+
+.data-file::file-selector-button {
+  min-height: 40px;
+  margin-inline-end: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: 1.5px solid var(--color-border-control);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-button-size);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* The confirmation sentence, which is where the weight lives instead of in a
+   colour. Given room so it is read rather than skipped. */
+.data-screen .card__body p + p { margin-block-start: var(--space-2); }

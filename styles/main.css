@@ -1,7 +1,19 @@
 /* ==========================================================================
-   MAIN.CSS — the only stylesheet index.html links to.
+   MAIN.CSS — the ordered index of the stylesheet. THE SOURCE OF TRUTH.
 
-   It imports six numbered layers in cascade order. THE NUMBERS ARE THE
+   NOTHING LINKS TO THIS FILE ANY MORE, AND THAT IS DELIBERATE.
+   index.html links styles/app.css, which tools/build-css.py generates by
+   concatenating the files listed below, in exactly this order. So this file
+   still decides the cascade; it just no longer delivers it.
+
+   EDIT THE LAYER FILES AND THIS LIST, then run:
+
+       python3 tools/build-css.py
+
+   verify-module7.py rebuilds app.css in memory and fails the suite if the
+   committed copy has drifted, so forgetting that step is loud, not silent.
+
+   It lists six numbered layers in cascade order. THE NUMBERS ARE THE
    CASCADE. Specificity increases down the list, so a later layer can always
    override an earlier one without !important.
 
@@ -14,12 +26,14 @@
 
    NEVER REORDER THESE. Adding a file means adding a line in the right block.
 
-   PERFORMANCE NOTE
-   @import chains are render-blocking and serialise. Acceptable here because
-   the service worker precaches every stylesheet, so only the very first visit
-   pays the cost. If first paint ever misses the 95 target, concatenate the
-   layers at deploy time — the layer files stay the source of truth and no
-   other code changes. Architecture §3.1.
+   PERFORMANCE NOTE — RESOLVED IN MODULE 7.
+   This block used to say that if first paint ever missed target, the layers
+   should be concatenated at deploy time. Module 7 measured it: on Slow 3G the
+   @import chain took 6.1 seconds to resolve, first paint landed at 6.6s, and
+   a returning visit still spent 288ms on 39 cache reads. Concatenated, those
+   became 2.9s, 4.6s and 160ms. So it was done, exactly as described here —
+   the layer files stayed the source of truth and no other code changed.
+   Architecture §3.1.
    ========================================================================== */
 
 /* ---- 01 · TOKENS -------------------------------------------------------- */
@@ -65,7 +79,7 @@
 @import url('./04-features/mika.css');
 @import url('./04-features/body.css');
 @import url('./04-features/report.css');
-/* Module 7 adds: export, backup. */
+@import url('./04-features/data.css');
 
 /* ---- 05 · UTILITIES ----------------------------------------------------- */
 @import url('./05-utilities/layout.css');

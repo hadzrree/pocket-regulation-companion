@@ -244,8 +244,42 @@ export const ms = {
     language: 'Bahasa',
     about: 'Tentang',
     on: 'Hidup',
-    off: 'Mati'
+    off: 'Mati',
+    name: 'Nama panggilan awak',
+    namePlaceholder: 'Boleh biar kosong kalau nak',
+    haptics: 'Getar sikit bila tekan',
+    data: 'Data awak',
+    openData: 'Buat salinan, atau padam semua',
+    never: 'Aplikasi ni tak pernah hantar notifikasi dan tak pernah minta awak kembali.',
+    version: 'Versi'
   },
+
+  data: {
+    title: 'Data awak',
+    intro: 'Ia ada dalam telefon ni je, tak ada di tempat lain.',
+
+    copyTitle: 'Buat salinan',
+    copyBody: 'Satu fail yang awak boleh simpan, kalau telefon ni hilang.',
+    copyContains: 'Fail ni ada semakan rasa awak, taman awak, apa yang awak buat, dan apa yang badan awak rasa.',
+    includeWriting: 'Masukkan sekali apa yang Mika pegang',
+    copyAction: 'Buat salinan',
+    copyDone: 'Dah simpan dalam muat turun awak.',
+
+    restoreTitle: 'Masukkan balik salinan',
+    restoreBody: 'Pilih fail yang awak buat dulu.',
+    restoreAction: 'Pilih fail',
+    restoreSafe: 'Ini cuma tambah apa yang tiada. Apa yang dah ada tak diubah atau dibuang.',
+    restoreDone: 'Dah masukkan balik {added} benda.',
+    restoreBad: 'Saya tak dapat baca fail tu. Mungkin bukan fail saya.',
+    restoreNewer: 'Fail tu daripada versi yang lebih baru daripada ini.',
+
+    deleteTitle: 'Padam semua',
+    deleteBody: 'Semua semakan rasa, semua yang Mika pegang, dan taman awak.',
+    deleteAction: 'Padam semua',
+    deleteConfirm: 'Ini tak boleh dibatalkan, dan tiada salinan di tempat lain.',
+    deleteYes: 'Ya, padam semua'
+  },
+
 
   scope: {
     statement:

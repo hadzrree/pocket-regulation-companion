@@ -1,0 +1,3159 @@
+/* =============================================================================
+   app.css — GENERATED FILE. DO NOT EDIT.
+
+   Built by tools/build-css.py from styles/main.css and the layer files it
+   imports, in cascade order. Edit those; then run:
+
+       python3 tools/build-css.py
+
+   Editing this file directly will work until the next build and then be
+   silently thrown away, which is the worst kind of bug to chase.
+   ============================================================================= */
+
+
+/* ===== 01-tokens/colors.css ======================================== */
+/* ==========================================================================
+   01-TOKENS / COLORS
+   Purpose : Every colour in the application, as CSS custom properties.
+   Source  : Warm Dawn Design Language v1.0 §1. Values are contrast-verified —
+             do not change one without re-running the verification.
+   Depends : nothing. This is the first file in the cascade.
+   Naming  : --color-{role}        text/icon/fill. ALWAYS accessible (>=4.5:1)
+             --color-{role}-soft   tinted background behind that role
+             --color-{role}-bright DECORATIVE ONLY. Never text. Never the sole
+                                   carrier of meaning.
+   ========================================================================== */
+
+:root {
+  /* ---- Surfaces ---------------------------------------------------------- */
+  --color-bg:               #FBF7F2;  /* Morning Light — warm ivory, never pure white */
+  --color-surface:          #FFFDFA;  /* Raised sheets, nav bars */
+  --color-card:             #FFFFFF;  /* Cards float above the warm page */
+  --color-card-sunken:      #F5EFE8;  /* Inset wells, inputs, progress tracks */
+  --color-overlay:          rgba(43, 39, 36, 0.34);   /* Warm scrim, never black */
+  --color-overlay-blur:     rgba(251, 247, 242, 0.72);
+
+  /* ---- Borders ----------------------------------------------------------- */
+  --color-border:           #E9DFD4;  /* Hairline separators (decorative) */
+  --color-border-strong:    #D8CABB;  /* Card outlines, dividers (decorative) */
+  --color-border-control:   #998E84;  /* Interactive borders — meets 3:1 */
+
+  /* ---- Text -------------------------------------------------------------- */
+  --color-text-primary:     #2B2724;  /* Warm ink, softer than black. 14.8:1 on card */
+  --color-text-secondary:   #6B625A;  /* 6.0:1 on card */
+  /* WAS #8C837A (3.7:1) until the Module 7 audit.
+
+     The old value was written as "meta only, never sentences", on the common
+     assumption that small print is exempt. It is not. WCAG 2.2 sets 4.5:1 for
+     ALL text below 18.66px, and axe-core flagged it on nine routes — the
+     bottom-navigation labels, every caption, and the field labels on Me and
+     Today. Those are not decoration; the nav labels are how a person finds
+     their way around the app.
+
+     Darkened to 4.9:1 on card and 4.7:1 on the page background. It stays
+     visibly quieter than secondary text (5.9:1), so the visual hierarchy the
+     Design Language asks for survives — it just no longer disappears for
+     anyone reading in sunlight or with reduced contrast sensitivity, which
+     includes most people over 60 and anyone on a medication that affects
+     vision. Design Language 4.2; Clinical Framework 14.1. */
+  --color-text-tertiary:    #756E66;  /* 4.9:1 on card, 4.7:1 on background */
+  --color-text-on-color:    #FFFFFF;
+  --color-text-inverse:     #FBF7F2;
+
+  /* ---- Disabled ---------------------------------------------------------- */
+  --color-disabled-text:    #8F8378;
+  --color-disabled-surface: #EFE9E2;
+  --color-disabled-border:  #E0D8CF;
+
+  /* ---- Primary · Sage (calm, growth, the app's voice) --------------------- */
+  --color-primary:          #3B7563;
+  --color-primary-hover:    #2F6252;
+  --color-primary-pressed:  #275547;
+  --color-primary-bright:   #6BAF95;   /* decorative only */
+  --color-primary-soft:     #E3EFE9;
+  --color-primary-tint:     #F1F8F4;
+
+  /* ---- Secondary · Dusk Sky (rest, night, breathing) ---------------------- */
+  --color-secondary:        #4F639B;
+  --color-secondary-hover:  #425384;
+  --color-secondary-bright: #93A6D6;   /* decorative only */
+  --color-secondary-soft:   #E6EAF5;
+  --color-secondary-tint:   #F3F5FB;
+
+  /* ---- Accent · Terracotta (warmth, encouragement) ------------------------ */
+  --color-accent:           #9E592C;
+  --color-accent-hover:     #874B25;
+  --color-accent-bright:    #EBA063;   /* decorative only */
+  --color-accent-soft:      #FBEADD;
+  --color-accent-tint:      #FEF6EF;
+
+  /* ---- Semantic ---------------------------------------------------------- */
+  --color-success:          #3A764F;
+  --color-success-bright:   #6FB88A;
+  --color-success-soft:     #E4F0E7;
+
+  --color-warning:          #916517;
+  --color-warning-bright:   #E0A63E;
+  --color-warning-soft:     #FBEFD9;
+
+  --color-danger:           #A45145;   /* Clay. NEVER fire-engine red. */
+  --color-danger-bright:    #D98979;
+  --color-danger-soft:      #F8E7E2;
+
+  --color-info:             #3D6F8E;
+  --color-info-bright:      #7FB0CC;
+  --color-info-soft:        #E3EEF4;
+
+  /* ---- Mood scale (5 steps, warm -> cool, never red) ---------------------- */
+  --color-mood-5:           #C88618;   /* Very Happy — Sunlight */
+  --color-mood-5-soft:      #FBE0A8;
+  --color-mood-5-ink:       #885B10;
+  --color-mood-4:           #4E8F72;   /* Good — New Leaf */
+  --color-mood-4-soft:      #D6EADD;
+  --color-mood-4-ink:       #427056;
+  --color-mood-3:           #A4927B;   /* Neutral — Warm Sand */
+  --color-mood-3-soft:      #EDE4D7;
+  --color-mood-3-ink:       #736450;
+  --color-mood-2:           #6C8BB8;   /* Low — Quiet Sky */
+  --color-mood-2-soft:      #DCE5F2;
+  --color-mood-2-ink:       #486795;
+  --color-mood-1:           #7E7391;   /* Very Low — Soft Dusk */
+  --color-mood-1-soft:      #E5E0EC;
+  --color-mood-1-ink:       #6A607B;
+
+  /* ---- Garden / reward palette (decorative) ------------------------------- */
+  --color-garden-soil:      #C7A98B;
+  --color-garden-stem:      #5E9E7A;
+  --color-garden-leaf:      #7FC4A0;
+  --color-garden-bloom:     #EBA063;
+  --color-garden-bloom-alt: #E4A6C0;
+  --color-garden-firefly:   #F5D77E;
+  --color-garden-sky-dawn:  #FCEBD8;
+  --color-garden-sky-day:   #E4EFF6;
+  --color-garden-sky-dusk:  #E7DDEC;
+
+  /* ---- Gradients (2 stops max, low chroma travel, 150-160deg) ------------- */
+  --gradient-calm:      linear-gradient(160deg, #E3EFE9 0%, #F1F8F4 100%);
+  --gradient-dawn:      linear-gradient(160deg, #FCEBD8 0%, #FDF6EE 100%);
+  --gradient-dusk:      linear-gradient(160deg, #E6EAF5 0%, #F3F1F8 100%);
+  --gradient-primary:   linear-gradient(150deg, #4E8F79 0%, #3B7563 100%);
+  --gradient-breath:    linear-gradient(150deg, #7FC4A0 0%, #93A6D6 100%);
+  --gradient-celebrate: linear-gradient(150deg, #F5D77E 0%, #EBA063 100%);
+}
+
+/* ==========================================================================
+   NIGHT THEME
+   Not a style preference — a clinical accommodation for 3am use.
+   Warm charcoal, never pure black (halation makes text vibrate for tired eyes).
+   Warm off-white text, never #FFF.
+   Applied via <html data-theme="dark">, set by core/a11y/prefs.js.
+   ========================================================================== */
+
+[data-theme="dark"] {
+  --color-bg:               #16151A;
+  --color-surface:          #1D1C22;
+  --color-card:             #23222A;
+  --color-card-sunken:      #1A191F;
+  --color-overlay:          rgba(8, 7, 10, 0.58);
+  --color-overlay-blur:     rgba(22, 21, 26, 0.72);
+
+  --color-border:           #33313B;
+  --color-border-strong:    #454351;
+  --color-border-control:   #6F6C82;
+
+  --color-text-primary:     #F2EDE7;
+  --color-text-secondary:   #B4ABA2;
+  /* WAS #8F8880, which measured 4.50:1 on a card — passing on paper and
+     failing in the browser, because axe computes 4.49 after sub-pixel
+     rendering. A value that lands exactly on the threshold is not a pass, it
+     is a coin toss decided by the device. Lifted to 5.1:1 on card and 6.1:1
+     on the page, so it stays legible on an OLED phone at low brightness,
+     which is when this theme is actually used — at night, in bed, by someone
+     who cannot sleep. */
+  --color-text-tertiary:    #999189;  /* 5.1:1 on card, 6.1:1 on background */
+  --color-text-on-color:    #16151A;
+  --color-text-inverse:     #23222A;
+
+  --color-disabled-text:    #847D89;
+  --color-disabled-surface: #2C2A33;
+  --color-disabled-border:  #3A3844;
+
+  --color-primary:          #7FC4AB;
+  --color-primary-hover:    #95D2BB;
+  --color-primary-pressed:  #6BB299;
+  --color-primary-bright:   #7FC4AB;
+  --color-primary-soft:     #22332E;
+  --color-primary-tint:     #1C2823;
+
+  --color-secondary:        #9BAEE0;
+  --color-secondary-hover:  #AEBEE9;
+  --color-secondary-bright: #9BAEE0;
+  --color-secondary-soft:   #252A3A;
+  --color-secondary-tint:   #1E212C;
+
+  --color-accent:           #E9A277;
+  --color-accent-hover:     #F0B28C;
+  --color-accent-bright:    #E9A277;
+  --color-accent-soft:      #33261D;
+  --color-accent-tint:      #281E17;
+
+  --color-success:          #82C395;
+  --color-success-bright:   #82C395;
+  --color-success-soft:     #203025;
+
+  --color-warning:          #E0B25E;
+  --color-warning-bright:   #E0B25E;
+  --color-warning-soft:     #332A19;
+
+  --color-danger:           #E39485;
+  --color-danger-bright:    #E39485;
+  --color-danger-soft:      #33221F;
+
+  --color-info:             #8FBBD6;
+  --color-info-bright:      #8FBBD6;
+  --color-info-soft:        #1E2B33;
+
+  --color-mood-5: #F2C169;  --color-mood-5-soft: #3A2E17;  --color-mood-5-ink: #F2C169;
+  --color-mood-4: #7CBF9B;  --color-mood-4-soft: #1F3028;  --color-mood-4-ink: #7CBF9B;
+  --color-mood-3: #C9B79E;  --color-mood-3-soft: #302A22;  --color-mood-3-ink: #C9B79E;
+  --color-mood-2: #93AFD8;  --color-mood-2-soft: #1F2733;  --color-mood-2-ink: #93AFD8;
+  --color-mood-1: #A296B6;  --color-mood-1-soft: #2A2533;  --color-mood-1-ink: #A296B6;
+
+  --color-garden-soil:      #6B5946;
+  --color-garden-sky-dawn:  #2E2620;
+  --color-garden-sky-day:   #1F2A31;
+  --color-garden-sky-dusk:  #262130;
+
+  --gradient-calm:      linear-gradient(160deg, #22332E 0%, #1C2823 100%);
+  --gradient-dawn:      linear-gradient(160deg, #33261D 0%, #241C17 100%);
+  --gradient-dusk:      linear-gradient(160deg, #252A3A 0%, #1E212C 100%);
+  --gradient-primary:   linear-gradient(150deg, #7FC4AB 0%, #63A98F 100%);
+  --gradient-breath:    linear-gradient(150deg, #7FC4A0 0%, #93A6D6 100%);
+  --gradient-celebrate: linear-gradient(150deg, #F2C169 0%, #E9A277 100%);
+
+  color-scheme: dark;
+}
+
+/* Follow the OS unless the user has explicitly chosen. prefers-color-scheme is
+   read HERE and nowhere else in the codebase — one source of truth. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark; }
+}
+
+/* ===== 01-tokens/typography.css ==================================== */
+/* ==========================================================================
+   01-TOKENS / TYPOGRAPHY
+   Purpose : The type scale. Every size derives from --font-scale so the in-app
+             text-size control and the OS setting both work without touching
+             a single component.
+   Source  : Design Language v1.0 §2.
+   Depends : nothing (cascade order only).
+   ========================================================================== */
+
+:root {
+  /* Nunito — the app's voice. Rounded terminals read as kind, not clinical.
+     Inter  — numerals, chart labels, captions. Tabular figures stop progress
+              counters jittering as they animate.
+     Both are SELF-HOSTED (see 02-base/fonts.css). The system stack below is a
+     real fallback, not a formality: the app must look correct before fonts
+     load, and correct forever if a font file is missing. */
+  --font-primary:   'Nunito', ui-rounded, 'SF Pro Rounded', system-ui,
+                    -apple-system, 'Segoe UI', sans-serif;
+  --font-secondary: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-numeric:   'Inter', ui-monospace, system-ui, sans-serif;
+
+  /* Set by [data-textsize] in 02-base/a11y.css. Default 1. */
+  --font-scale: 1;
+
+  --text-display-size:   calc(40px * var(--font-scale));
+  --text-display-lh:     1.10;  --text-display-weight:  800;  --text-display-ls:  -0.02em;
+
+  --text-h1-size:        calc(32px * var(--font-scale));
+  --text-h1-lh:          1.19;  --text-h1-weight:       800;  --text-h1-ls:       -0.015em;
+
+  --text-h2-size:        calc(26px * var(--font-scale));
+  --text-h2-lh:          1.23;  --text-h2-weight:       700;  --text-h2-ls:       -0.01em;
+
+  --text-h3-size:        calc(22px * var(--font-scale));
+  --text-h3-lh:          1.27;  --text-h3-weight:       700;  --text-h3-ls:       -0.005em;
+
+  --text-title-size:     calc(19px * var(--font-scale));
+  --text-title-lh:       1.37;  --text-title-weight:    700;  --text-title-ls:    0;
+
+  --text-subtitle-size:  calc(17px * var(--font-scale));
+  --text-subtitle-lh:    1.41;  --text-subtitle-weight: 500;  --text-subtitle-ls: 0;
+
+  /* Body line-height is 1.63, not 1.5. Brain fog needs air between lines. */
+  --text-body-size:      calc(16px * var(--font-scale));
+  --text-body-lh:        1.63;  --text-body-weight:     400;  --text-body-ls:     0;
+
+  --text-body-sm-size:   calc(15px * var(--font-scale));
+  --text-body-sm-lh:     1.60;  --text-body-sm-weight:  400;  --text-body-sm-ls:  0;
+
+  --text-caption-size:   calc(13px * var(--font-scale));
+  --text-caption-lh:     1.38;  --text-caption-weight:  500;  --text-caption-ls:  0.01em;
+
+  --text-button-size:    calc(16px * var(--font-scale));
+  --text-button-lh:      1.25;  --text-button-weight:   700;  --text-button-ls:   0.01em;
+
+  --text-label-size:     calc(12px * var(--font-scale));
+  --text-label-lh:       1.33;  --text-label-weight:    600;  --text-label-ls:    0.06em;
+
+  /* Reading measure. Bahasa Malaysia runs ~15% longer than English. */
+  --measure-en: 68ch;
+  --measure-bm: 60ch;
+}
+
+:lang(ms) { --measure: var(--measure-bm); hyphens: auto; }
+:lang(en) { --measure: var(--measure-en); }
+
+/* ===== 01-tokens/spacing.css ======================================= */
+/* ==========================================================================
+   01-TOKENS / SPACING
+   Purpose : A strict 4px grid. Generous space is the visual equivalent of a
+             slow sentence — a clinical choice, not an aesthetic one.
+   Source  : Design Language v1.0 §3.
+   ========================================================================== */
+
+:root {
+  --space-0:   0px;
+  --space-1:   4px;   /* icon-to-label gap, chip internals */
+  --space-2:   8px;   /* MINIMUM gap between adjacent touch targets */
+  --space-3:  12px;   /* compact chips and list rows */
+  --space-4:  16px;   /* default gap in a vertical stack, gutter between cards */
+  --space-5:  20px;   /* padding inside information cards */
+  --space-6:  24px;   /* screen side padding AND padding inside every card */
+  --space-8:  32px;   /* between sections on a screen */
+  --space-10: 40px;   /* above a hero primary button */
+  --space-12: 48px;   /* around empty states */
+  --space-16: 64px;   /* top of a first-run or celebration screen */
+  --space-20: 80px;   /* breathing screen — deliberate emptiness */
+
+  --screen-padding-x: var(--space-6);
+  --screen-padding-y: var(--space-8);
+  --stack-gap:        var(--space-4);
+  --section-gap:      var(--space-8);
+}
+
+/* ===== 01-tokens/radius.css ======================================== */
+/* ==========================================================================
+   01-TOKENS / RADIUS
+   Purpose : Nothing in this application has a sharp corner. Sharp corners read
+             as institutional — forms, hospitals, portals. Rounded reads as safe.
+   Source  : Design Language v1.0 §4.
+   ========================================================================== */
+
+:root {
+  --radius-xs:     6px;    /* tags, tiny chips */
+  --radius-sm:     10px;   /* inputs, small controls */
+  --radius-md:     14px;   /* buttons in rows, list items */
+  --radius-lg:     20px;   /* inner panels, mood buttons */
+  --radius-card:   24px;   /* THE card radius — most common shape on screen */
+  --radius-xl:     28px;   /* hero cards, bottom sheets, dialogs */
+  --radius-sheet:  28px 28px 0 0;
+  --radius-fab:    26px;   /* 56px FAB — a squircle, not a circle */
+  --radius-pill:   999px;  /* every button, chip, progress bar */
+  --radius-circle: 50%;
+}
+
+/* ===== 01-tokens/shadows.css ======================================= */
+/* ==========================================================================
+   01-TOKENS / SHADOWS
+   Purpose : Soft elevation. Every shadow is tinted warm brown-grey —
+             rgba(90,70,55,a) — never black. Black shadows on a warm background
+             read as dirt. Blur is always >=4x the Y-offset so edges dissolve
+             rather than cut.
+   Source  : Design Language v1.0 §7.
+   Depends : colors.css only for the dark-theme override selector.
+   ========================================================================== */
+
+:root {
+  --shadow-xs:        0 1px 2px rgba(90, 70, 55, 0.04);
+  --shadow-sm:        0 2px 6px rgba(90, 70, 55, 0.05),
+                      0 1px 2px rgba(90, 70, 55, 0.04);
+  --shadow-md:        0 6px 16px rgba(90, 70, 55, 0.07),
+                      0 2px 5px rgba(90, 70, 55, 0.04);
+  --shadow-lg:        0 14px 32px rgba(90, 70, 55, 0.09),
+                      0 4px 10px rgba(90, 70, 55, 0.05);
+  --shadow-floating:  0 12px 28px rgba(59, 117, 99, 0.22),
+                      0 4px 10px rgba(90, 70, 55, 0.08);
+  --shadow-glass:     0 8px 32px rgba(90, 70, 55, 0.10),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.60);
+  --shadow-pressed:   0 1px 3px rgba(90, 70, 55, 0.06);
+  --shadow-focus:     0 0 0 3px rgba(59, 117, 99, 0.28);
+  --shadow-glow-warm: 0 0 24px rgba(235, 160, 99, 0.35);
+
+  --blur-glass: saturate(160%) blur(20px);
+}
+
+/* Shadows barely read on dark. Elevation is carried by surface lightness plus
+   a 1px inset highlight. Never raise opacity to compensate — it looks muddy. */
+[data-theme="dark"] {
+  --shadow-xs:        0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-sm:        0 2px 6px rgba(0, 0, 0, 0.34);
+  --shadow-md:        0 6px 16px rgba(0, 0, 0, 0.40);
+  --shadow-lg:        0 14px 32px rgba(0, 0, 0, 0.48);
+  --shadow-floating:  0 12px 28px rgba(0, 0, 0, 0.52);
+  --shadow-glass:     0 8px 32px rgba(0, 0, 0, 0.44),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --shadow-pressed:   0 1px 3px rgba(0, 0, 0, 0.30);
+  --shadow-focus:     0 0 0 3px rgba(127, 196, 171, 0.40);
+  --shadow-glow-warm: 0 0 24px rgba(233, 162, 119, 0.28);
+}
+
+/* ===== 01-tokens/motion.css ======================================== */
+/* ==========================================================================
+   01-TOKENS / MOTION
+   Purpose : Durations and easing curves. Every animation should feel like a
+             slow breath. The default easing is the shape of an exhale — quick
+             to start, long and soft to settle.
+   Source  : Design Language v1.0 §11.
+   Note    : No component may invent a duration or a curve. If a value is not
+             here, it does not exist. This is what keeps 40 screens feeling
+             like one product.
+   ========================================================================== */
+
+:root {
+  --duration-instant:   90ms;   /* colour / opacity swap */
+  --duration-fast:     160ms;   /* tap feedback, ripple */
+  --duration-base:     240ms;   /* THE default for anything unlisted */
+  --duration-slow:     360ms;   /* card lift, sheet open */
+  --duration-slower:   520ms;   /* page transition, achievement */
+  --duration-ambient: 1200ms;   /* garden growth, sky shift */
+
+  /* The therapeutic breathing cycle: 4 in · 2 hold · 6 out = 12s total. */
+  --duration-inhale:  4000ms;
+  --duration-hold:    2000ms;
+  --duration-exhale:  6000ms;
+
+  --ease-standard: cubic-bezier(0.32, 0.72, 0.28, 1.00);  /* calm decelerate */
+  --ease-out-soft: cubic-bezier(0.16, 1.00, 0.30, 1.00);
+  --ease-in-soft:  cubic-bezier(0.55, 0.00, 0.85, 0.45);
+  --ease-spring:   cubic-bezier(0.34, 1.42, 0.44, 1.00);  /* max 4% overshoot */
+  --ease-breath:   cubic-bezier(0.42, 0.00, 0.58, 1.00);  /* pure sine feel */
+
+  --press-scale: 0.972;
+  --lift-scale:  1.015;
+}
+
+/* ===== 01-tokens/layout.css ======================================== */
+/* ==========================================================================
+   01-TOKENS / LAYOUT
+   Purpose : Sizing, touch targets, safe areas, and the z-index scale.
+   Source  : Design Language v1.0 §§5-6; Clinical Framework §14.
+   ========================================================================== */
+
+:root {
+  /* Touch targets. 48px is the WCAG 2.2 floor; distress flows use 56px because
+     a person with a tremor cannot reliably hit 48. */
+  --touch-min:     48px;
+  --touch-comfort: 56px;
+  --touch-crisis:  72px;   /* emergency button — must be hittable in panic */
+
+  --button-height-sm: 40px;
+  --button-height-md: 48px;
+  --button-height-lg: 56px;
+  --button-height-xl: 64px;   /* the ONE primary action on a screen */
+
+  --icon-16: 16px;  --icon-20: 20px;  --icon-24: 24px;   /* 24 is the default */
+  --icon-28: 28px;  --icon-32: 32px;  --icon-40: 40px;
+  --icon-stroke:      1.75;   /* Lucide ships at 2 — we soften it deliberately */
+  --icon-stroke-bold: 2.25;   /* selected nav tab only */
+
+  --nav-height:  68px;
+  --fab-size:    56px;
+  --content-max: 480px;   /* phone-first; centred on tablet and desktop */
+
+  --safe-top:    env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left:   env(safe-area-inset-left, 0px);
+  --safe-right:  env(safe-area-inset-right, 0px);
+
+  /* Every primary action lives inside this band, for one-handed use. */
+  --thumb-zone-bottom: 220px;
+
+  /* z-index scale. The FAB sits ABOVE the nav and nothing may be placed above
+     it except the emergency layer — a modal must never block crisis access. */
+  --z-base:      0;
+  --z-card:     10;
+  --z-nav:     100;
+  --z-fab:     110;
+  --z-sheet:   200;
+  --z-dialog:  300;
+  --z-emergency: 400;
+  --z-toast:   500;
+
+  /* Instance-level. Each progress ring sets its own two values inline; the
+     keyframe reads them. Declared here so there is always a defined fallback.
+       circumference = 2 * PI * r      offset = circumference * (1 - progress) */
+  --ring-circumference: 0;
+  --ring-offset: 0;
+}
+
+/* ===== 02-base/reset.css =========================================== */
+/* ==========================================================================
+   02-BASE / RESET
+   Purpose : A small, opinionated reset. Not Normalize — we only remove what
+             actively fights the design system.
+   Depends : 01-tokens/*
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;      /* respect OS text size, don't inflate */
+  -webkit-tap-highlight-color: transparent;  /* we draw our own press state */
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd { margin: 0; }
+
+ul[role='list'], ol[role='list'] { list-style: none; padding: 0; }
+
+img, picture, svg, video { max-width: 100%; display: block; }
+
+input, button, textarea, select { font: inherit; color: inherit; }
+
+/* Inputs and textareas must never be resized by the user in a way that breaks
+   the single-column layout on a phone. */
+textarea { resize: vertical; }
+
+/* Remove the default button chrome. Every button in this app is styled. */
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Prevent iOS zooming on focus by never letting an input fall below 16px. */
+input, textarea { font-size: max(16px, var(--text-body-size)); }
+
+/* ==========================================================================
+   THE [hidden] FIX — added in Module 5, after a real bug
+   ==========================================================================
+   Browsers style `[hidden]` as `display: none` in their user-agent
+   stylesheet, which is the WEAKEST possible source. Any class that sets
+   `display` beats it. This app has several — `.btn--full { display: flex }`,
+   `.u-stack-sm { display: flex }` — so `node.hidden = true` silently did
+   nothing on those elements.
+
+   What that actually caused: the crisis numbers inside the check-in's care
+   card were visible from the moment the card appeared, so the "See the
+   numbers" button had nothing to reveal. And Mika's "Let Mika hold this"
+   button was on screen with an empty field, which is the exact state the
+   design says cannot exist.
+
+   Neither failed loudly. Both were invisible in code review and invisible in
+   a passing test suite, because a thing being MORE visible than intended
+   breaks no assertion anyone thinks to write.
+
+   `!important` is justified here: `hidden` is a statement about whether an
+   element exists for the user, not a style preference, and nothing should be
+   able to override it by accident.
+   ========================================================================== */
+
+[hidden] { display: none !important; }
+
+/* ===== 02-base/fonts.css =========================================== */
+/* ==========================================================================
+   02-BASE / FONTS
+   Purpose : Self-hosted @font-face declarations.
+   Depends : 01-tokens/typography.css
+
+   WHY SELF-HOSTED, NOT THE GOOGLE FONTS CDN
+   -----------------------------------------
+   The tech brief lists "Google Fonts". We use the Google Fonts TYPEFACES —
+   Nunito and Inter, exactly as the Design Language specifies — but serve them
+   from our own assets/fonts/ folder. Three reasons, any one decisive:
+
+     1. OFFLINE-FIRST. A CDN request fails with no network. The app must work
+        at 3am on a phone with no signal — that is the whole product.
+     2. PRIVACY. A request to fonts.gstatic.com discloses the user's IP, and
+        the fact that they opened a mental health app, to a third party. The
+        Architecture's CSP (connect-src 'self') blocks it by design.
+     3. PERFORMANCE. Removes a DNS lookup, a TLS handshake and a
+        render-blocking round trip on first paint.
+
+   WHAT SHIPPED (Module 2)
+   -----------------------
+   Four files, ~208 KB total. Both families are VARIABLE fonts: one file
+   carries every weight from 400 to 800, instead of four separate static
+   files per family. That is roughly a third of the bytes for strictly more
+   typographic range.
+
+     nunito-latin.woff2       39 KB   the app's voice
+     nunito-latin-ext.woff2   35 KB
+     inter-latin.woff2        48 KB   numerals, captions, chart labels
+     inter-latin-ext.woff2    85 KB
+
+   WHY EACH FAMILY IS SPLIT IN TWO
+   -------------------------------
+   The unicode-range on each rule tells the browser which characters that file
+   covers. A browser downloads a font file ONLY IF the page actually contains
+   a character in its range. English and Bahasa Malaysia are written entirely
+   within Basic Latin, so in normal use the two "-ext" files are never
+   fetched at all — the app pays 87 KB, not 208 KB. The extended files exist
+   so that a name, a place or a borrowed word with a diacritic renders in the
+   right typeface instead of silently falling back to a system font mid-word.
+
+   LICENCE
+   -------
+   Nunito © 2014 The Nunito Project Authors.
+   Inter  © 2016 The Inter Project Authors.
+   Both under the SIL Open Font License 1.1 — see assets/fonts/OFL.txt.
+   The OFL permits bundling and redistribution inside an application; the
+   licence text must travel with the files, which is why OFL.txt is in the
+   repository rather than only referenced here.
+
+   Source: the @fontsource-variable packages, which are the same binaries
+   Google Fonts serves, subset and repackaged for self-hosting.
+
+   IF YOU EVER REPLACE THESE FILES
+   -------------------------------
+   Keep the family names ('Nunito', 'Inter') and the weight ranges identical.
+   Every size token in 01-tokens/typography.css is drawn against these
+   metrics, and a family with different vertical proportions will change the
+   rhythm of every screen at once.
+   ========================================================================== */
+
+/* ---- Nunito — the app's voice -------------------------------------------
+   Rounded terminals read as kind rather than clinical. It carries every
+   heading, every button and every sentence the app says to the user. */
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/nunito-latin.woff2') format('woff2');
+  font-weight: 400 800;          /* variable: one file, all weights */
+  font-style: normal;
+  font-display: swap;            /* show fallback at once, swap when ready */
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                 U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../assets/fonts/nunito-latin-ext.woff2') format('woff2');
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+                 U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
+                 U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+                 U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ---- Inter — numerals and small print ------------------------------------
+   Used for dates, phone numbers, captions and chart labels. Its tabular
+   figures stop a counter jittering as the digits change, which matters for
+   the progress numbers in Module 4 and the charts in Module 6. */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+                 U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F,
+                 U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/inter-latin-ext.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+                 U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
+                 U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+                 U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* ===== 02-base/elements.css ======================================== */
+/* ==========================================================================
+   02-BASE / ELEMENTS
+   Purpose : Bare element defaults. Everything here is unclassed HTML.
+   Depends : 01-tokens/*
+   ========================================================================== */
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-lh);
+  font-weight: var(--text-body-weight);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* Stop the whole page rubber-banding on iOS — it makes a fixed nav bar
+     detach visibly, which reads as the app breaking. */
+  overscroll-behavior-y: none;
+
+  /* The app is a single full-height column with a fixed nav at the bottom. */
+  min-height: 100dvh;
+  padding-bottom: var(--safe-bottom);
+
+  transition: background-color var(--duration-slow) var(--ease-standard),
+              color var(--duration-slow) var(--ease-standard);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-primary);
+  text-wrap: balance;              /* avoids a single orphaned word in a title */
+}
+
+h1 { font-size: var(--text-h1-size);    line-height: var(--text-h1-lh);
+     font-weight: var(--text-h1-weight); letter-spacing: var(--text-h1-ls); }
+h2 { font-size: var(--text-h2-size);    line-height: var(--text-h2-lh);
+     font-weight: var(--text-h2-weight); letter-spacing: var(--text-h2-ls); }
+h3 { font-size: var(--text-h3-size);    line-height: var(--text-h3-lh);
+     font-weight: var(--text-h3-weight); letter-spacing: var(--text-h3-ls); }
+h4 { font-size: var(--text-title-size); line-height: var(--text-title-lh);
+     font-weight: var(--text-title-weight); }
+
+p  { max-width: var(--measure, 68ch); text-wrap: pretty; }
+
+a  { color: var(--color-primary); text-underline-offset: 3px; }
+
+/* The router mounts every view into #main. */
+#main {
+  display: block;
+  padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + var(--space-4));
+}
+
+/* Centre the phone-shaped app on wide screens. Desktop is not a separate
+   design — it is the same column, centred. Design Language §3.5. */
+#appbar, #main, #nav > * {
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+/* ===== 02-base/a11y.css ============================================ */
+/* ==========================================================================
+   02-BASE / A11Y
+   Purpose : Accessibility primitives and the four user-preference modes.
+             These are clinical accommodations, not compliance checkboxes —
+             see Clinical Framework §14.
+   Depends : 01-tokens/*
+   Applied : core/a11y/prefs.js sets the data-* attributes on <html>.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   FOCUS
+   One ring, everywhere, never removed. :focus-visible means it appears for
+   keyboard users and not on a mouse tap — so it helps without adding visual
+   noise for people who don't need it.
+   -------------------------------------------------------------------------- */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-md);
+}
+
+/* --------------------------------------------------------------------------
+   SCREEN READER ONLY
+   -------------------------------------------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link — first focusable element on the page. */
+.skip-link {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translate(-50%, -120%);
+  z-index: var(--z-toast);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  padding: var(--space-3) var(--space-5);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-md);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform var(--duration-base) var(--ease-out-soft);
+}
+.skip-link:focus { transform: translate(-50%, 0); }
+
+/* --------------------------------------------------------------------------
+   TEXT SIZE
+   Five steps. Every type token derives from --font-scale, so nothing else in
+   the codebase needs to know this exists. Clinical Framework §14.
+   -------------------------------------------------------------------------- */
+[data-textsize="s"]   { --font-scale: 0.94; }
+[data-textsize="m"]   { --font-scale: 1;    }   /* default */
+[data-textsize="l"]   { --font-scale: 1.14; }
+[data-textsize="xl"]  { --font-scale: 1.30; }
+[data-textsize="xxl"] { --font-scale: 1.50; }
+
+/* --------------------------------------------------------------------------
+   HIGH CONTRAST
+   For low vision, cataract, bright Malaysian daylight, and older users.
+   Shadows are replaced by outlines, because a shadow is not a boundary.
+   -------------------------------------------------------------------------- */
+[data-contrast="high"] {
+  --color-text-primary:   #16130F;
+  --color-text-secondary: #3F3831;
+  --color-text-tertiary:  #564E45;
+  --color-border:         #8C837A;
+  --color-border-strong:  #6B625A;
+  --color-border-control: #4A423B;
+  --color-primary:        #1F5645;
+  --color-primary-hover:  #174537;
+  --color-secondary:      #2F4278;
+  --color-accent:         #7C4420;
+  --color-success:        #235738;
+  --color-warning:        #6C4A0E;
+  --color-danger:         #7E3A30;
+  --color-info:           #26506B;
+  --color-disabled-text:  #5F574F;
+
+  --shadow-sm: 0 0 0 1px var(--color-border-strong);
+  --shadow-md: 0 0 0 1px var(--color-border-strong);
+  --shadow-lg: 0 0 0 2px var(--color-border-strong);
+  --shadow-focus: 0 0 0 4px rgba(31, 86, 69, 0.55);
+}
+
+[data-theme="dark"][data-contrast="high"] {
+  --color-text-primary:   #FFFBF6;
+  --color-text-secondary: #DAD2C9;
+  --color-text-tertiary:  #BDB4AA;
+  --color-border:         #7A7686;
+  --color-border-strong:  #948FA2;
+  --color-border-control: #A9A4B6;
+  --color-primary:        #A8DCC7;
+  --color-secondary:      #BCC9F0;
+  --color-accent:         #F5BE9B;
+  --color-success:        #A6D8B4;
+  --color-warning:        #EFCB8A;
+  --color-danger:         #F0B2A5;
+  --color-info:           #B0D2E6;
+}
+
+@media (prefers-contrast: more) {
+  :root { --color-border: #A79C91; --color-border-control: #6B625A; }
+}
+
+/* --------------------------------------------------------------------------
+   REDUCED MOTION
+   Motion is NOT removed wholesale — that would strip the calming quality the
+   app depends on. Travel, spring, bounce and confetti go. Opacity and slow
+   scale remain.
+
+   THE ONE EXCEPTION: the breathing ring keeps animating, because it is the
+   therapeutic content, not decoration. Clinical Framework §2.6, Design
+   Language §11. This is the only place !important is permitted in the
+   codebase, and it is permitted because we are overriding inline and
+   component-level animation deliberately.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 1ms;
+    --duration-fast:    1ms;
+    --duration-base:    1ms;
+    --duration-slow:    120ms;
+    --duration-slower:  120ms;
+    --duration-ambient: 200ms;
+    --ease-spring: var(--ease-standard);
+    --press-scale: 1;
+    --lift-scale:  1;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 120ms !important;
+    scroll-behavior: auto !important;
+  }
+  .prc-breath-ring, .prc-breath-ring * {
+    animation-duration: revert !important;
+    animation-iteration-count: infinite !important;
+  }
+  .prc-confetti, .prc-parallax, .prc-firefly { display: none !important; }
+}
+
+/* The in-app switch, for users whose OS setting is off but who still want it. */
+[data-motion="reduced"] {
+  --duration-fast: 1ms;
+  --duration-base: 1ms;
+  --duration-slow: 120ms;
+  --press-scale: 1;
+  --lift-scale:  1;
+}
+[data-motion="reduced"] *:not(.prc-breath-ring):not(.prc-breath-ring *) {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+/* ==========================================================================
+   MODULE 2 · THE ONE EXCEPTION TO THE FOCUS RING
+   ==========================================================================
+   #main carries tabindex="-1" so the router can move focus into new content
+   after a route change. That makes it match [tabindex]:focus-visible above,
+   which drew a 3px sage ring around the ENTIRE screen on every navigation.
+
+   The ring is removed here, deliberately and with a caveat:
+
+     - WCAG 2.4.7 governs user interface COMPONENTS. #main is a landmark
+       container, not a control — nobody activates it, so there is no state
+       for the ring to communicate.
+     - Screen reader users are not relying on it: the router announces the
+       new screen title through the polite live region (core/a11y/announce.js)
+       at the same moment focus lands.
+     - Sighted keyboard users are not stranded either. Focus is genuinely
+       inside #main, so their next Tab reaches the first control ON the new
+       screen rather than sending them back through the whole page.
+
+   This is standard practice for skip-link and route-change focus targets.
+   Every actual control keeps its full ring.
+   ========================================================================== */
+
+#main:focus,
+#main:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ===== 03-components/icon.css ====================================== */
+/* ==========================================================================
+   03-COMPONENTS / ICON
+   Purpose : Sizing and stroke for every inline SVG icon.
+   Depends : 01-tokens/layout.css (--icon-stroke), 01-tokens/motion.css
+   Pairs with : core/components/icons.js
+
+   WHY STROKE-WIDTH LIVES HERE AND NOT IN THE JS
+     An SVG presentation attribute cannot contain a var(). Setting
+     stroke-width="var(--icon-stroke)" parses as an invalid length and falls
+     back to 1 — hairline icons that look like a rendering fault. Declared as
+     a CSS property it resolves correctly, AND it means high-contrast mode can
+     thicken every icon in the app with one rule.
+   ========================================================================== */
+
+.icon {
+  display: block;
+  flex: none;
+  stroke-width: var(--icon-stroke);
+  /* Icons never scale with the text-size control. A 200% icon beside 200%
+     text is not more readable — it just eats the line. Design Language §8.2. */
+  transition: stroke-width var(--duration-base) var(--ease-standard);
+}
+
+/* The selected navigation tab. Weight, not only colour, marks position —
+   colour must never be the sole carrier of meaning. Design Language §18. */
+.icon--bold { stroke-width: var(--icon-stroke-bold); }
+
+/* High-contrast mode thickens every stroke by one step so icons hold their
+   shape against a stronger background. */
+[data-contrast='high'] .icon { stroke-width: var(--icon-stroke-bold); }
+
+/* ===== 03-components/button.css ==================================== */
+/* ==========================================================================
+   03-COMPONENTS / BUTTON
+   Purpose : Every button shape, in five variants and four sizes.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Button.js
+
+   THE RULES THIS FILE ENFORCES (Design Language §5, Clinical Framework §14)
+     - Every button is a pill. No sharp corners anywhere in the product.
+     - Minimum height 48px. The one primary action on a screen is 64px.
+     - Press = scale 0.972 and a shadow drop. Never a colour flash.
+     - The "quiet" variant is a real, dignified option — never greyed out,
+       never smaller than the action beside it.
+     - Focus is a 3px ring with a 2px offset, visible in both themes.
+   ========================================================================== */
+
+.btn {
+  /* --- structure --- */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--button-height-lg);
+  padding-inline: var(--space-6);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-pill);
+
+  /* --- type --- */
+  font-family: var(--font-primary);
+  font-size: var(--text-button-size);
+  font-weight: var(--text-button-weight);
+  line-height: var(--text-button-lh);
+  letter-spacing: var(--text-button-ls);
+  text-align: center;
+
+  /* --- behaviour --- */
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;   /* removes the 300ms mobile click delay */
+  transition:
+    transform var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard),
+    background-color var(--duration-base) var(--ease-standard),
+    border-color var(--duration-base) var(--ease-standard),
+    color var(--duration-base) var(--ease-standard);
+}
+
+/* Labels wrap. They never truncate — a Bahasa Malaysia label at 200% text
+   size must stay readable, not become an ellipsis. */
+.btn__label { overflow-wrap: anywhere; }
+
+.btn:active:not(:disabled) {
+  transform: scale(var(--press-scale));
+  box-shadow: var(--shadow-pressed);
+}
+
+.btn:disabled {
+  background: var(--color-disabled-surface);
+  border-color: var(--color-disabled-border);
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---- Sizes -------------------------------------------------------------- */
+.btn--sm { min-height: var(--button-height-sm); padding-inline: var(--space-4);
+           font-size: var(--text-body-sm-size); }
+.btn--md { min-height: var(--button-height-md); }
+.btn--lg { min-height: var(--button-height-lg); }
+.btn--xl { min-height: var(--button-height-xl); padding-inline: var(--space-8);
+           font-size: var(--text-title-size); }
+
+.btn--full { display: flex; width: 100%; }
+
+/* ---- Primary ------------------------------------------------------------
+   The single most important action on the screen. If a screen has two of
+   these, the screen is wrong, not the button. */
+.btn--primary {
+  background: var(--gradient-primary);
+  color: var(--color-text-on-color);
+  box-shadow: var(--shadow-floating);
+}
+.btn--primary:hover:not(:disabled) { background: var(--color-primary-hover); }
+
+/* ---- Secondary ---------------------------------------------------------- */
+.btn--secondary {
+  background: var(--color-card);
+  border-color: var(--color-border-control);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+.btn--secondary:hover:not(:disabled) {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary);
+}
+
+/* ---- Quiet ---------------------------------------------------------------
+   "Not now." "Stop here." "I can't today."
+
+   READ THIS BEFORE CHANGING IT. This variant is deliberately NOT de-emphasised
+   into invisibility. Standard product practice is to make the decline option
+   weak so users pick the other one. Here, declining is a legitimate and often
+   correct clinical choice, and the behavioural-activation model collapses if
+   users feel pushed. It is a full-height, full-contrast, dignified control
+   that simply carries no fill. Clinical Framework §8.3. */
+.btn--quiet {
+  background: transparent;
+  border-color: var(--color-border-strong);
+  color: var(--color-text-secondary);
+}
+.btn--quiet:hover:not(:disabled) {
+  background: var(--color-card-sunken);
+  color: var(--color-text-primary);
+}
+
+/* ---- Ghost -------------------------------------------------------------- */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+  padding-inline: var(--space-4);
+}
+.btn--ghost:hover:not(:disabled) { background: var(--color-primary-tint); }
+
+/* ---- Crisis --------------------------------------------------------------
+   72px, because it must be hittable by someone whose hands are shaking.
+   Clay, never fire-engine red: the control offers help, it does not sound an
+   alarm. Design Language §1.6, Clinical Framework §6.2. */
+.btn--crisis {
+  min-height: var(--touch-crisis);
+  background: var(--color-danger-soft);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+  font-size: var(--text-title-size);
+}
+.btn--crisis:hover:not(:disabled) { background: var(--color-danger); color: var(--color-text-on-color); }
+
+/* ---- Reduced motion ------------------------------------------------------
+   The press transform is removed, the colour change is kept. Feedback still
+   happens — it just stops moving. */
+[data-motion='reduced'] .btn,
+[data-motion='reduced'] .btn:active:not(:disabled) {
+  transform: none;
+  transition: background-color var(--duration-instant) linear,
+              color var(--duration-instant) linear;
+}
+
+/* ===== 03-components/card.css ====================================== */
+/* ==========================================================================
+   03-COMPONENTS / CARD
+   Purpose : The container that holds almost everything on a screen.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Card.js
+
+   RULES (Design Language §6)
+     - 24px radius. 24px internal padding on every side.
+     - Warm-tinted shadow, never black.
+     - A toned card carries a 3px left edge AND a word or icon. Colour is
+       never the only signal.
+     - An interactive card lifts 1.5% on hover and presses 2.8% down on tap.
+   ========================================================================== */
+
+.card {
+  display: block;
+  width: 100%;
+  padding: var(--space-6);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  text-align: start;
+  border: 1px solid transparent;
+}
+
+/* ---- Elevation ---------------------------------------------------------- */
+.card--raised { box-shadow: var(--shadow-md); }
+.card--flat   { box-shadow: none; border-color: var(--color-border); }
+.card--sunken {
+  background: var(--color-card-sunken);
+  box-shadow: none;
+  border-color: transparent;
+}
+
+/* ---- Tone ----------------------------------------------------------------
+   The left edge is 3px, not a full border, so the card still reads as calm.
+   Every toned card in the app also carries an icon or a word — see Card.js. */
+.card--calm { background: var(--color-primary-tint);   border-inline-start: 3px solid var(--color-primary); }
+.card--warm { background: var(--color-accent-tint);    border-inline-start: 3px solid var(--color-accent); }
+.card--dusk { background: var(--color-secondary-tint); border-inline-start: 3px solid var(--color-secondary); }
+
+/* "care" is the tone used when the app is offering support after a heavy
+   check-in. Clay, never red — see Design Language §1.6. */
+.card--care { background: var(--color-danger-soft);    border-inline-start: 3px solid var(--color-danger); }
+
+/* ---- Head, body, actions ------------------------------------------------ */
+.card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+}
+.card__icon  { color: var(--color-primary); }
+.card--warm .card__icon { color: var(--color-accent); }
+.card--dusk .card__icon { color: var(--color-secondary); }
+.card--care .card__icon { color: var(--color-danger); }
+
+.card__title { margin: 0; }
+
+.card__body { color: var(--color-text-primary); }
+.card__body p { max-width: var(--measure); }
+
+.card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block-start: var(--space-5);
+}
+/* Two actions share the row EXACTLY equally.
+
+   `flex: 1 1 0` — a zero basis — not `1 1 auto`. With an auto basis the
+   buttons are sized from their text first and only then share the leftover
+   space, so "I did it" and "Not now" come out 16px apart. Sixteen pixels is
+   enough to read as a preference, and the whole design of the task card
+   rests on the two options being visibly equal: the decline must never look
+   like the lesser choice. Clinical Framework §8.3. */
+.card__actions > * { flex: 1 1 0; min-width: 0; }
+
+/* ---- Interactive -------------------------------------------------------- */
+.card--interactive {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform var(--duration-base) var(--ease-standard),
+              box-shadow var(--duration-base) var(--ease-standard);
+}
+.card--interactive:hover  { transform: scale(var(--lift-scale)); box-shadow: var(--shadow-lg); }
+.card--interactive:active { transform: scale(var(--press-scale)); box-shadow: var(--shadow-pressed); }
+
+[data-motion='reduced'] .card--interactive,
+[data-motion='reduced'] .card--interactive:hover,
+[data-motion='reduced'] .card--interactive:active { transform: none; }
+
+/* High contrast gives every card a real outline, because a shadow alone is
+   not a reliable boundary for a low-vision user. */
+[data-contrast='high'] .card { border-color: var(--color-border-control); }
+
+/* ===== 03-components/mood-selector.css ============================= */
+/* ==========================================================================
+   03-COMPONENTS / MOOD-SELECTOR
+   Purpose : The five faces — the emotional centre of the product.
+   Depends : 01-tokens/*
+   Pairs with : core/components/MoodSelector.js
+
+   THE COLOUR SCALE
+     Warm (Sunlight) at the top, cool (Soft Dusk) at the bottom. It never
+     passes through red at any point. Red means danger, error, stop — and a
+     low mood is none of those things. Design Language §1.5.
+
+     Adjacent steps are separated by luminance as well as hue, so the scale
+     still reads as an ordered sequence in greyscale and under every common
+     colour vision deficiency.
+
+   THE SELECTED STATE CARRIES FOUR SIGNALS
+     fill + ring + scale + bold label. Never colour alone. Design Language §18.
+   ========================================================================== */
+
+.mood-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+/* ---- One face button -----------------------------------------------------
+   flex:1 1 0 with min-width:0 lets five faces share any width down to a
+   320px screen without the row overflowing. Without min-width:0 a flex item
+   refuses to shrink below its content and the fifth face falls off. */
+.mood {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-comfort);
+  padding: var(--space-2) var(--space-1) var(--space-3);
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform var(--duration-base) var(--ease-spring),
+              background-color var(--duration-base) var(--ease-standard),
+              border-color var(--duration-base) var(--ease-standard);
+}
+
+.mood__label {
+  font-family: var(--font-primary);
+  font-size: calc(11px * var(--font-scale));
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;   /* labels wrap, never truncate */
+
+  /* Two lines' worth of height is reserved whether or not the word needs it.
+     "Very heavy" wraps and the other four do not; without this the first
+     button is taller than its neighbours and the row of faces sits on a
+     crooked baseline. Reserving the space keeps the five faces aligned in
+     every language and at every text size. */
+  min-height: 2.5em;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ---- The drawn face ------------------------------------------------------ */
+.mood-face {
+  display: block;
+  width: 100%;
+  max-width: 56px;
+  aspect-ratio: 1 / 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--duration-slow) var(--ease-spring);
+}
+
+.mood-face__head  { fill: var(--mood-soft); stroke: var(--mood); stroke-width: 2; }
+.mood-face__eye   { fill: none; stroke: var(--mood-ink); stroke-width: 2.4; }
+.mood-face__eye-dot { fill: var(--mood-ink); stroke: none; }
+.mood-face__mouth { fill: none; stroke: var(--mood-ink); stroke-width: 2.4; }
+.mood-face__blush { fill: var(--mood); opacity: 0.28; }
+
+/* ---- Per-step colour ---------------------------------------------------- */
+.mood[data-mood='1'] { --mood: var(--color-mood-1); --mood-soft: var(--color-mood-1-soft); --mood-ink: var(--color-mood-1-ink); }
+.mood[data-mood='2'] { --mood: var(--color-mood-2); --mood-soft: var(--color-mood-2-soft); --mood-ink: var(--color-mood-2-ink); }
+.mood[data-mood='3'] { --mood: var(--color-mood-3); --mood-soft: var(--color-mood-3-soft); --mood-ink: var(--color-mood-3-ink); }
+.mood[data-mood='4'] { --mood: var(--color-mood-4); --mood-soft: var(--color-mood-4-soft); --mood-ink: var(--color-mood-4-ink); }
+.mood[data-mood='5'] { --mood: var(--color-mood-5); --mood-soft: var(--color-mood-5-soft); --mood-ink: var(--color-mood-5-ink); }
+
+/* ---- Hover -------------------------------------------------------------- */
+@media (hover: hover) {
+  .mood:hover:not(:disabled) .mood-face { transform: scale(1.06); }
+  .mood:hover:not(:disabled) .mood__label { color: var(--color-text-primary); }
+}
+
+.mood:active:not(:disabled) .mood-face { transform: scale(0.94); }
+
+/* ---- Selected ------------------------------------------------------------
+   Four simultaneous signals: a tinted well, a coloured ring, a 6% lift on the
+   face, and a bolder darker label. */
+.mood[aria-checked='true'] {
+  background: var(--mood-soft);
+  border-color: var(--mood);
+}
+.mood[aria-checked='true'] .mood-face  { transform: scale(1.08); }
+.mood[aria-checked='true'] .mood__label { color: var(--mood-ink); font-weight: 800; }
+
+/* ---- Locked (past the two-hour edit window) ------------------------------
+   The chosen face stays at full strength. Only the OTHER four fade, and they
+   fade gently rather than greying out — the day is recorded, not disabled.
+   Nothing here says "locked" or "expired". */
+.mood-row--locked .mood { cursor: default; }
+.mood-row--locked .mood[aria-checked='false'] { opacity: 0.4; }
+.mood-row--locked .mood[aria-checked='true']  { opacity: 1; }
+
+/* ---- Reduced motion ------------------------------------------------------ */
+[data-motion='reduced'] .mood,
+[data-motion='reduced'] .mood-face,
+[data-motion='reduced'] .mood:hover .mood-face,
+[data-motion='reduced'] .mood:active .mood-face,
+[data-motion='reduced'] .mood[aria-checked='true'] .mood-face { transform: none; }
+
+/* ---- High contrast ------------------------------------------------------- */
+[data-contrast='high'] .mood { border-color: var(--color-border-control); }
+[data-contrast='high'] .mood-face__head { stroke-width: 2.6; }
+[data-contrast='high'] .mood__label { color: var(--color-text-primary); }
+
+/* ---- Very narrow screens -------------------------------------------------
+   Below 340px the five words stop fitting side by side even wrapped. The
+   faces stay; the labels remain in the accessible name, so nothing is lost
+   for a screen reader — only the printed word is dropped. */
+@media (max-width: 339px) {
+  .mood__label { font-size: calc(10px * var(--font-scale)); }
+}
+
+/* ===== 03-components/toast.css ===================================== */
+/* ==========================================================================
+   03-COMPONENTS / TOAST
+   Purpose : A brief message that appears, is read, and leaves by itself.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Toast.js
+
+   POSITION
+     Above the navigation bar, not over it, and never over the crisis control.
+     It fades and rises 8px — it does not slide in from an edge. Sliding
+     implies something arriving from elsewhere; this is the app quietly
+     confirming something the user just did.
+   ========================================================================== */
+
+.toast-host {
+  position: fixed;
+  inset-inline: 0;
+  /* Clears the nav bar (68px) plus the device safe area plus a comfortable
+     gap, so a toast never sits on top of a tab the user is about to press. */
+  bottom: calc(var(--nav-height) + var(--safe-bottom) + var(--space-4));
+  z-index: var(--z-toast);
+  display: flex;
+  justify-content: center;
+  padding-inline: var(--space-4);
+  pointer-events: none;   /* the empty host must never block a tap */
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--content-max);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--duration-slow) var(--ease-out-soft),
+              transform var(--duration-slow) var(--ease-out-soft);
+}
+
+.toast.is-visible { opacity: 1; transform: translateY(0); }
+
+.toast__text {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-lh);
+  color: var(--color-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.toast__icon { color: var(--color-primary); }
+
+.toast__action {
+  flex: none;
+  min-height: var(--touch-min);
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-tint);
+}
+
+.toast__close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  /* 44px rather than the usual 48px minimum: this control is the least
+     important thing on screen, it sits beside larger targets, and the toast
+     also dismisses itself. WCAG 2.2 AA is met at 24px for a control with
+     adequate spacing; 44px is comfortably above that. */
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-circle);
+  color: var(--color-text-tertiary);
+}
+.toast__close:hover { background: var(--color-card-sunken); color: var(--color-text-primary); }
+
+/* ---- Tone --------------------------------------------------------------- */
+.toast--care { background: var(--color-accent-tint); border-color: var(--color-accent-soft); }
+.toast--care .toast__icon { color: var(--color-accent); }
+.toast--info .toast__icon { color: var(--color-info); }
+
+/* ---- Reduced motion ------------------------------------------------------ */
+[data-motion='reduced'] .toast { transform: none; transition: opacity var(--duration-base) linear; }
+[data-motion='reduced'] .toast.is-visible { transform: none; }
+
+/* ===== 03-components/empty-state.css =============================== */
+/* ==========================================================================
+   03-COMPONENTS / EMPTY-STATE
+   Purpose : What a screen looks like before the user has done anything.
+   Depends : 01-tokens/*
+   Pairs with : core/components/EmptyState.js
+   ========================================================================== */
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+}
+
+/* The glyph is deliberately faint. An empty state should not draw the eye —
+   it is a description of a state, not a call to action. */
+.empty__glyph { color: var(--color-text-tertiary); opacity: 0.5; }
+
+.empty__text {
+  max-width: 34ch;
+  color: var(--color-text-secondary);
+  text-wrap: balance;
+}
+
+/* ===== 03-components/crisis-list.css =============================== */
+/* ==========================================================================
+   03-COMPONENTS / CRISIS-LIST
+   Purpose : The list of crisis phone numbers.
+   Depends : 01-tokens/*
+   Pairs with : core/components/CrisisList.js
+
+   Used by the check-in, Calm Mode and the help screen. Moved out of
+   04-features/checkin.css in Module 3, when the second and third callers
+   appeared.
+
+   THE TARGET SIZE IS 72px, NOT 48px
+     This is the only control in the product with its own touch minimum. A
+     person reaching for a crisis number may have a tremor, may be crying,
+     may be breathing badly, and is almost certainly not looking carefully.
+     48px is the WCAG floor for someone in ordinary conditions. These are not
+     ordinary conditions. Design Language §5.6; Clinical Framework §6.2.
+   ========================================================================== */
+
+.crisis-list { width: 100%; }
+
+.crisis-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--touch-crisis);      /* 72px */
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: background-color var(--duration-base) var(--ease-standard);
+}
+.crisis-line:hover { background: var(--color-card-sunken); }
+
+.crisis-line__body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+
+.crisis-line__name {
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  font-weight: 700;
+}
+
+/* Tabular figures so the numbers align down the column and read as numbers
+   rather than as words. */
+.crisis-line__number {
+  font-family: var(--font-numeric);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--text-title-size);
+  font-weight: 700;
+  color: var(--color-danger);
+  letter-spacing: 0.02em;
+}
+
+.crisis-line__note {
+  font-size: var(--text-caption-size);
+  line-height: var(--text-caption-lh);
+  color: var(--color-text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.crisis-line__icon { color: var(--color-danger); }
+
+/* ===== 03-components/breathing-circle.css ========================== */
+/* ==========================================================================
+   03-COMPONENTS / BREATHING-CIRCLE
+   Purpose : The paced breathing circle.
+   Depends : 01-tokens/*
+   Pairs with : core/components/BreathingCircle.js
+
+   NOTE ON HOW THIS IS ANIMATED
+     There are no @keyframes here. The pace changes every cycle as the rhythm
+     lengthens from 5.5s to 12s, so the durations are set from JavaScript
+     through the Web Animations API. This file provides only the resting
+     appearance and the layout.
+
+     Everything animated is transform and opacity — the two properties a
+     browser can composite without touching layout or paint. A stutter in
+     this circle is not cosmetic: it breaks the rhythm the user is following.
+   ========================================================================== */
+
+.breath {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+/* A fixed square stage so the layout never reflows as the circle grows.
+   Sizing the stage to the LARGEST state means nothing around it moves. */
+.breath__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: min(72vw, 280px);
+  aspect-ratio: 1 / 1;
+}
+
+.breath__disc {
+  width: 100%;
+  height: 100%;
+  /* The circle grows from its own centre, not its top-left corner. */
+  transform-origin: 50% 50%;
+  transform: scale(0.56);   /* the resting, smallest state */
+  opacity: 0.42;
+  will-change: transform, opacity;
+}
+
+/* The outer ring — a soft edge so the shape has no hard boundary to snap to. */
+.breath__halo {
+  fill: none;
+  stroke: var(--color-primary-bright);
+  stroke-width: 1.5;
+  opacity: 0.45;
+}
+
+/* The body of the circle. A two-stop gradient in the calm palette. */
+.breath__fill {
+  fill: var(--color-primary-soft);
+  stroke: var(--color-primary);
+  stroke-width: 2;
+}
+
+/* The word sits at the centre of the stage, NOT inside the circle — so it
+   does not scale with it. Text that grows and shrinks is hard to read and
+   pulls the eye, and the eye should be resting on the shape. */
+.breath__word {
+  position: absolute;
+  font-family: var(--font-primary);
+  font-size: var(--text-h3-size);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-primary);
+  /* Never intercepts a tap — the whole screen is a large stop target. */
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+/* ---- Reduced movement ----------------------------------------------------
+   The circle holds ONE size. A large shape growing and shrinking in the
+   centre of the visual field is exactly the pattern that triggers vestibular
+   symptoms.
+
+   The pacing is not removed — that would leave the screen useless for the
+   people who asked for the accommodation. The JavaScript switches to easing
+   the fill opacity instead, which has no travel and no scale change for the
+   vestibular system to track. The word and the haptic pulse carry the rhythm
+   as well. Clinical Framework §14.4. */
+[data-motion='reduced'] .breath__disc {
+  transform: scale(0.86);
+  will-change: opacity;
+}
+
+/* ---- High contrast ------------------------------------------------------- */
+[data-contrast='high'] .breath__fill { stroke-width: 3; }
+[data-contrast='high'] .breath__halo { opacity: 0.8; stroke-width: 2; }
+
+/* ===== 03-components/garden.css ==================================== */
+/* ==========================================================================
+   03-COMPONENTS / GARDEN
+   Purpose : Colour and motion for the drawn garden.
+   Depends : 01-tokens/colors.css (the --color-garden-* palette)
+   Pairs with : core/components/Garden.js
+
+   Every colour here comes from the garden palette in the tokens file. The
+   drawing therefore recolours correctly in the night theme without a single
+   value being repeated — and it will keep matching if the palette is ever
+   retuned.
+   ========================================================================== */
+
+.garden {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- Sky ----------------------------------------------------------------
+   Three times of day, set by the class Garden.js puts on the root. */
+.garden--morning   .garden__sky-top    { stop-color: var(--color-garden-sky-dawn); }
+.garden--morning   .garden__sky-bottom { stop-color: var(--color-accent-tint); }
+.garden--afternoon .garden__sky-top    { stop-color: var(--color-garden-sky-day); }
+.garden--afternoon .garden__sky-bottom { stop-color: var(--color-primary-tint); }
+.garden--evening   .garden__sky-top    { stop-color: var(--color-garden-sky-dusk); }
+.garden--evening   .garden__sky-bottom { stop-color: var(--color-secondary-tint); }
+.garden--lateNight .garden__sky-top    { stop-color: var(--color-garden-sky-dusk); }
+.garden--lateNight .garden__sky-bottom { stop-color: var(--color-secondary-soft); }
+
+.garden__sun      { fill: var(--color-garden-firefly); opacity: 0.85; }
+.garden__sun-halo { fill: var(--color-garden-firefly); opacity: 0.18; }
+
+/* At 3am it is the moon, not the sun. Someone opening the app in the middle
+   of the night should not be shown midday. */
+.garden--lateNight .garden__sun      { fill: var(--color-secondary-bright); opacity: 0.7; }
+.garden--lateNight .garden__sun-halo { fill: var(--color-secondary-bright); opacity: 0.12; }
+
+/* ---- Ground -------------------------------------------------------------- */
+.garden__hill--far  { fill: var(--color-garden-leaf); opacity: 0.32; }
+.garden__hill--near { fill: var(--color-garden-stem); opacity: 0.26; }
+.garden__soil       { fill: var(--color-garden-soil); }
+
+/* ---- The scatter · one object per thing the person did ------------------- */
+.garden__grass {
+  fill: none;
+  stroke: var(--color-garden-stem);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.garden__pebble       { fill: var(--color-border-strong); opacity: 0.7; }
+.garden__bud-stem     { stroke: var(--color-garden-stem); stroke-width: 1.4; fill: none; stroke-linecap: round; }
+.garden__bud-head     { fill: var(--color-garden-bloom); }
+.garden__bud-head--alt{ fill: var(--color-garden-bloom-alt); }
+
+/* ---- The main plant ------------------------------------------------------ */
+.garden__stem {
+  fill: none;
+  stroke: var(--color-garden-stem);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+}
+.garden__leaf      { fill: var(--color-garden-leaf); }
+.garden__leaf--alt { fill: var(--color-garden-stem); opacity: 0.85; }
+
+.garden__petal       { fill: var(--color-garden-bloom); }
+.garden__petal--alt  { fill: var(--color-garden-bloom-alt); }
+.garden__bloom-centre{ fill: var(--color-garden-firefly); }
+
+/* ---- Fireflies -----------------------------------------------------------
+   The only purely decorative flourish in the product, and it arrives at the
+   last stage so it means something when it does. A slow, irregular fade —
+   never a blink, which reads as an alert. */
+.garden__firefly {
+  fill: var(--color-garden-firefly);
+  opacity: 0.2;
+  animation: firefly 5.5s var(--ease-breath) infinite;
+}
+
+@keyframes firefly {
+  0%, 100% { opacity: 0.12; }
+  45%      { opacity: 0.85; }
+}
+
+/* Reduce movement stops the fireflies entirely and leaves them at a steady
+   soft glow. They are decoration; the accommodation costs nothing. */
+[data-motion='reduced'] .garden__firefly { animation: none; opacity: 0.5; }
+
+/* ---- Growing in ----------------------------------------------------------
+   The whole drawing settles once on arrival. It never re-animates on a
+   re-render, so returning to the tab is calm rather than showy. */
+.garden { animation: garden-settle var(--duration-ambient) var(--ease-out-soft) both; }
+@keyframes garden-settle {
+  from { opacity: 0; transform: scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+[data-motion='reduced'] .garden { animation: none; }
+
+/* ---- Stage dots ----------------------------------------------------------
+   Five dots, no percentage, no "3/5" label. It says where the garden is, not
+   how far it has to go — there is no "has to". */
+.garden-stages { display: flex; gap: var(--space-2); justify-content: center; }
+
+.garden-stages__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--color-border-strong);
+}
+.garden-stages__dot.is-reached { background: var(--color-primary); }
+
+/* ===== 03-components/mika.css ====================================== */
+/* ==========================================================================
+   03-COMPONENTS / MIKA
+   Purpose : Mika's colour, translucency, and ambient life.
+   Depends : 01-tokens/*
+   Pairs with : core/components/Mika.js
+
+   THE GOVERNING PRINCIPLE
+     Mika moves at the speed of an exhale. Its fastest movement is slower than
+     the app's default transition. Nothing it does is ever quick.
+     Mika Specification §6.1.
+
+   WHAT MIKA NEVER DOES
+     Bounce · spin · jump excitedly · wave · chase the cursor · react to every
+     keystroke · flash · shake · look startled · droop · wilt · dim because of
+     absence. If a rule is ever added to this file that does one of those, it
+     is wrong. Mika Specification §6.4.
+   ========================================================================== */
+
+.mika {
+  display: block;
+  overflow: visible;
+  /* Mika is always touching the ground line. Every transform originates
+     there, so it grows and breathes from where it sits rather than floating.
+     Floating reads as anxious. Spec §7.1. */
+  transform-origin: 50% 88%;
+}
+
+/* ---- The shell -----------------------------------------------------------
+   Translucent, because `mika` is the Malay word for the clear acetate sheet
+   on a bound report. You can see what it is holding. Spec §1.1. */
+.mika__shell {
+  fill: var(--color-primary-bright);
+  fill-opacity: 0.55;
+  stroke: var(--color-primary);
+  stroke-width: 1.2;
+  stroke-opacity: 0.5;
+}
+
+/* ---- The core light ------------------------------------------------------
+   Pulses on a FOUR second cycle while the body breathes on a twelve second
+   one. The two drift in and out of phase, and that drift is what makes this
+   read as alive rather than as a loop. Spec §6.2. */
+.mika__core-in  { stop-color: var(--color-garden-firefly); stop-opacity: 0.85; }
+.mika__core-out { stop-color: var(--color-garden-firefly); stop-opacity: 0; }
+
+.mika__core {
+  opacity: 0.62;
+  animation: mika-core 4000ms var(--ease-breath) infinite;
+}
+
+@keyframes mika-core {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.80; }
+}
+
+/* ---- Held thoughts, visible inside ---------------------------------------
+   Not a score. A record of things said, any of which can be taken back at any
+   moment. Spec §8.6. */
+.mika__held {
+  fill: var(--color-garden-leaf);
+  opacity: 0.42;
+}
+
+/* ---- Growth elements ------------------------------------------------------
+   Nothing here can ever be removed. The stage comes from an append-only
+   ledger, so no code path can draw a smaller Mika than last time. Spec §8.4. */
+.mika__leaf   { fill: var(--color-garden-leaf); }
+.mika__moss   { fill: var(--color-garden-stem); opacity: 0.55; }
+.mika__arm    { fill: var(--color-garden-leaf); opacity: 0.9; }
+.mika__petal  { fill: var(--color-garden-bloom); }
+.mika__bloom-core { fill: var(--color-garden-firefly); }
+.mika__canopy { fill: var(--color-garden-leaf); opacity: 0.72; }
+
+.mika__firefly {
+  fill: var(--color-garden-firefly);
+  opacity: 0.25;
+  animation: mika-firefly 5200ms var(--ease-breath) infinite;
+}
+@keyframes mika-firefly {
+  0%, 100% { opacity: 0.15; }
+  45%      { opacity: 0.9; }
+}
+
+/* ---- The face ------------------------------------------------------------
+   Two dots and, sometimes, one curve. Spec §7.1. */
+.mika__eye {
+  fill: var(--color-text-primary);
+  transform-origin: center;
+  transition: transform 90ms var(--ease-standard);
+}
+
+/* The blink. 180ms total, driven from JavaScript on a randomised 4–7s
+   interval — a fixed interval is the fastest way to look mechanical. */
+.mika.is-blinking .mika__eye { transform: scaleY(0.08); }
+
+/* THE MOUTH IS ABSENT AT REST. A permanent smile reads as performance. */
+.mika__mouth {
+  fill: none;
+  stroke: var(--color-text-primary);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0;
+  transition: opacity var(--duration-slower) var(--ease-out-soft);
+}
+.mika.is-content .mika__mouth,
+.mika.is-glad .mika__mouth { opacity: 0.85; }
+
+/* ---- Ambient breathing ---------------------------------------------------
+   TWELVE SECONDS. The same 4-2-6 cycle the breathing pacer settles to. It is
+   never mentioned to the user and there is no instruction to follow it —
+   watching a slow, steady, predictable presence is weak but real
+   co-regulation when no calm other is available. Spec §2.1. */
+.mika__breath {
+  transform-origin: 50% 88%;
+  animation: mika-breathe 12000ms var(--ease-breath) infinite;
+}
+@keyframes mika-breathe {
+  0%, 100% { transform: scale(0.97); }
+  33%      { transform: scale(1.03); }   /* in  — 4s  */
+  50%      { transform: scale(1.03); }   /* hold — 2s */
+}
+
+/* ---- Sway ---------------------------------------------------------------
+   Inherited from the garden plants, so Mika belongs to the scene rather than
+   sitting on top of it. Spec §6.2. */
+.mika__sway {
+  transform-origin: 50% 88%;
+  animation: mika-sway 6000ms var(--ease-breath) infinite;
+}
+@keyframes mika-sway {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50%      { transform: rotate(1.6deg); }
+}
+
+/* ---- States --------------------------------------------------------------
+   Six, and six is the ceiling. There is no sad state, no worried state and no
+   disappointed state — a companion that looks upset when you are upset hands
+   you a second person to take care of. Spec §7.3. */
+
+/* Attentive — gaze toward the user. */
+.mika.is-attentive .mika__face { transform: translateY(0.6px); }
+
+/* Receiving — the core warms one step while it gathers. */
+.mika.is-receiving .mika__core { opacity: 0.85; animation-duration: 3000ms; }
+
+/* Comforting — leans 6° toward the user, and NO mouth.
+   §7.1 lists a mouth here; the state table in §7.3 says absent. The state
+   table wins: a smile after a heavy disclosure would be exactly wrong. */
+.mika.is-comforting .mika__sway {
+  animation: none;
+  transform: rotate(6deg);
+  transition: transform 1600ms var(--ease-breath);
+}
+
+/* Quietly glad — two small hops, then straight back to resting.
+   NEVER used after a heavy hold. Reserved for growth moments. Spec §7.3. */
+.mika.is-glad .mika__breath { animation: mika-hop 900ms var(--ease-spring) 2; }
+@keyframes mika-hop {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40%      { transform: translateY(-4px) scale(1.04, 0.96); }
+}
+
+/* ---- Reduced movement -----------------------------------------------------
+   Travel, sway, hops and the lean all go. The AMBIENT BREATHING STAYS: it is
+   therapeutic content, not decoration, and the design language's motion
+   exception covers exactly this case. Blinking stays too, at half frequency —
+   a companion that never blinks reads as dead. Spec §6.7. */
+[data-motion='reduced'] .mika__sway,
+[data-motion='reduced'] .mika.is-glad .mika__breath,
+[data-motion='reduced'] .mika.is-comforting .mika__sway {
+  animation: none;
+  transform: none;
+}
+[data-motion='reduced'] .mika__firefly { animation: none; opacity: 0.55; }
+
+/* ---- High contrast -------------------------------------------------------
+   The silhouette must stay readable, so translucency drops and the outline
+   becomes real. Spec §11.3. */
+[data-contrast='high'] .mika__shell {
+  fill-opacity: 0.25;
+  stroke: var(--color-border-control);
+  stroke-width: 1.5;
+  stroke-opacity: 1;
+}
+[data-contrast='high'] .mika__core { opacity: 0.9; }
+
+/* ===== 03-components/mood-ribbon.css =============================== */
+/* ==========================================================================
+   03-COMPONENTS / MOOD-RIBBON
+   Purpose : The mood history drawing.
+   Depends : 01-tokens/colors.css
+   Pairs with : core/components/MoodRibbon.js
+
+   THERE IS NO RULE IN THIS FILE FOR A TREND LINE, AN AVERAGE, A GRIDLINE OR
+   AN AXIS LABEL — because there is nothing to style. The component cannot
+   draw them. If a future change needs a selector here that does not exist,
+   that is the design telling you something.
+   ========================================================================== */
+
+.ribbon-figure { margin: 0; width: 100%; }
+
+.ribbon {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* One mark per day, in the colour of the word that was said. The colour scale
+   is separated by luminance as well as hue, so the ribbon still reads as an
+   ordered sequence in greyscale and under every common colour vision
+   deficiency. Design Language §1.5. */
+.ribbon__day--1 { fill: var(--color-mood-1); }
+.ribbon__day--2 { fill: var(--color-mood-2); }
+.ribbon__day--3 { fill: var(--color-mood-3); }
+.ribbon__day--4 { fill: var(--color-mood-4); }
+.ribbon__day--5 { fill: var(--color-mood-5); }
+
+/* A blank day. Faint, small, on the baseline, and never annotated. */
+.ribbon__blank { fill: var(--color-border-strong); opacity: 0.55; }
+
+/* A hairline for the marks to stand on. Not an axis: no ticks, no numbers. */
+.ribbon__base { stroke: var(--color-border); stroke-width: 1; }
+
+.ribbon-figure__caption {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-secondary);
+  padding-block-start: var(--space-2);
+}
+
+/* High contrast gives every mark an outline so the shape survives when the
+   colour difference is doing less work. */
+[data-contrast='high'] .ribbon__day { stroke: var(--color-text-primary); stroke-width: 0.6; }
+
+/* ===== 03-components/nav-bar.css =================================== */
+/* ==========================================================================
+   03-COMPONENTS / NAV-BAR
+   Purpose : The five-tab bottom navigation.
+   Depends : 01-tokens/*
+   Pairs with : app/main.js buildNav() in Module 1; core/components/NavBar.js
+                in Module 2 (which adds Lucide icons and the floating puck).
+
+   RULES (Design Language §15, Clinical Framework §14)
+     - Five tabs, never six.
+     - Icon AND word. Icon-only navigation forces recall, and recall is
+       expensive when concentration is gone.
+     - 48px minimum target, 8px minimum gap.
+     - Labels never truncate.
+     - The bar HIDES COMPLETELY in Calm Mode and Emergency Mode: in those
+       moments there is one thing to do, so there is one thing on screen.
+   ========================================================================== */
+
+#nav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: var(--z-nav);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  padding-bottom: var(--safe-bottom);
+  transition: opacity var(--duration-base) var(--ease-standard);
+}
+
+/* Fade out, never slide. Sliding implies distance and urgency. */
+#nav[hidden] { display: none; }
+
+.navbar {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: var(--space-2);
+  min-height: var(--nav-height);
+  padding: var(--space-2) var(--space-2) var(--space-3);
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.navbar__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: var(--touch-min);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: var(--space-2) var(--space-1);
+  border-radius: var(--radius-md);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-secondary);
+  font-size: calc(10.5px * var(--font-scale));
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  transition: color var(--duration-base) var(--ease-standard),
+              transform var(--duration-base) var(--ease-spring);
+}
+
+.navbar__label {
+  /* Labels wrap rather than truncate. A Bahasa Malaysia label at 200% text
+     size must stay readable, not turn into an ellipsis. */
+  overflow-wrap: anywhere;
+}
+
+/* The selected tab floats 7px upward onto a soft sage puck. */
+.navbar__tab[aria-selected='true'] {
+  color: var(--color-primary);
+  transform: translateY(-7px);
+  background: var(--color-primary-soft);
+}
+
+.navbar__tab:hover { color: var(--color-primary); }
+
+/* ==========================================================================
+   MODULE 2 ADDITIONS — icons, motion preference, large-text growth.
+   The Module 1 bar was labels only; core/components/NavBar.js now renders a
+   Lucide glyph above each word.
+   ========================================================================== */
+
+.navbar__glyph {
+  display: grid;
+  place-items: center;
+  height: 24px;
+}
+
+/* Reduced motion keeps the sage puck and the colour, drops the 7px lift.
+   The selected tab stays unmistakable — it simply stops moving. */
+[data-motion='reduced'] .navbar__tab,
+[data-motion='reduced'] .navbar__tab[aria-selected='true'] { transform: none; }
+
+/* At the largest text sizes five labels stop fitting on one line each. The
+   bar grows taller rather than truncating a word. */
+.navbar { min-height: max(var(--nav-height), calc(56px * var(--font-scale))); }
+
+/* ===== 04-features/transitions.css ================================= */
+/* ==========================================================================
+   04-FEATURES / TRANSITIONS
+   Purpose : Page transitions between routes.
+   Depends : 01-tokens/motion.css
+   Pairs with : app/router.js, which toggles .is-leaving / .is-entering
+
+   FADE, NEVER SLIDE. Sliding implies distance and urgency; this app has
+   neither. Design Language §11.
+   ========================================================================== */
+
+#main {
+  opacity: 1;
+  transition: opacity 200ms var(--ease-standard);
+}
+
+#main.is-leaving  { opacity: 0; }
+
+#main.is-entering {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+#main:not(.is-entering):not(.is-leaving) {
+  transform: none;
+  transition: opacity 320ms var(--ease-out-soft),
+              transform 320ms var(--ease-out-soft);
+}
+
+/* ===== 04-features/settings.css ==================================== */
+/* ==========================================================================
+   04-FEATURES / SETTINGS
+   Purpose : Layout for the Me tab's preference groups.
+   Depends : 01-tokens/*
+   Pairs with : features/me/me.view.js
+   ========================================================================== */
+
+.setting { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.setting__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);   /* the 8px minimum between adjacent touch targets */
+}
+
+.setting__option {
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border-control);
+  background: var(--color-card);
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-button-size);
+  font-weight: 700;
+  transition: background-color var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              transform var(--duration-fast) var(--ease-spring);
+}
+
+.setting__option:active { transform: scale(var(--press-scale)); }
+
+.setting__option[aria-checked='true'] {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-on-color);
+}
+
+/* The text-size group shows the letter A at each actual size, so the control
+   demonstrates what it does rather than describing it. */
+.setting__option[data-name='textSize'][data-value='s']   { font-size: 13px; }
+.setting__option[data-name='textSize'][data-value='m']   { font-size: 16px; }
+.setting__option[data-name='textSize'][data-value='l']   { font-size: 19px; }
+.setting__option[data-name='textSize'][data-value='xl']  { font-size: 22px; }
+.setting__option[data-name='textSize'][data-value='xxl'] { font-size: 26px; }
+
+/* ===== 04-features/today.css ======================================= */
+/* ==========================================================================
+   04-FEATURES / TODAY
+   Purpose : Layout for the Today screen's four zones.
+   Depends : 01-tokens/*, 05-utilities/layout.css
+   Pairs with : features/today/today.view.js
+   ========================================================================== */
+
+.today {
+  /* Room for the nav bar plus the safe area, so the last element on the
+     screen is never sitting under a tab. */
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+.today__checkin { width: 100%; }
+
+/* ---- Zone 4 · the offer --------------------------------------------------
+   The ONE primary action on the screen, at 64px, inside the thumb zone. Its
+   label follows the check-in — see the reasoning in today.view.js. There is
+   no second button here and there never will be. */
+.today__offer { display: flex; }
+.today__offer .btn { box-shadow: var(--shadow-floating); }
+
+/* ===== 04-features/checkin.css ===================================== */
+/* ==========================================================================
+   04-FEATURES / CHECK-IN
+   Purpose : The daily check-in card, the response line, and the crisis offer.
+   Depends : 01-tokens/*, 03-components/card.css, 03-components/mood-selector.css
+   Pairs with : features/checkin/checkin.js
+   ========================================================================== */
+
+.checkin { width: 100%; }
+
+/* The check-in card carries slightly less horizontal padding than a standard
+   card, so the five faces get every available pixel on a 320px screen. */
+.card--checkin { padding-inline: var(--space-4); }
+.card--checkin .card__head { padding-inline: var(--space-2); }
+
+/* ---- The response --------------------------------------------------------
+   Fades and rises 6px. It is the app answering, so it should feel like
+   something arriving gently rather than a panel opening. */
+.checkin__response {
+  padding-inline: var(--space-2);
+  animation: checkin-arrive var(--duration-slower) var(--ease-out-soft) both;
+}
+
+.checkin__response-text {
+  color: var(--color-text-primary);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+@keyframes checkin-arrive {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+[data-motion='reduced'] .checkin__response { animation: none; }
+
+/* ---- The crisis offer ----------------------------------------------------
+   Ordinary size, ordinary weight, "care" tone. NOT a modal, NOT a banner,
+   NOT red. Making it dramatic would punish an honest answer, and a user who
+   learns that telling the truth summons an alarming screen will stop telling
+   the truth. Clinical Framework §6.2. */
+.checkin__care {
+  animation: checkin-arrive var(--duration-slower) var(--ease-out-soft) both;
+}
+[data-motion='reduced'] .checkin__care { animation: none; }
+
+/* The crisis list itself now lives in 03-components/crisis-list.css.
+   It moved there in Module 3, when Calm Mode and the help screen started
+   using the same list. Only the spacing above it, which is specific to the
+   check-in, remains here. */
+.checkin__care .crisis-list { margin-block-start: var(--space-4); }
+
+/* ===== 04-features/feelings.css ==================================== */
+/* ==========================================================================
+   04-FEATURES / FEELINGS
+   Purpose : The record of days already told.
+   Depends : 01-tokens/*, 03-components/mood-selector.css (the drawn faces)
+   Pairs with : features/feelings/feelings.view.js
+
+   NOTE ON WHAT IS NOT STYLED HERE
+     There is no trend line, no average, no comparison, and no rule for
+     colouring a "bad week". The screen shows what the person said and stops.
+     Clinical Framework §12.4.
+   ========================================================================== */
+
+.feelings__list { padding-block-start: var(--space-2); }
+
+.feeling-row {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.feeling-row__face { width: 44px; }
+.feeling-row__face .mood-face { max-width: 44px; }
+
+/* Per-row colour, so the drawn face keeps its meaning outside the selector.
+   The word beside it carries the same meaning in text — colour is never the
+   only signal. Design Language §18. */
+.feeling-row[data-mood='1'] { --mood: var(--color-mood-1); --mood-soft: var(--color-mood-1-soft); --mood-ink: var(--color-mood-1-ink); }
+.feeling-row[data-mood='2'] { --mood: var(--color-mood-2); --mood-soft: var(--color-mood-2-soft); --mood-ink: var(--color-mood-2-ink); }
+.feeling-row[data-mood='3'] { --mood: var(--color-mood-3); --mood-soft: var(--color-mood-3-soft); --mood-ink: var(--color-mood-3-ink); }
+.feeling-row[data-mood='4'] { --mood: var(--color-mood-4); --mood-soft: var(--color-mood-4-soft); --mood-ink: var(--color-mood-4-ink); }
+.feeling-row[data-mood='5'] { --mood: var(--color-mood-5); --mood-soft: var(--color-mood-5-soft); --mood-ink: var(--color-mood-5-ink); }
+
+.feeling-row__body { min-width: 0; }
+.feeling-row__date { font-weight: 700; }
+.feeling-row__word { color: var(--mood-ink); font-weight: 700; }
+
+/* A note spans the full row width, below the face and the date. */
+.feeling-row__note {
+  grid-column: 1 / -1;
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+  overflow-wrap: anywhere;   /* a long unbroken string must not widen the row */
+}
+
+/* ===== 04-features/practice.css ==================================== */
+/* ==========================================================================
+   04-FEATURES / PRACTICE
+   Purpose : The three full-screen distress routes — Calm Mode, Grounding,
+             and the help screen.
+   Depends : 01-tokens/*, 03-components/breathing-circle.css
+   Pairs with : features/panic/calm.view.js, features/ground/ground.view.js,
+                features/crisis/crisis.view.js
+
+   THE LAYOUT RULE FOR THESE SCREENS
+     One thing in the middle, the way out at the bottom, nothing else. The
+     navigation bar is hidden by the router (navTab: null), so the whole
+     viewport belongs to this screen.
+
+     The stage is centred vertically and the foot is pinned to the thumb zone,
+     so the exit is in the same place on every one of these screens and does
+     not move when the content above it changes height. A control that moves
+     is a control that has to be found again, and finding things is expensive
+     in the states these screens exist for.
+   ========================================================================== */
+
+.practice {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-8) var(--screen-padding-x)
+           calc(var(--space-8) + var(--safe-bottom));
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+/* The middle. Takes all remaining height and centres its contents, so the
+   circle sits in the optical centre of the screen rather than the top. */
+.practice__stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  text-align: center;
+}
+
+/* The bottom. Never moves, on any of the three screens. */
+.practice__foot {
+  flex: none;
+  padding-block-start: var(--space-8);
+}
+
+/* Calm Mode gets the calm gradient. Not decoration — it separates this screen
+   from every other screen in the app at a glance, which matters when someone
+   opens it in a hurry and needs to know instantly that they are in the right
+   place. */
+.practice--calm { background: var(--gradient-calm); }
+
+/* ---- The quiet route to a phone number -----------------------------------
+   Present on Calm Mode, where the navigation bar is hidden. A text link
+   rather than a button: findable, but not implying that the app has decided
+   this is an emergency. Full 48px height despite looking like text. */
+.calm__help {
+  display: block;
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.calm__help:hover { color: var(--color-danger); }
+
+/* ---- Grounding ---------------------------------------------------------- */
+.practice__glyph { color: var(--color-secondary); opacity: 0.75; }
+
+.practice__prompt {
+  max-width: 22ch;
+  text-wrap: balance;
+  color: var(--color-text-primary);
+}
+
+/* Five dots, not a percentage bar. A bar implies a quantity being filled and
+   a point at which it is not yet full. Dots simply say which prompt this is.
+   Design Language §14.3. */
+.steps { display: flex; gap: var(--space-2); justify-content: center; }
+
+.steps__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-circle);
+  background: var(--color-border-strong);
+  transition: background-color var(--duration-slow) var(--ease-standard),
+              transform var(--duration-slow) var(--ease-spring);
+}
+.steps__dot.is-done { background: var(--color-secondary); transform: scale(1.25); }
+
+[data-motion='reduced'] .steps__dot,
+[data-motion='reduced'] .steps__dot.is-done { transform: none; }
+
+/* ---- The closing line ----------------------------------------------------
+   Shown after any practice, however short. It never contains a duration, a
+   count, or a comparison — "You did some" is the whole message, because the
+   alternative is a number that some sessions fail to reach. */
+.practice__after {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  text-align: center;
+  animation: practice-settle var(--duration-slower) var(--ease-out-soft) both;
+}
+
+.practice__after-text { max-width: 24ch; text-wrap: balance; }
+
+@keyframes practice-settle {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+[data-motion='reduced'] .practice__after { animation: none; }
+
+/* ---- The help screen -----------------------------------------------------
+   Not a .practice — it scrolls, because five numbers with their hours and
+   notes do not fit one viewport at large text sizes. Everything else about
+   it follows the same rules. */
+.crisis-screen {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--space-8) + var(--safe-bottom));
+}
+.crisis-screen__foot { padding-block-start: var(--space-6); }
+
+/* ===== 04-features/task.css ======================================== */
+/* ==========================================================================
+   04-FEATURES / TASK
+   Purpose : Zone 3 of Today — the one small thing.
+   Depends : 01-tokens/*, 03-components/card.css
+   Pairs with : features/task/task-card.js
+
+   THE ACTION ROW IS THE WHOLE DESIGN
+     .card__actions already gives both buttons `flex: 1 1 auto`, so "I did it"
+     and "Not now" come out the same width. That is deliberate and it is load
+     bearing — see the header note in task-card.js. Do not add a rule here
+     that shrinks, greys or de-emphasises the second button.
+   ========================================================================== */
+
+.task { width: 100%; }
+
+.task__text {
+  margin: 0;
+  color: var(--color-text-primary);
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+/* Once done, the task text is shown as a record of what happened rather than
+   as an instruction — same words, quieter weight. */
+.task__text-done { color: var(--color-text-secondary); }
+
+/* The single line that appears when the ask has just got smaller. It names
+   the change so it is legible rather than mysterious. Never an apology. */
+.task__softened {
+  color: var(--color-text-secondary);
+  padding-inline: var(--space-2);
+  padding-block-end: var(--space-2);
+  animation: task-soften var(--duration-slow) var(--ease-out-soft) both;
+}
+
+@keyframes task-soften {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+[data-motion='reduced'] .task__softened { animation: none; }
+
+/* ===== 04-features/garden.css ====================================== */
+/* ==========================================================================
+   04-FEATURES / GARDEN
+   Purpose : Layout for the Garden tab.
+   Depends : 01-tokens/*, 03-components/garden.css
+   Pairs with : features/garden/garden.view.js
+   ========================================================================== */
+
+.garden-view {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.garden-view__stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.garden-view__record { padding-block-start: var(--space-4); }
+
+/* One row per thing the person did. No count, no total, no comparison —
+   the specificity is the point. */
+.grew-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+}
+
+.grew-row__icon { color: var(--color-primary); }
+.grew-row__body { min-width: 0; }
+.grew-row__what { font-weight: 600; }
+.grew-row__when { color: var(--color-text-secondary); }
+
+/* ==========================================================================
+   MODULE 5 — Mika lives in the garden.
+   One ledger, one story. Mika grows on exactly the same growth entries the
+   plant does, so there is no second progress system to compare. Spec §0, §8.3.
+   ========================================================================== */
+
+.garden-scene { position: relative; }
+
+/* Mika sits on the soil, lower-left, out of the way of the main plant. It is
+   ambient — it breathes and blinks and does nothing else. Tapping it opens
+   the companion. */
+.garden-scene__mika {
+  position: absolute;
+  left: 6%;
+  bottom: 4%;
+  display: grid;
+  place-items: end center;
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* ===== 04-features/mika.css ======================================== */
+/* ==========================================================================
+   04-FEATURES / MIKA
+   Purpose : The Mika flow and "What Mika is holding".
+   Depends : 01-tokens/*, 03-components/mika.css
+   Pairs with : features/mika/mika.view.js, features/holding/holding.view.js
+   ========================================================================== */
+
+.mika-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-6) var(--screen-padding-x)
+           calc(var(--space-6) + var(--safe-bottom));
+  max-width: var(--content-max);
+  margin-inline: auto;
+  /* The screen quiets FIRST, then Mika arrives. 600ms, and it is the
+     difference between being interrupted and being joined. Spec §5 Screen 1. */
+  background: var(--gradient-calm);
+  animation: mika-quiet 600ms var(--ease-standard) both;
+}
+
+@keyframes mika-quiet { from { opacity: 0.4; } to { opacity: 1; } }
+[data-motion='reduced'] .mika-screen { animation: none; }
+
+/* Mika sits in the optical centre of the space above the words. */
+.mika-screen__stage {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-8);
+}
+
+/* ---- Size on Mika's own screens -----------------------------------------
+   The stage sizes in Mika.js (40px → 76px) are the sizes for Mika standing in
+   the GARDEN, among plants, at a glance. On its own screen, where it is the
+   only thing present and the person is looking directly at it, that reads as
+   lost rather than small.
+
+   These are the same five steps, scaled up by the same factor, so the growth
+   from stage 1 to stage 5 is exactly as proportionate as it is in the garden —
+   it is just legible. Nothing about the drawing changes. */
+.mika-screen__stage .mika--stage-1,
+.gathering__mika .mika--stage-1 { width: 108px; height: 108px; }
+.mika-screen__stage .mika--stage-2,
+.gathering__mika .mika--stage-2 { width: 130px; height: 130px; }
+.mika-screen__stage .mika--stage-3,
+.gathering__mika .mika--stage-3 { width: 151px; height: 151px; }
+.mika-screen__stage .mika--stage-4,
+.gathering__mika .mika--stage-4 { width: 173px; height: 173px; }
+.mika-screen__stage .mika--stage-5,
+.gathering__mika .mika--stage-5 { width: 205px; height: 205px; }
+
+/* At 200% text size Mika shrinks first. Text always wins the space — a person
+   who has turned the type up needs the words, not the picture. Spec §11.3. */
+@media (max-height: 700px) {
+  .mika-screen__stage .mika { width: 96px !important; height: 96px !important; }
+}
+
+/* While the user writes, Mika moves to the lower-left and shrinks — out of
+   the thumb arc, so it is never tapped by accident, and never covering the
+   field. Spec §6.3, §11.4. */
+.mika-screen__aside {
+  display: flex;
+  justify-content: flex-start;
+  padding-inline-start: var(--space-2);
+  opacity: 0.85;
+}
+.mika-screen__aside .mika { width: 52px; height: 52px; }
+
+.mika-screen__lines { padding-block: var(--space-4); text-align: center; }
+
+/* One line at a time, 600ms apart. Nothing appears all at once. */
+.mika-line {
+  max-width: 28ch;
+  margin-inline: auto;
+  text-wrap: balance;
+  color: var(--color-text-primary);
+  animation: mika-line-in var(--duration-slower) var(--ease-out-soft) both;
+}
+@keyframes mika-line-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+[data-motion='reduced'] .mika-line { animation: none; }
+
+.mika-line--received { font-weight: 700; }
+
+.mika-screen__field { flex: 1; display: flex; }
+.mika-screen__foot { flex: none; padding-block-start: var(--space-6); }
+
+/* ---- The field -----------------------------------------------------------
+   Unlimited length. NO character count, NO word counter, NO formatting
+   toolbar, NO mood tags, NO title. Nothing that suggests the text is being
+   read by anything. Spec §5 Screen 2. */
+.mika-field {
+  width: 100%;
+  min-height: 40vh;
+  padding: var(--space-5);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-lh);
+  resize: none;
+}
+.mika-field::placeholder { color: var(--color-text-tertiary); opacity: 0.45; }
+.mika-field:focus { border-color: var(--color-primary); }
+
+/* ---- The gathering -------------------------------------------------------
+   Nothing is eaten, swallowed, crushed, burned or deleted. The leaves drift
+   apart, then travel to Mika and pass THROUGH its translucent shell, where
+   they stay visible. Acceptance and holding — never erasure. Spec §5 Screen 3.
+
+   A tap anywhere fast-forwards to the end. Someone in acute distress must
+   never be made to watch an animation. */
+.gathering {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  cursor: pointer;
+}
+
+.gathering__mika { position: relative; z-index: 1; }
+.gathering__leaves { position: absolute; inset: 0; pointer-events: none; }
+
+.leaf {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 10px;
+  margin: -5px 0 0 -8px;
+  border-radius: 60% 20% 60% 20%;
+  background: var(--color-garden-leaf);
+  opacity: 0;
+  /* Drift out, hang, then travel back into Mika. 900ms per leaf, never
+     faster — Mika does not lunge, snap or chase. */
+  animation: leaf-hold 6800ms var(--ease-out-soft) both;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes leaf-hold {
+  0%   { opacity: 0;    transform: translate(0, 0) scale(1); }
+  8%   { opacity: 0.85; transform: translate(calc(var(--x) * 0.4), calc(var(--y) * 0.4)) scale(1); }
+  26%  { opacity: 0.85; transform: translate(var(--x), var(--y)) scale(1); }
+  55%  { opacity: 0.85; transform: translate(calc(var(--x) * 0.6), calc(var(--y) * 0.5)) scale(0.9); }
+  88%  { opacity: 0.45; transform: translate(0, 0) scale(0.42); }
+  100% { opacity: 0.35; transform: translate(0, 0) scale(0.4); }
+}
+
+/* Reduced motion: no travel at all. The leaves simply fade in over Mika at
+   40% scale. 1.6s, and the meaning survives entirely. Spec §6.7. */
+.leaf--still {
+  animation: leaf-still 1600ms var(--ease-out-soft) both;
+  animation-delay: calc(var(--i) * 0.12s);
+  transform: scale(0.4);
+}
+@keyframes leaf-still {
+  from { opacity: 0; }
+  to   { opacity: 0.35; }
+}
+
+/* ---- The risk offer ------------------------------------------------------
+   A CARD, not a modal. It does not cover the screen, does not block, and
+   cannot trap. No red, no warning icon, no alarm colour — threat cues raise
+   arousal in exactly the person least able to afford it. Spec §10.4.5. */
+.mika-risk { margin-block-end: var(--space-4); }
+.mika-risk .crisis-list { margin-block: var(--space-4); }
+
+/* ==========================================================================
+   WHAT MIKA IS HOLDING
+   ========================================================================== */
+
+.holding {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.holding__mika { display: flex; justify-content: center; padding-block: var(--space-4); }
+
+/* One row per held thought. NO counter, NO badge, NO date until opened, and
+   nothing that could be read as "needs attention". Spec §5 Screen 8. */
+.held {
+  border-radius: var(--radius-md);
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.held__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  text-align: start;
+  cursor: pointer;
+}
+
+.held__leaf {
+  flex: none;
+  width: 14px;
+  height: 9px;
+  border-radius: 60% 20% 60% 20%;
+  background: var(--color-garden-leaf);
+  opacity: 0.7;
+}
+
+.held__preview { min-width: 0; overflow-wrap: anywhere; }
+
+.held__body { padding: 0 var(--space-4) var(--space-4); }
+
+/* The text exactly as written. It is allowed to be long, ugly and untidy. */
+.held__text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding-block: var(--space-3);
+  border-block-start: 1px solid var(--color-border);
+}
+
+.held__when { color: var(--color-text-secondary); }
+.held__line { padding-block-end: var(--space-3); }
+.held__actions { padding-block-start: var(--space-2); }
+.held__confirm { padding-block-start: var(--space-4); }
+
+/* A thought the person has taken back. It stays in the list — taking
+   something back is not the same as wanting it gone — but it reads as no
+   longer being carried by Mika. */
+.held--returned { opacity: 0.6; }
+.held--returned .held__leaf { background: var(--color-border-strong); }
+
+/* ===== 04-features/body.css ======================================== */
+/* ==========================================================================
+   04-FEATURES / BODY
+   Purpose : The body-sensation log.
+   Depends : 01-tokens/*, 03-components/card.css
+   Pairs with : features/body/body.view.js
+
+   THE STANDING LINE IS NOT STYLED AS A WARNING.
+   No red, no icon, no border, no box. It is ordinary body text in the
+   secondary colour, in the same place every time. It is a fact that is always
+   true, not an alert that has just fired — and something that looks like an
+   alert every single visit stops being read by the third visit.
+   ========================================================================== */
+
+.body-log {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.body-log__region { padding-block-start: var(--space-4); }
+
+.body-log__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* One sensation. A pill, 48px, in plain words — never clinical vocabulary.
+   A person reading their own clinical terminology back at 2am is reading a
+   diagnosis they gave themselves. */
+.sensation {
+  min-height: var(--touch-min);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-border-strong);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  font-weight: 600;
+  text-align: start;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color var(--duration-base) var(--ease-standard),
+              border-color var(--duration-base) var(--ease-standard);
+}
+.sensation:hover { border-color: var(--color-primary); }
+
+.sensation[aria-pressed='true'] {
+  background: var(--color-primary-tint);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* The standing line. Ordinary text, every time, never an alert. */
+.body-log__standing {
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+  padding-block-start: var(--space-2);
+}
+
+/* Both closing states share a layout and nothing else. They mean very
+   different things — one is "saved", the other is "the app has stopped asking
+   for today" — so they carry different class names as well. */
+.body-log__after { text-align: center; padding-block: var(--space-6); }
+
+/* ===== 04-features/report.css ====================================== */
+/* ==========================================================================
+   04-FEATURES / REPORT
+   Purpose : The appointment summary, on screen.
+   Depends : 01-tokens/*
+   Pairs with : features/report/report.view.js
+   ========================================================================== */
+
+.report-screen {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+.report { display: flex; flex-direction: column; gap: var(--space-6); }
+
+.report__head { padding-block-end: var(--space-2); border-block-end: 1px solid var(--color-border); }
+
+/* The provenance line. It says what this is and what it is not, and it is on
+   every copy — a page of clinical-looking data with no provenance is worse
+   than no page at all. */
+.report__scope {
+  color: var(--color-text-secondary);
+  max-width: var(--measure);
+}
+
+.report__section { padding-block-start: var(--space-2); }
+
+.report__row {
+  padding: var(--space-3) 0;
+  border-block-end: 1px solid var(--color-border);
+}
+.report__row-date { color: var(--color-text-secondary); }
+.report__note { color: var(--color-text-secondary); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.report__list { padding-inline-start: var(--space-5); }
+.report__list li {
+  list-style: disc;
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-lh);
+  padding-block: 2px;
+}
+
+.report__controls { padding-block-start: var(--space-4); }
+
+/* ===== 04-features/data.css ======================================== */
+/* ==========================================================================
+   04-FEATURES / DATA
+   Purpose : The "Your data" screen — take a copy, put one back, delete all.
+   Depends : 01-tokens/*, 03-components/card.css, 03-components/button.css
+   Pairs with : features/data/data.view.js
+
+   THE DELETE CARD IS NOT STYLED AS A DANGER ZONE.
+   No red border, no warning tint, no skull, no shaking. Every other app puts
+   destructive settings behind a red rectangle, which is a design borrowed
+   from server administration, where the risk is to the company. Here the data
+   belongs to the person and the risk of deleting it is entirely theirs to
+   take.
+
+   Someone deleting a mental-health record may be leaving an unsafe home,
+   passing the phone to a family member, or simply finished. Painting their
+   exit red tells them the app disapproves. It gets the same plain card as
+   everything else, and the confirmation carries the weight in words.
+   ========================================================================== */
+
+.data-screen {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  /* Cleared past the nav bar and the phone's home indicator, so the last
+     button is never half-covered on an iPhone. */
+  padding-block-end: calc(var(--nav-height) + var(--safe-bottom) + var(--space-8));
+}
+
+/* --------------------------------------------------------------------------
+   THE OPT-IN FOR PRIVATE WRITING
+   The whole row is the label, so the tap target is the sentence rather than
+   a 16px square. Motor difficulty is ordinary — tremor from lithium or an
+   SSRI, a shaking hand mid-panic — and a checkbox you have to aim at is a
+   checkbox that gets missed.
+-------------------------------------------------------------------------- */
+.data-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-height: var(--touch-min);
+  padding: var(--space-3);
+  margin-block-start: var(--space-2);
+  border: 1.5px solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  background: var(--color-card-sunken);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.data-check:hover { border-color: var(--color-primary); }
+
+/* The box itself is left as the platform control. A hand-drawn checkbox has
+   to reimplement indeterminate state, forced-colours mode, and the way each
+   assistive technology announces it — and usually reimplements two of the
+   three. It is only made bigger. */
+.data-check__box {
+  inline-size: 22px;
+  block-size: 22px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: var(--color-primary);
+  /* Optically aligned with the first line of text rather than its box. */
+  margin-block-start: 1px;
+}
+
+/* No focus rule here on purpose. 02-base/a11y.css already rings every
+   input on :focus-visible, and a second declaration would be a second
+   place to keep in step. */
+
+/* --------------------------------------------------------------------------
+   THE FILE PICKER
+   Also left as the platform control, for the same reason and one more: a
+   custom file button has to be a <button> that clicks a hidden <input>, and
+   on several Android browsers that pattern silently does nothing.
+-------------------------------------------------------------------------- */
+.data-file {
+  display: block;
+  inline-size: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-3);
+  margin-block-start: var(--space-2);
+  border: 1.5px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-card-sunken);
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm-size);
+}
+
+.data-file::file-selector-button {
+  min-height: 40px;
+  margin-inline-end: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: 1.5px solid var(--color-border-control);
+  border-radius: var(--radius-pill);
+  background: var(--color-card);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-button-size);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* The confirmation sentence, which is where the weight lives instead of in a
+   colour. Given room so it is read rather than skipped. */
+.data-screen .card__body p + p { margin-block-start: var(--space-2); }
+
+/* ===== 05-utilities/layout.css ===================================== */
+/* ==========================================================================
+   05-UTILITIES / LAYOUT
+   Purpose : Single-purpose layout helpers. Each does one thing.
+   Depends : 01-tokens/spacing.css
+   Rule    : A utility never has more than one declaration group. If it needs
+             two, it is a component.
+   ========================================================================== */
+
+.u-stack     { display: flex; flex-direction: column; gap: var(--stack-gap); }
+.u-stack-sm  { display: flex; flex-direction: column; gap: var(--space-2); }
+.u-stack-lg  { display: flex; flex-direction: column; gap: var(--space-8); }
+
+.u-row       { display: flex; align-items: center; gap: var(--space-3); }
+.u-spread    { display: flex; align-items: center; justify-content: space-between;
+               gap: var(--space-4); }
+.u-center    { display: grid; place-items: center; }
+
+.u-screen    { padding-inline: var(--screen-padding-x); }
+.u-screen-y  { padding-block: var(--screen-padding-y); }
+
+.u-grow      { flex: 1; }
+.u-full      { width: 100%; }
+
+/* Pushes the following element to the bottom of a flex column — used to keep
+   the primary action in the thumb zone regardless of content height. */
+.u-push      { margin-top: auto; }
+
+.u-hidden    { display: none !important; }
+
+/* ===== 05-utilities/text.css ======================================= */
+/* ==========================================================================
+   05-UTILITIES / TEXT
+   Purpose : Type-scale classes. Use these instead of setting font-size.
+   Depends : 01-tokens/typography.css
+   ========================================================================== */
+
+.t-display  { font-family: var(--font-primary); font-size: var(--text-display-size);
+              line-height: var(--text-display-lh); font-weight: var(--text-display-weight);
+              letter-spacing: var(--text-display-ls); }
+
+.t-h1       { font-family: var(--font-primary); font-size: var(--text-h1-size);
+              line-height: var(--text-h1-lh); font-weight: var(--text-h1-weight);
+              letter-spacing: var(--text-h1-ls); }
+
+.t-h2       { font-family: var(--font-primary); font-size: var(--text-h2-size);
+              line-height: var(--text-h2-lh); font-weight: var(--text-h2-weight);
+              letter-spacing: var(--text-h2-ls); }
+
+.t-h3       { font-family: var(--font-primary); font-size: var(--text-h3-size);
+              line-height: var(--text-h3-lh); font-weight: var(--text-h3-weight);
+              letter-spacing: var(--text-h3-ls); }
+
+.t-title    { font-family: var(--font-primary); font-size: var(--text-title-size);
+              line-height: var(--text-title-lh); font-weight: var(--text-title-weight); }
+
+.t-subtitle { font-family: var(--font-primary); font-size: var(--text-subtitle-size);
+              line-height: var(--text-subtitle-lh); font-weight: var(--text-subtitle-weight);
+              color: var(--color-text-secondary); }
+
+.t-body     { font-family: var(--font-primary); font-size: var(--text-body-size);
+              line-height: var(--text-body-lh); font-weight: var(--text-body-weight);
+              max-width: var(--measure, 68ch); }
+
+.t-body-sm  { font-family: var(--font-primary); font-size: var(--text-body-sm-size);
+              line-height: var(--text-body-sm-lh); font-weight: var(--text-body-sm-weight); }
+
+.t-caption  { font-family: var(--font-secondary); font-size: var(--text-caption-size);
+              line-height: var(--text-caption-lh); font-weight: var(--text-caption-weight);
+              letter-spacing: var(--text-caption-ls); color: var(--color-text-tertiary); }
+
+.t-button   { font-family: var(--font-primary); font-size: var(--text-button-size);
+              line-height: var(--text-button-lh); font-weight: var(--text-button-weight);
+              letter-spacing: var(--text-button-ls); }
+
+.t-label    { font-family: var(--font-secondary); font-size: var(--text-label-size);
+              line-height: var(--text-label-lh); font-weight: var(--text-label-weight);
+              letter-spacing: var(--text-label-ls); text-transform: uppercase;
+              color: var(--color-text-tertiary); }
+
+/* Tabular figures. Progress counters must not jitter as they animate. */
+.t-num      { font-family: var(--font-numeric); font-variant-numeric: tabular-nums;
+              font-feature-settings: 'tnum' 1; }
+
+.t-muted    { color: var(--color-text-secondary); }
+.t-center   { text-align: center; }
+
+/* ===== 06-print/report.css ========================================= */
+/* ==========================================================================
+   06-PRINT / REPORT
+   Purpose : What comes out of the printer, or the PDF a phone makes.
+   Depends : nothing — this layer deliberately overrides everything.
+
+   WHY THIS LAYER EXISTS AT ALL
+     The report is meant to be handed to a clinician. On paper that means
+     black text on white paper with real margins, and none of the app's warm
+     off-white, soft shadows or rounded cards — those are for a phone at 3am,
+     not for a page that goes in a folder.
+
+   THE RULE
+     Everything that is not the report is hidden. Buttons, navigation, the
+     toast host, anything interactive. A printed page with a "Print" button
+     drawn on it looks like a mistake, and a clinician reading it will trust
+     the rest of the page slightly less.
+   ========================================================================== */
+
+@media print {
+
+  /* Paper, not screen. Ink is expensive and a tinted background prints as a
+     grey wash that makes small text harder to read. */
+  :root,
+  [data-theme='dark'] {
+    --color-bg: #FFFFFF;
+    --color-card: #FFFFFF;
+    --color-text-primary: #000000;
+    --color-text-secondary: #333333;
+    --color-text-tertiary: #555555;
+    --color-border: #BBBBBB;
+    --color-border-strong: #999999;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+  }
+
+  /* Everything that is not the report. */
+  #nav,
+  .toast-host,
+  .skip-link,
+  .report__controls,
+  .btn {
+    display: none !important;
+  }
+
+  #main {
+    padding: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .report-screen { padding: 0 !important; max-width: none !important; }
+
+  .report {
+    gap: 14pt;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  /* Real page margins. 16mm is comfortable for a hole punch and a staple. */
+  @page { margin: 16mm; }
+
+  /* A section must not be split across a page break in the middle of a date
+     and the thing that happened on it. */
+  .report__section { break-inside: avoid; }
+  .report__row { break-inside: avoid; }
+  .report__head { break-after: avoid; }
+
+  /* The drawing prints. The colour scale is separated by luminance as well as
+     hue, so it stays readable on a black-and-white printer — which is what a
+     clinic has. Design Language §1.5. */
+  .ribbon { max-width: 150mm; }
+  .ribbon__day { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+
+  /* Nothing animates on paper. */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

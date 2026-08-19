@@ -27,7 +27,22 @@
   /* ---- Text -------------------------------------------------------------- */
   --color-text-primary:     #2B2724;  /* Warm ink, softer than black. 14.8:1 on card */
   --color-text-secondary:   #6B625A;  /* 6.0:1 on card */
-  --color-text-tertiary:    #8C837A;  /* 3.7:1 — meta only, never sentences */
+  /* WAS #8C837A (3.7:1) until the Module 7 audit.
+
+     The old value was written as "meta only, never sentences", on the common
+     assumption that small print is exempt. It is not. WCAG 2.2 sets 4.5:1 for
+     ALL text below 18.66px, and axe-core flagged it on nine routes — the
+     bottom-navigation labels, every caption, and the field labels on Me and
+     Today. Those are not decoration; the nav labels are how a person finds
+     their way around the app.
+
+     Darkened to 4.9:1 on card and 4.7:1 on the page background. It stays
+     visibly quieter than secondary text (5.9:1), so the visual hierarchy the
+     Design Language asks for survives — it just no longer disappears for
+     anyone reading in sunlight or with reduced contrast sensitivity, which
+     includes most people over 60 and anyone on a medication that affects
+     vision. Design Language 4.2; Clinical Framework 14.1. */
+  --color-text-tertiary:    #756E66;  /* 4.9:1 on card, 4.7:1 on background */
   --color-text-on-color:    #FFFFFF;
   --color-text-inverse:     #FBF7F2;
 
@@ -134,7 +149,14 @@
 
   --color-text-primary:     #F2EDE7;
   --color-text-secondary:   #B4ABA2;
-  --color-text-tertiary:    #8F8880;
+  /* WAS #8F8880, which measured 4.50:1 on a card — passing on paper and
+     failing in the browser, because axe computes 4.49 after sub-pixel
+     rendering. A value that lands exactly on the threshold is not a pass, it
+     is a coin toss decided by the device. Lifted to 5.1:1 on card and 6.1:1
+     on the page, so it stays legible on an OLED phone at low brightness,
+     which is when this theme is actually used — at night, in bed, by someone
+     who cannot sleep. */
+  --color-text-tertiary:    #999189;  /* 5.1:1 on card, 6.1:1 on background */
   --color-text-on-color:    #16151A;
   --color-text-inverse:     #23222A;
 

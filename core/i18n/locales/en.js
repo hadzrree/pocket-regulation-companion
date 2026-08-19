@@ -283,8 +283,45 @@ export const en = {
     language: 'Language',
     about: 'About',
     on: 'On',
-    off: 'Off'
+    off: 'Off',
+    name: 'What I call you',
+    namePlaceholder: 'Leave it blank if you\'d rather',
+    haptics: 'Little buzz when you tap',
+    data: 'Your data',
+    openData: 'Take a copy, or delete everything',
+    /* A positive statement of something the app does NOT do. Worth saying out
+       loud: most apps in this category are built to pull people back. */
+    never: 'This app never sends notifications and never asks you to come back.',
+    version: 'Version'
   },
+
+  data: {
+    title: 'Your data',
+    intro: 'It lives on this phone and nowhere else.',
+
+    copyTitle: 'Take a copy',
+    copyBody: 'A file you can keep somewhere safe, in case this phone is lost.',
+    copyContains: 'The file has your check-ins, your garden, what you did, and what your body noticed.',
+    includeWriting: 'Also include what Mika is holding',
+    copyAction: 'Make a copy',
+    copyDone: 'Saved to your downloads.',
+
+    restoreTitle: 'Put a copy back',
+    restoreBody: 'Choose a file you made earlier.',
+    restoreAction: 'Choose a file',
+    /* Said before they pick a file, not after it has run. */
+    restoreSafe: 'This only adds what is missing. Nothing already here is changed or removed.',
+    restoreDone: 'Put back {added} things.',
+    restoreBad: 'I couldn\'t read that file. It might not be one of mine.',
+    restoreNewer: 'That file is from a newer version than this one.',
+
+    deleteTitle: 'Delete everything',
+    deleteBody: 'Every check-in, everything Mika holds, and your garden.',
+    deleteAction: 'Delete everything',
+    deleteConfirm: 'This can\'t be undone, and there is no copy anywhere else.',
+    deleteYes: 'Yes, delete everything'
+  },
+
 
   scope: {
     statement:
