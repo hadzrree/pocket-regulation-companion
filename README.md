@@ -30,10 +30,19 @@ Push to GitHub, then **Settings → Pages → Deploy from a branch → main → 
 GitHub Pages serves from a sub-path, and a leading slash resolves to the domain
 root instead. This one rule prevents most PWA-on-Pages failures.
 
-## Outstanding assets
+## If you change any CSS
 
-Two font files. See `docs/MODULE-01-FOUNDATION.md` §5 for step-by-step
-instructions. The app runs correctly without them, in the system fallback.
+The six numbered style layers are concatenated into `styles/app.css`, which is
+the only stylesheet the app loads. After editing a layer file, run:
+
+```bash
+python3 tools/build-css.py
+```
+
+`styles/main.css` still decides the cascade order — it is the source of truth
+and the build script reads it. `styles/app.css` is generated output; editing it
+directly works until the next build and is then thrown away. The Module 7 test
+suite fails if the two have drifted, so forgetting is loud rather than silent.
 
 ## Documentation
 
@@ -54,9 +63,36 @@ and this code follows them:
 | Module | Scope | Status |
 |---|---|---|
 | 1 | Foundation, PWA, tokens, navigation, accessibility, bilingual | ✅ Complete |
-| 2 | Component library, storage layer, mood check-in | Not started |
-| 3 | Breathing, grounding, Calm Mode, crisis | Not started |
-| 4 | Behavioural activation, garden | Not started |
-| 5 | Mika | Not started |
-| 6 | Symptoms, history, charts | Not started |
-| 7 | Export, reminders, optimisation | Not started |
+| 2 | Component library, storage layer, mood check-in | ✅ Complete |
+| 3 | Breathing, grounding, Calm Mode, crisis | ✅ Complete |
+| 4 | Behavioural activation, garden | ✅ Complete |
+| 5 | Mika, the emotional companion | ✅ Complete |
+| 6 | Body log, mood history, report for an appointment | ✅ Complete |
+| 7 | Backup, restore, delete, accessibility audit, offline, release | ✅ Complete |
+
+**Version 1.6.0.** 304 automated assertions passing; 108 page states audited
+with axe-core, zero violations; every route verified with the network
+disconnected.
+
+## Before anyone is given this app
+
+The software is finished. It is **not** clinically signed off, and the
+difference matters. Read **`docs/RELEASE-READINESS.md`** — it lists five items
+that need a named clinician to read the actual words, the most important being
+the risk-phrase list in `core/safety/risk-phrases.js`, which is currently a
+developer's draft.
+
+## Verifying a build
+
+```bash
+python3 -m http.server 8099 --bind 127.0.0.1 &
+python3 tests/verify-module7.py      # and module2..6
+python3 tests/verify-a11y.py
+python3 tests/verify-offline.py
+```
+
+Requires Playwright and Chromium.
+
+## Outstanding assets
+
+App icons are generated placeholders. See `docs/ASSETS.md`.

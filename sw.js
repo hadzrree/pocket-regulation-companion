@@ -20,8 +20,10 @@
  */
 
 /* Bump this string on EVERY release. It is what triggers the update and the
-   cleanup of the previous cache. */
-const CACHE = 'prc-v1.5.0-module6';
+   cleanup of the previous cache. Keep it in step with APP_VERSION in
+   app/version.js — a service worker is not an ES module and cannot import
+   it, so the two are kept together by hand. */
+const CACHE = 'prc-v1.6.0-module7';
 
 /* The app shell. Every path relative — see the header note. */
 const SHELL = [
@@ -30,49 +32,21 @@ const SHELL = [
   './offline.html',
   './manifest.webmanifest',
 
-  './styles/main.css',
-  './styles/01-tokens/colors.css',
-  './styles/01-tokens/typography.css',
-  './styles/01-tokens/spacing.css',
-  './styles/01-tokens/radius.css',
-  './styles/01-tokens/shadows.css',
-  './styles/01-tokens/motion.css',
-  './styles/01-tokens/layout.css',
-  './styles/02-base/reset.css',
-  './styles/02-base/fonts.css',
-  './styles/02-base/elements.css',
-  './styles/02-base/a11y.css',
-  './styles/03-components/icon.css',
-  './styles/03-components/button.css',
-  './styles/03-components/card.css',
-  './styles/03-components/mood-selector.css',
-  './styles/03-components/toast.css',
-  './styles/03-components/empty-state.css',
-  './styles/03-components/crisis-list.css',
-  './styles/03-components/breathing-circle.css',
-  './styles/03-components/garden.css',
-  './styles/03-components/mika.css',
-  './styles/03-components/mood-ribbon.css',
-  './styles/03-components/nav-bar.css',
-  './styles/04-features/transitions.css',
-  './styles/04-features/settings.css',
-  './styles/04-features/today.css',
-  './styles/04-features/checkin.css',
-  './styles/04-features/feelings.css',
-  './styles/04-features/practice.css',
-  './styles/04-features/task.css',
-  './styles/04-features/garden.css',
-  './styles/04-features/mika.css',
-  './styles/04-features/body.css',
-  './styles/04-features/report.css',
-  './styles/06-print/report.css',
-  './styles/05-utilities/layout.css',
-  './styles/05-utilities/text.css',
+  /* ONE stylesheet, not thirty-nine.
+
+     The six numbered layers are concatenated into app.css by
+     tools/build-css.py — see the comment in index.html for the measurements
+     that led to it. The layer files are still in the repository and still the
+     source of truth, but nothing fetches them at runtime, so precaching them
+     would spend 125 KB of a person's data plan on files no browser will ever
+     ask for. */
+  './styles/app.css',
 
   './app/main.js',
   './app/router.js',
   './app/routes.js',
   './app/register-sw.js',
+  './app/version.js',
 
   './core/store/store.js',
   './core/store/initial-state.js',
@@ -102,6 +76,7 @@ const SHELL = [
   './core/components/MoodRibbon.js',
 
   './core/storage/db.js',
+  './core/storage/backup.js',
   './core/storage/migrations.js',
   './core/storage/repositories/mood.repo.js',
   './core/storage/repositories/growth.repo.js',
@@ -131,6 +106,7 @@ const SHELL = [
   './features/holding/holding.view.js',
   './features/body/body.view.js',
   './features/report/report.view.js',
+  './features/data/data.view.js',
 
   './assets/fonts/nunito-latin.woff2',
   './assets/fonts/inter-latin.woff2',
