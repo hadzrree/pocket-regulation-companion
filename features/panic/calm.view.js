@@ -117,7 +117,23 @@ export function mount(container) {
     el('div', { class: 'practice__foot u-stack-sm' }, [stopButton, helpLink])
   ]);
 
+  /* A visually hidden h1, appended to the CONTAINER rather than to `host`.
+
+     WHY THIS SCREEN HAS NO VISIBLE HEADING AND STILL NEEDS ONE.
+     The design is deliberately almost empty — a person arriving here is
+     panicking or overwhelmed, and a title bar is one more thing to process.
+     But a screen-reader user navigating by headings, which is the ordinary
+     way of finding out where you are, lands on a page with no heading at all
+     and is told nothing. The sighted user gets that answer from the shape of
+     the screen; this gives the same answer to someone who cannot see it, and
+     costs the visual design nothing. WCAG 2.4.6; Clinical Framework 14.2.
+
+     It sits outside `host` on purpose: every state of this screen rebuilds
+     `host` with clear(), so a heading inside it would survive exactly one
+     render and then quietly vanish.
+     Rebuilt on each mount so it always carries the current language. */
   clear(container);
+  container.appendChild(el('h1', { class: 'sr-only' }, t('calm.title')));
   container.appendChild(host);
 
   // A single frame's pause before the first inhale, so the screen has settled
