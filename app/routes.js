@@ -143,6 +143,14 @@ export const routes = {
     titleKey: 'report.title',
     navTab: 'me',
     distress: false
+  },
+
+  /* Module 7. The only screen from which anything can leave the device. */
+  '/data': {
+    load: () => import('../features/data/data.view.js'),
+    titleKey: 'data.title',
+    navTab: 'me',
+    distress: false
   }
 };
 
